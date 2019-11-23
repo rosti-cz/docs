@@ -1,0 +1,25 @@
+name: Build+Deploy
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-python@v1
+    - name: Build
+      run: |
+        pip3 install mkdocs
+        mkdocs build
+    - name: Deploy
+      env:
+        SSHKEY: ${{ secrets.deploy_ssh_key }}
+        HOST: ${{ secrets.host }}
+        PORT: ${{ secrets.port }}
+      run: |
+        echo "$SSHKEY" > ssh.key
+        chmod 600 ssh.key
+        rsync -avz -e "ssh -i ssh.key -oStrictHostKeyChecking=no -p $PORT" site/ app@$HOST:/srv/app/
