@@ -15,7 +15,7 @@ VERSION=0.1
 .PHONY: all build upload clean
 
 sync:
-	pipenv sync
+	pipenv --python /usr/bin/python3 sync
 
 build: sync
 	pipenv run mkdocs build
