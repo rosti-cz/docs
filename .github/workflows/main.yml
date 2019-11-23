@@ -8,15 +8,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Preps
-      run: |
-        apt-get update
-        apt-get install -y python3-setuptools rsync
+    - uses: actions/checkout@v1.
+    - uses: actions/setup-python@v1
+    - uses: dschep/install-pipenv-action@v1
     - name: Build
       run: |
-        pip3 install mkdocs
-        mkdocs build
+        pipenv install mkdocs
+        pipenv run mkdocs build
     - name: Deploy
       env:
         SSHKEY: ${{ secrets.deploy_ssh_key }}
