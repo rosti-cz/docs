@@ -20,4 +20,5 @@ jobs:
         HOST: ${{ secrets.host }}
         PORT: ${{ secrets.port }}
       run: |
+        echo "$SSHKEY" > ssh.key
         rsync -avz -e "ssh -i ssh.key -oStrictHostKeyChecking=no -p $PORT" site/ app@$HOST:/srv/app/
