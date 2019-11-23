@@ -17,15 +17,17 @@ Mezi verzemi PHP lze přepínat. U vytvořené aplikace stačí změnit image na
 
 Po změně v administraci je potřeba upravit konfiguraci supervisoru v souboru */srv/conf/supervisor.d/php.conf*.
 
-    [program:app]
-    command=/usr/sbin/php-fpm7.0 -F -O -g /srv/run/php-fpm.pid -y /srv/conf/php-fpm/php-fpm.conf
-    directory=/srv/app
-    autostart=true
-    autorestart=true
-    stdout_logfile=/srv/logs/app.log
-    stdout_logfile_maxbytes=2MB
-    stdout_logfile_backups=5
-    redirect_stderr=true
+```
+[program:app]
+command=/usr/sbin/php-fpm7.0 -F -O -g /srv/run/php-fpm.pid -y /srv/conf/php-fpm/php-fpm.conf
+directory=/srv/app
+autostart=true
+autorestart=true
+stdout_logfile=/srv/logs/app.log
+stdout_logfile_maxbytes=2MB
+stdout_logfile_backups=5
+redirect_stderr=true
+```
 
 Kde se **php-fpm7.0** nahradí za **php-fpm** vyžadované verze.
 
