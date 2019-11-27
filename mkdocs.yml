@@ -4,7 +4,7 @@ pages:
     - "Základní informace": base.md
     - "DNS a registrace domén": dns.md
     - "Základní pojmy": aword.md
-    - "E-mailové schránky": emails.md
+    - "E-mailové služby": emails.md
     - "Migrace e-mailů z Roští": end_of_emails.md
     - "SSH přístup": ssh.md
     - "SSL certifikáty": ssl.md
