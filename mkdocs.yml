@@ -15,7 +15,7 @@ pages:
         - Python: apps/python.md
         - Node: apps/node.md
         - Ruby: apps/ruby.md
-    - Aplikace s Runtime:
+    - "Aplikace s Runtime":
         - Runtime: runtime/main.md
     - Úložiště:
 #        - Úvod: storages/index.md
