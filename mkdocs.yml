@@ -1,5 +1,5 @@
 site_name: Dokumentace Roští.cz
-pages:
+nav:
     - Domů: index.md
     - "Základní informace": base.md
     - "DNS a registrace domén": dns.md
@@ -18,7 +18,7 @@ pages:
     - "Aplikace s Runtime":
         - Runtime: runtime/main.md
     - Úložiště:
-#        - Úvod: storages/index.md
+        # - Úvod: storages/index.md
         - MongoDB: storages/mongo.md
         - Memcached: storages/memcached.md
         - Redis: storages/redis.md
