@@ -15,8 +15,7 @@ nav:
         - Python: apps/python.md
         - Node: apps/node.md
         - Ruby: apps/ruby.md
-    - "Aplikace s Runtime":
-        - Runtime: runtime/main.md
+    - "Aplikace s Runtime": runtime/main.md
     - Úložiště:
         # - Úvod: storages/index.md
         - MongoDB: storages/mongo.md
