@@ -62,12 +62,12 @@ V momentě, kdy vydáme novou verzi Runtime, je pro nás kompletní a už do ní
 
 Na druhou stranu byste měli Runtime jednou za čas u aplikace aktualizovat, protože nové verze obsahují důležité bezpečnostní opravy v systému samotném i v podporovaných technologiích. Technologie se mění rychleji než systém a tak nové verze Runtime budou vždy obsahovat poslední verze Node.js, Pythonu a PHP, případně dalších, které můžeme během vývoje přidat. Starší verze zůstanou také, ale po čase je budeme odstraňovat. Může se tedy stát, že Python 3.8.1, který je aktuální teď a je dostupný v Runtime 2020.01 už nebude dostupný ve verzi 2021.01. Náš cíl je nechávat verze jednotlivých technologií dostupné minimálně šest měsíců, ale záležet bude i na četnosti vydávání nových verzí. Zde najdete tabulku s verzemi Runtime a verzemi jednotlivých technologií:
 
-|                 | Runtime 2020-1 |
-| --------------- | :------------: |
-| Python 3.8.1    | &#10004;       |
-| Node.js 12.14.1 | &#10004;       |
-| Node.js 13.7.0  | &#10004;       |
-| PHP 7.4.2       | &#10004;       |
+|                 | Runtime 2020.01 | Runtime 2020.02 |
+| --------------- | :-------------: | :-------------: |
+| Python 3.8.1    | &#10004;        | &#10004;        |
+| Node.js 12.14.1 | &#10004;        | &#10004;        |
+| Node.js 13.7.0  | &#10004;        | &#10004;        |
+| PHP 7.4.2       | &#10004;        | &#10004;        |
 
 To nás přivádí k aktualizaci, která se liší podle jednotlivých technologií. Pokud tedy chcete změnit verzi technologie na novém nebo i současném Runtimu, použijte příkaz *rosti*, proveďte změnu a pak se řiďte následujícími pokyny:
 
