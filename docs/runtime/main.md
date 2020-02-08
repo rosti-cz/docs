@@ -1,8 +1,5 @@
 # Runtime
 
-!!! important
-    Dokumentace pro Runtime není ještě plně dokončená. Spousta věcí je společná s původními imagi, takže je možné použít i postupy popsané tam.
-
 Roští v roce 2020 přešlo na nový formát běhových prostředí, které jsme doposud všude nazývali image. Nově teď budeme mluvit o Runtime nebo Runtime imagi, v češtině pak o běhovém prostředí. I když se může stát, že se toho mění hodně, tak jde spíše o změnu v procesech než že bychom měnili kompletně celou koncepci.
 
 Nový Runtime se proti původním obrazům liší v několika ohledech:
@@ -17,17 +14,17 @@ Nový Runtime se proti původním obrazům liší v několika ohledech:
 * můžeme podporovat více verzí jedné technologie najednou,
 * je pro nás snadnější přidávat nové technologie,
 * je pro vás snadnější aktualizovat na novější verzi Runtime,
-* vývoj bude open source a budete mít možnost do Runtime přidat něco vlastního.
+* vývoj je open source a máte možnost do Runtime přidat něco vlastního.
 
 Klíčový je pro nás hlavně proces vydávání nových verzí. Verze už nebude vázaná na číslo verze dané technologie, ale půjdeme odděleně. Díky tomu budeme moci vydat novou verzi Runtime, která nebude měnit verzi ani jedné z technologií a zároveň budeme moci aplikovat nějakou opravu a navíc budeme vědět, kdo běží na starém obrazu. Nedostaneme se tak do situace, kdy máme na serverech tři různé varianty obrazu pro Python 3.5 jako dnes.
 
 Druhou klíčovou vlastností je, že základ pro Runtime je Debian 10 Buster. Tím vyřešíme řadu problémů, které se nám začaly objevovat s dodatečnými balíčky.
 
-## Beta
+## Aktuální stav a migrace
 
-Dokud uvidíte v administraci *-beta-#* u jednotlivých verzí, znamená to, že některé postupy, které jsme v novém Runtime zavedli, nemusí fungovat v další verzi. Naopak to neznamená, že by aplikace neměla fungovat nebo být nestabilní. Obraz pro Runtime i původní obrazy jsou postavy na podobné adresářové struktuře a částečně i na stejném kódu a je dokonce možné zkopírovat data z jednoho do druhého a s malými opravami bude vše fungovat. Toto pravidlo má řadu výjimek, hlavně dané konkrétní technologií. Třeba Node.js obrazy a Runtime nemají společnou verzi Node.js a ve všech případech bude nutné upravit cesty k Pythonu, Node.js nebo php-fpm. U PHP jsme zase změnili cestu k *php.ini* a podobně.
+V únoru 2020 jsme uvolnili první ostrou verzi našeho Runtimu a přechod ze starých obrazů doporučujeme u všech aplikací, kde to je možné. Pokud náhodou narazíte na nějaký problém při migraci, napište nám na [podpora@rosti.c](mailto:podpora@rosti.cz) a my se vám pokusíme co nejvíce pomoci. Naším cílem je, aby vše co bylo hostované na starých obrazech bylo hostovatelné i v našem novém Runtimu. Původní obrazy mají s Runtime mnohé společného, ale v některých detailech se liší. Jedním takovým detailem je, že si sestavujeme PHP sami, takže je možné, že vám bude chybět třeba některá z knihoven. Může chvíli trvat, než tyto problémy vyladíme a proto prosíme o pečlivé hlášení problémů a trpělivost.
 
-V beta režimu ještě nějaký čas zůstaneme, hlavně abychom nasbírali zpětnou vazbu. Pokud máte nějaký problém nebo návrh, příštích několik měsíců je ideální čas nám o tom napsat. Později se může stát, že nebude tak jednoduché něco změnit.
+Migrace se vždy musí řešit novou aplikací a následně přepnutím domény. Adresářová struktura obou prostředí je téměř shodná, takže s malými úpravami konfigurace supervisoru by mělo být možné přemigrovat do nového pouze překopírováním dat z původního kontejneru. U PHP by to ve většině případů mělo platit i bez dodatečných úprav konfigurace. Python a Node.js si vyžádají reinstalaci virtualenvu, resp. node_packages adresáře a potenciálně další úpravy. Prostředí jako takové se ale výrazně nezměnilo od toho, na co jste byli zvyklí.
 
 ## rosti.sh
 
@@ -154,3 +151,6 @@ Do supervisordu je možné přidat další procesy. Stačí zkopírovat existuj�
 
 !!! important
     Na Roští jde hostovat vše co si umí povídat po HTTP protokolu. Není možné hostovat třeba XMPP server nebo nějakou službu na UDP. Jste limitovaní portem 8000, na kterém náš load balancer hledá HTTP server pro vaši doménu.
+
+!!! important
+    Runtime zatím nepodporuje Ruby a Javu.
