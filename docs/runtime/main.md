@@ -22,7 +22,7 @@ Druhou klíčovou vlastností je, že základ pro Runtime je Debian 10 Buster. T
 
 ## Aktuální stav a migrace
 
-V únoru 2020 jsme uvolnili první ostrou verzi našeho Runtimu a přechod ze starých obrazů doporučujeme u všech aplikací, kde to je možné. Pokud náhodou narazíte na nějaký problém při migraci, napište nám na [podpora@rosti.c](mailto:podpora@rosti.cz) a my se vám pokusíme co nejvíce pomoci. Naším cílem je, aby vše co bylo hostované na starých obrazech bylo hostovatelné i v našem novém Runtimu. Původní obrazy mají s Runtime mnohé společného, ale v některých detailech se liší. Jedním takovým detailem je, že si sestavujeme PHP sami, takže je možné, že vám bude chybět třeba některá z knihoven. Může chvíli trvat, než tyto problémy vyladíme a proto prosíme o pečlivé hlášení problémů a trpělivost.
+V únoru 2020 jsme uvolnili první ostrou verzi našeho Runtimu a přechod ze starých obrazů doporučujeme u všech aplikací, kde to je možné. Pokud náhodou narazíte na nějaký problém při migraci, napište nám na [podpora@rosti.cz](mailto:podpora@rosti.cz) a my se vám pokusíme co nejvíce pomoci. Naším cílem je, aby vše co bylo hostované na starých obrazech bylo hostovatelné i v našem novém Runtimu. Původní obrazy mají s Runtime mnohé společného, ale v některých detailech se liší. Jedním takovým detailem je, že si sestavujeme PHP sami, takže je možné, že vám bude chybět třeba některá z knihoven. Může chvíli trvat, než tyto problémy vyladíme a proto prosíme o pečlivé hlášení problémů a trpělivost.
 
 Migrace se vždy musí řešit novou aplikací a následně přepnutím domény. Adresářová struktura obou prostředí je téměř shodná, takže s malými úpravami konfigurace supervisoru by mělo být možné přemigrovat do nového pouze překopírováním dat z původního kontejneru. U PHP by to ve většině případů mělo platit i bez dodatečných úprav konfigurace. Python a Node.js si vyžádají reinstalaci virtualenvu, resp. node_packages adresáře a potenciálně další úpravy. Prostředí jako takové se ale výrazně nezměnilo od toho, na co jste byli zvyklí.
 
@@ -35,7 +35,7 @@ Jednou ze základních změn je nový nástroj *rosti.sh*, který můžete vyvol
 Podobně to můžete provést i s ostatními technologiemi.
 
 !!! note
-    Přemýšlíme o tom, že by všechny technologie měly výchozí verzi, která by byla dostupná ve hned po přihlášení. Nicméně by to mohlo způsobit i problémy třeba se změnou výchozí verze Node.js a může tak přestat něco fungovat a tak bychom rádi, pokud nám napíšete jak to vidíte u vašeho projektu. Chcete si vybírat sami explicitně nebo preferujete výběr dle verze Runtime? Dejte nám vědět na [podpora@rosti.c](mailto:podpora@rosti.cz).
+    Přemýšlíme o tom, že by všechny technologie měly výchozí verzi, která by byla dostupná ve hned po přihlášení. Nicméně by to mohlo způsobit i problémy třeba se změnou výchozí verze Node.js a může tak přestat něco fungovat a tak bychom rádi, pokud nám napíšete jak to vidíte u vašeho projektu. Chcete si vybírat sami explicitně nebo preferujete výběr dle verze Runtime? Dejte nám vědět na [podpora@rosti.cz](mailto:podpora@rosti.cz).
 
 ### Přepínání technologií
 
