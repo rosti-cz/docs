@@ -23,13 +23,13 @@ Pokud máte kontejner pouze s 256 MB RAM, rozbalte archiv lokálně a obsah adre
 
 ## Supervisor
 
-V kontejnerech na Roští běží vše pod daemonem supervisor, který umí efektivně spravovat procesy na pozadí a postará se o jejich restartování, pokud se něco napoprvé nepovede. Zároveň sbírá zprávy ze stdout a stderr a ukládá se do adresáře */srv/logs*. Jemu tedy musíme říct, že má od teď spravovat i naše MongoDB. To uděláme tak, že vytvoříme soubor */srv/conf/supervisor.d/mongodb.conf* a uložíme do něj:
+V kontejnerech na Roští běží vše pod daemonem supervisor, který umí efektivně spravovat procesy na pozadí a postará se o jejich restartování, pokud se něco napoprvé nepovede. Zároveň sbírá zprávy ze stdout a stderr a ukládá se do adresáře */srv/log*. Jemu tedy musíme říct, že má od teď spravovat i naše MongoDB. To uděláme tak, že vytvoříme soubor */srv/conf/supervisor.d/mongodb.conf* a uložíme do něj:
 
     [program:mongodb]
     command=/srv/bin/mongod --dbpath /srv/var/mongodb
     autostart=true
     autorestart=true
-    stdout_logfile=/srv/logs/mongodb.log
+    stdout_logfile=/srv/log/mongodb.log
     stdout_logfile_maxbytes=2MB
     stdout_logfile_backups=5
     stdout_capture_maxbytes=2MB
