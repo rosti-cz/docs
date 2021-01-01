@@ -1,34 +1,32 @@
 site_name: Dokumentace Roští.cz
 nav:
-    - Domů: index.md
-    - "Základní informace": base.md
-    - "DNS a registrace domén": dns.md
-    - "Základní pojmy": aword.md
-    - "E-mailové služby": emails.md
-    - "Migrace e-mailů z Roští": end_of_emails.md
-    - "SSH přístup": ssh.md
-    - "SSL certifikáty": ssl.md
-    - "Staré Roští": old.md
-    - Aplikace:
-        - Úvod: apps/index.md
-        - PHP: apps/php.md
-        - Python: apps/python.md
-        - Node: apps/node.md
-        - Ruby: apps/ruby.md
-    - "Aplikace s Runtime": runtime/main.md
-    - Úložiště:
-        # - Úvod: storages/index.md
-        - MongoDB: storages/mongo.md
-        - Memcached: storages/memcached.md
-        - Redis: storages/redis.md
-    - Nástroje:
-        - Supervisor: tools/supervisor.md
-        - Cron: tools/cron.md
-        - "Doinstalování Node.js": addnode.md
-        - "Doinstalování balíčků": extra-packages.md
-        - "Přesměrování domén": tools/redirect.md
-    - "O nás": about.md
-    - "FAQ - časté dotazy": faq.md
+    - Domů: cs/main.md
+    - "Quickstart průvodce":
+      - "1. První aplikace": "cs/quickstart/first_app.md"
+      - "2. Jednoduchý deployment": cs/quickstart/first_deployment.md
+      - "3. Databáze": cs/quickstart/databases.md
+      - "4. Nastavení domény": cs/quickstart/domains.md
+    - Technologie:
+        - Python: cs/apps/python.md
+        - PHP: cs/apps/php.md
+        - Node.js: cs/apps/nodejs.md
+        - Deno: cs/apps/deno.md
+        - Ruby: cs/apps/ruby.md
+        - Golang: cs/apps/golang.md
+    - "Další informace":
+        - "Platby za služby": billing.md
+        - "Runtime prostředí": runtime.md
+        - "Nástroj rosti.sh": rosti_sh.md
+        - "Adresářová struktura /srv": srv.md
+        - "Správa služeb běžících na pozadí": supervisor.md
+        - "Připojení k SSH a databázím z venku": ssh.md
+        - "Instalace extra balíčků do systému": extra-packages.md
+        - "Cron": cron.md
+        - "Memcached a Redis": memcached_redis.md
+        - "MongoDB": mongo.md
+        - "SMTP server pro odchozí emaily": smtp.md
+        - "API": api.md
+        - "FAQ": faq.md
 theme: readthedocs
 markdown_extensions:
   - admonition

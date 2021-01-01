@@ -16,7 +16,7 @@ Ale vy si určitě najdete to svoje.
 
 ## Zapnutí Redisu
 
-Redis na Roští sedí s vaší aplikací ve stejném kontejneru. Už je nainstalován, stčí ho jen zapnout:
+Redis na Roští sedí s vaší aplikací ve stejném kontejneru. Už je nainstalován, stačí ho jen zapnout:
 
 ```bash
 enable-redis

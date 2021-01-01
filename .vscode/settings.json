@@ -3,5 +3,15 @@
     "spellright.documentTypes": [
         "latex",
         "plaintext"
+    ],
+    "cSpell.enableFiletypes": [
+        "markdown"
+    ],
+    "cSpell.words": [
+        "bin",
+        "binárka",
+        "binárku",
+        "rka",
+        "rku"
     ]
 }
