@@ -10,7 +10,7 @@ Všichni uživatelé a jejich aplikace mají společný load balancer, který b�
 
 Pojďme se připojit do aplikace, kterou jsme v minulé části vytvořili:
 
-    ssh app@node-16.rosti.cz -p 24509
+    ssh -p 24509 app@node-16.rosti.cz
 
 Uživatelské jméno *app* je pro všechny aplikace stejné. Port a adresa nodu se ale mění a u vaší aplikace bude obojí jiné. Pro připojení doporučujeme využít SSH klienta v Linux a na Windows použít Linux for Windows Subsystem for Linux (WSL). Ale je možné využít libovolného SSH klienta. Přes SSH se připojujete přímo do kontejneru a není tam žádná mezivrstva navíc. Kromě SSH přístupu můžete použít i SCP a SFTP na kopírování souborů.
 
@@ -70,6 +70,8 @@ Supervisor má i interaktivní shell. Příkazy jsou stejné jako v předchozíc
 
 Pojďme si jednotlivé programovací jazyky projít a řekneme si nejjednodušší cestu, jak nějakou aplikaci v daném jazyku na Roští nasadit. Jak jsme si řekli výše, základní princip je spustit HTTP server na portu 8080, s výjimkou PHP.
 
+Ale pojďme se podívat na jednotlivé technologie. Pokud vám zajímá jen jedna, můžete ostatní v klidu přeskočit.
+
 ### Python
 
 Ukázková aplikace používá [Gunicorn](https://gunicorn.org/), který překládá Pythoní WSGI protokol na HTTP protokol. Je možné ale Gunicorn nahradit HTTP serverem implementovaným v Pythonu. Nasazení vlastního Pythoního kódu může být trochu komplikované, pokud s tím ještě nemáte zkušenosti.
@@ -79,7 +81,7 @@ Ideální ukázkou je tady [Django](https://www.djangoproject.com/). Všechny Dj
     cd /srv/app
     pip install -r requirements.txt
 
- Pak v něm najděte *wsgi.py*. Dejme tomu, že to bude soubor */srv/app/muj_projekt/wsgi.py*. Půjdeme tedy do nastavení supervisoru, konkrétně do *conf/supervisor.d/python.conf* a tam změníme řádek *command=* následovně:
+Pak v něm najděte *wsgi.py*. Dejme tomu, že to bude soubor */srv/app/muj_projekt/wsgi.py*. Půjdeme tedy do nastavení supervisoru, konkrétně do *conf/supervisor.d/python.conf* a tam změníme řádek *command=* následovně:
 
     command=/srv/venv/bin/gunicorn -u app -g app -b 0.0.0.0:8080 --access-logfile - --error-logfile - --reload muj_projekt.wsgi
 
@@ -99,7 +101,8 @@ Nakonec ještě pár poznámek:
 
 ### PHP
 
-Používáme PHP-FPM jak bylo řečeno výše a ukázková aplikace je normální PHP skript, který najdete v */srv/app*. Pokud chcete nasadit něco jiného, jednoduše obsah tohoto adresáře nahraďte vlastním kódem a bude to fungovat. Roští umožňuje upravit téměř každé nastavení PHP, takže pokud chcete znát detaily, [mrkněte do sekce](cs//apps/php.md), která se PHP věnuje.
+Používáme PHP-FPM jak bylo řečeno výše a ukázková aplikace je normální PHP skript, který najdete v */srv/app*. Pokud chcete nasadit něco jiného, jednoduše obsah tohoto adresáře nahraďte vlastním kódem a bude to fungovat. Roští umožňuje upravit téměř každé nastavení PHP, takže pokud chcete znát detaily, [mrkněte do sekce](../apps/php.md), která se PHP věnuje.
+
 
 ### Node.js
 
@@ -114,7 +117,7 @@ Tím nainstalujete závislosti a restartujete Node.js proces, který by teď mě
 Než smažete ukázkový kód, tak si prohlédněte jak v něm je udělaný *package.json*. Nejsnadnější cesta je do vašeho "package.json" přidat podobou *scripts* sekci jako je právě tam:
 
     "scripts": {
-      "start": "/srv/bin/primary_tech/node app.js"
+    "start": "/srv/bin/primary_tech/node app.js"
     }
 
 Všimněte si také cesty */srv/bin/primary_tech*. Je to adresář, do kterého jsou nalinkované nástroje podle technologie vybrané při vytváření aplikace. Všechny podporované technologie najdete v */opt/techs/* a je možné je používat i najednou, pokud nastavíte cesty přímo do */opt/techs/*.
@@ -155,13 +158,13 @@ Tím se načtou změny z konfigurace supervisoru a rovnou se aplikují. Na domé
 
 ## Něco málo závěrem
 
-Než přejdeme dál, je tu ještě jeden obrázek, který byste měli vidět:
+Než přejdeme dál, podíváme se, jak putuje požadavek, který přijde do naší infrastruktury.
 
 ![Kompletní schéma kontejneru](../../imgs/first_deployment_2.png)
 
-Komunikace mezi naším load balancerem a vaší aplikace je šifrována na úrovni síťové vrstvy a HTTPS řeší až load balancer.
+Komunikace mezi naším load balancerem a vaší aplikace je šifrována na úrovni síťové vrstvy a HTTPS řeší až load balancer. Veškerá komunikace v naší infrastruktuře, které jde skrze internet, je tedy šifrována.
 
-To bude z této části všechno a můžeme se [přesunout k databázím](cs/quickstart/databases.md).
+To bude z této části všechno a můžeme se [přesunout k databázím](databases.md).
 
 
 

@@ -32,4 +32,4 @@ U vytvořené aplikace se automaticky nastavuje nejnižší balíček. Pokud pot
 
 Pod dalšími záložkami na této stránce najdete možnost změnit heslo, mrknout na využití paměti a procesoru nebo přidat do kontejneru Redis nebo Memcached.
 
-Vaše aplikace teď už běží a když kliknete na testovací doménu, otevře se vám "hello world" stránka, kterou můžete nahradit vlastním kódem. Čímž se dostáváme k [nasazení kódu nebo-li deploymentu](new/quickstart/first_deployment.md).
+Vaše aplikace teď už běží a když kliknete na testovací doménu, otevře se vám "hello world" stránka, kterou můžete nahradit vlastním kódem. Čímž se dostáváme k [nasazení kódu nebo-li deploymentu](first_deployment.md).

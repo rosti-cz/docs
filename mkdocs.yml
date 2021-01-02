@@ -11,22 +11,23 @@ nav:
         - PHP: cs/apps/php.md
         - Node.js: cs/apps/nodejs.md
         - Deno: cs/apps/deno.md
-        - Ruby: cs/apps/ruby.md
         - Golang: cs/apps/golang.md
     - "Další informace":
-        - "Platby za služby": billing.md
-        - "Runtime prostředí": runtime.md
-        - "Nástroj rosti.sh": rosti_sh.md
-        - "Adresářová struktura /srv": srv.md
-        - "Správa služeb běžících na pozadí": supervisor.md
-        - "Připojení k SSH a databázím z venku": ssh.md
-        - "Instalace extra balíčků do systému": extra-packages.md
-        - "Cron": cron.md
-        - "Memcached a Redis": memcached_redis.md
-        - "MongoDB": mongo.md
-        - "SMTP server pro odchozí emaily": smtp.md
-        - "API": api.md
-        - "FAQ": faq.md
+        - "Platby za služby": cs/billing.md
+        - "Runtime prostředí": cs/runtime.md
+        - "Nástroj rosti.sh": cs/rosti_sh.md
+        - "Adresářová struktura /srv": cs/srv.md
+        - "Správa služeb běžících na pozadí": cs/supervisor.md
+        - "Připojení k SSH a databázím z venku": cs/ssh.md
+        - "Instalace extra balíčků do systému": cs/extra-packages.md
+        - "Cron": cs/cron.md
+        - "Memcached a Redis": cs/memcached_redis.md
+        - "MongoDB": cs/mongo.md
+        - "SMTP server pro odchozí emaily": cs/smtp.md
+        - "API": cs/api.md
+        - "FAQ": cs/faq.md
+    - "Stará dokumentace": old/index.md
 theme: readthedocs
 markdown_extensions:
   - admonition
+  - pymdownx.details

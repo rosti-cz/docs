@@ -19,12 +19,12 @@ Snažili jsme se přímočaře popsat, jak Roští funguje a jak tam nasadit va�
 
 ## Specifika jednotlivých technologií
 
-* [Python](/apps/python.md)
+* [Python](apps/python.md)
 * [PHP](apps/php.md)
 * [Node.js](apps/nodejs.md)
 * [Deno](apps/deno.md)
-* [Ruby](apps/ruby.md)
 * [Golang](apps/golang.md)
+<!-- * [Ruby](apps/ruby.md) -->
 
 ## Ostatní
 
@@ -44,3 +44,5 @@ Snažili jsme se přímočaře popsat, jak Roští funguje a jak tam nasadit va�
 <!-- * [HTTPS](https.md) -->
 <!-- * [Nginx (přesměrování, více domén s jiným obsahem)](nginx.md) -->
 <!-- * [Tipy pro deployment nového kódu](deployment.md) -->
+
+Stará dokumentace [je dostupná zde](../old/index.md).

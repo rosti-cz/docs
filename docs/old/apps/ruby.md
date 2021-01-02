@@ -6,7 +6,7 @@ Obraz pro Ruby vytváříme kompilací zdrojových kódů ze stránky [ruby-lang
 
 Supervisor je nástroj, který spravuje procesy běžící na pozadí, což vaše aplikace je. Můžete díky němu editovat parametry těchto procesů a můžete libovolně přidávat další, třeba pro zpracování úloh na pozadí nebo pro pravidelné zpracování nějakých dat. Pokud jste se nikdy s nástrojem supervisor nesetkali, odkáži vás zde ještě na [stránku supervisor](../tools/supervisor.md), kde dozvíte vše podstatné.
 
-![Ruby aplikace - nastavení parametrů](../imgs/ruby_app_param.png)
+![Ruby aplikace - nastavení parametrů](../../imgs/ruby_app_param.png)
 
 ## Nasazení aplikace
 
