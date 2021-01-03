@@ -16,6 +16,7 @@ jobs:
     - name: Build
       run: |
         pip3 install mkdocs
+        pip3 install pymdown-extensions
         mkdocs build
     - name: Deploy
       env:
