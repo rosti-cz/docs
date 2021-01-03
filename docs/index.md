@@ -12,37 +12,37 @@ Níže najdete jednotlivé kapitoly tohoto průvodce, ale pro rychlý start vám
 
 Snažili jsme se přímočaře popsat, jak Roští funguje a jak tam nasadit vaši aplikaci. Když si tyhle čtyři části projdete, budete vědět o Roští téměř všechno a pokud už máte zkušenosti s Linuxem, zorientujete se velmi rychle. I tak, pokud narazíte na nesrovnalost, nebo nebude něco jasné, použijte prosím náš online chat, [kontaktní formulář](https://rosti.cz/kontakt/) a nebo [email](mailto:podpora@rosti.cz) a nebojte se zeptat.
 
-* [1. První aplikace](quickstart/first_app.md)
-* [2. Jednoduchý deployment](quickstart/first_deployment.md)
-* [3. Databáze](quickstart/databases.md)
-* [4. Nastavení domény](quickstart/domains.md)
+* [1. První aplikace](cs/quickstart/first_app.md)
+* [2. Jednoduchý deployment](cs/quickstart/first_deployment.md)
+* [3. Databáze](cs/quickstart/databases.md)
+* [4. Nastavení domény](cs/quickstart/domains.md)
 
 ## Specifika jednotlivých technologií
 
-* [Python](apps/python.md)
-* [PHP](apps/php.md)
-* [Node.js](apps/nodejs.md)
-* [Deno](apps/deno.md)
-* [Golang](apps/golang.md)
+* [Python](cs/apps/python.md)
+* [PHP](cs/apps/php.md)
+* [Node.js](cs/apps/nodejs.md)
+* [Deno](cs/apps/deno.md)
+* [Golang](cs/apps/golang.md)
 <!-- * [Ruby](apps/ruby.md) -->
 
 ## Ostatní
 
-* [Platby za služby](billing.md)
-* [Runtime prostředí](runtime.md)
-* [Nástroj rosti.sh](rosti_sh.md)
-* [Adresářová struktura /srv](srv.md)
-* [Správa služeb běžících na pozadí](supervisor.md)
-* [Připojení k SSH a databázím z venku](ssh.md)
-* [Instalace extra balíčků do systému](extra-packages.md)
-* [Cron](cron.md)
-* [Memcached a Redis](memcached_redis.md)
-* [MongoDB](mongo.md)
-* [SMTP server pro odchozí emaily](smtp.md)
-* [API](api.md)
-* [FAQ](faq.md)
+* [Platby za služby](cs/billing.md)
+* [Runtime prostředí](cs/runtime.md)
+* [Nástroj rosti.sh](cs/rosti_sh.md)
+* [Adresářová struktura /srv](cs/srv.md)
+* [Správa služeb běžících na pozadí](cs/supervisor.md)
+* [Připojení k SSH a databázím z venku](cs/ssh.md)
+* [Instalace extra balíčků do systému](cs/extra-packages.md)
+* [Cron](cs/cron.md)
+* [Memcached a Redis](cs/memcached_redis.md)
+* [MongoDB](cs/mongo.md)
+* [SMTP server pro odchozí emaily](cs/smtp.md)
+* [API](cs/api.md)
+* [FAQ](cs/faq.md)
 <!-- * [HTTPS](https.md) -->
 <!-- * [Nginx (přesměrování, více domén s jiným obsahem)](nginx.md) -->
 <!-- * [Tipy pro deployment nového kódu](deployment.md) -->
 
-Stará dokumentace [je dostupná zde](../old/index.md).
+Stará dokumentace [je dostupná zde](old/index.md).
