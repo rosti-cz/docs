@@ -1,12 +1,12 @@
 # Průvodce Roští.cz
 
-Roští je proti ostatním poskytovatelům hostingu trochu jiné. Při přidání aplikace na Roští dostanete kontejner na jednom z našich serverů, který bude obsahovat pevně dané prostředí, ve kterém mohou běžet vaše aplikace téměř bez ohledu na použitou technologii. Spojujeme tak výhodu hostingu, kde se nemusíte o moc starat a flexibilitu virtuálních serverů, kde máte k dispozici celou řadu nástrojů, které dělají vývoj, provoz a řešení problémů o dost jednodušší.
+Roští je proti ostatním poskytovatelům hostingu trochu jiné. Při přidání aplikace na Roští dostanete kontejner na jednom z našich serverů, který bude obsahovat pevně dané prostředí, ve kterém mohou běžet vaše aplikace téměř bez ohledu na použitou technologii. Jednotlivé kontejnery jsou na sobě nezávislé a kompletně oddělené. Spojujeme tak výhodu hostingu, kde se nemusíte o moc starat a flexibilitu virtuálních serverů, kde máte k dispozici celou řadu nástrojů, které dělají vývoj, provoz a řešení problémů o dost jednodušší.
 
-Pokud k nám nasadíte jednu aplikaci, napsanou například v Pythonu a připravíte si pro ní skripty pro nasazování nové verze, s malými úpravami budete moci se stejnými skripty nasadit jakoukoli jinou aplikaci napsanou třeba v PHP.
+Snažili jsme se vytvořit jednotný systém, použitelný pro celou řadu technologií, jako je Python, PHP, Node.js, Golang a další. Pokud k nám nasadíte jednu aplikaci, napsanou například v Pythonu, a připravíte si pro ní skripty pro nasazování nové verze, tak s malými úpravami budete moci se stejnými skripty nasadit jinou aplikaci napsanou třeba v PHP nebo Node.js.
 
-Z principu je Roští.cz vhodné pro menší a střední stateful aplikace, kde není potřeba škálovat a oceníte především rychlost nasazení nového kódu. Pro naše klienty provozujeme i komplikovanější infrastruktury na AWS a na fyzických serverech. Nebojte se proto na nás obrátit i v případě, že na první pohled pro vás Roští nebude vhodné. Dokážeme vám připravit infrastrukturu pro služby, které vyžadují jak škálování, tak vysokou dostupnost.
+Z principu je Roští.cz vhodné pro menší a střední stateful aplikace, kde není potřeba škálovat a oceníte především rychlost nasazení nového kódu. Pro naše klienty provozujeme i komplikovanější infrastruktury na [AWS](https://aws.amazon.com/), [DigitalOcean](https://www.digitalocean.com/) a na fyzických serverech. Nebojte se proto na nás obrátit i v případě, že na první pohled pro vás Roští nebude vhodné. Dokážeme vám připravit infrastrukturu pro služby, které vyžadují jak škálování, tak vysokou dostupnost.
 
-Níže najdete jednotlivé kapitoly tohoto průvodce, ale pro rychlý start vám postačí ta první a později se můžete vracet k těm dalším.
+Níže najdete jednotlivé kapitoly tohoto průvodce, ale pro rychlý start vám postačí ta první. Později se můžete vracet k těm dalším a rozšířit si znalosti o našem systému.
 
 ## Quickstart průvodce
 

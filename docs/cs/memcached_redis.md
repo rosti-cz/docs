@@ -12,6 +12,6 @@ Alternativní způsob je použití utility *rosti*. Po přihlášení přes SSH 
 
 Tam vyberte službu, kterou chcete aktivovat.
 
-V případě Redisu můžete změnit jeho konfiguraci v souboru */srv/conf/redis.conf*. U Memcached je možné to samé v konfiguraci supervisoru a to v */srv/conf/supervisor.d/memcached.conf*, konkrétně na řádku začínajícím *command=*.
+V případě Redisu můžete změnit jeho konfiguraci v souboru */srv/conf/redis.conf*. U Memcached je možné to samé v konfiguraci supervisoru, konkrétně v */srv/conf/supervisor.d/memcached.conf*, konkrétně na řádku začínajícím *command=*.
 
 Pokud je náhodou něco špatně, zkontrolujte logy v */srv/log/*, kam obě služby zapisují svůj výstup.

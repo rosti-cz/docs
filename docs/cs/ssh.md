@@ -1,6 +1,6 @@
 ## SSH přístup
 
-Přístup k aplikaci přes SSH je alfou a omegou Roští. Málo kde ho dostanete a přitom je při vývoji i nasazování tak neocenitelným nástrojem. Podívejte se, co všechno můžete s SSH u své aplikace dělat:
+Přístup k aplikaci přes SSH je alfou a omegou Roští. Málo kde ho dostanete a přitom je při vývoji i nasazování tak nenahraditelné. Podívejte se, co všechno můžete s SSH u své aplikace dělat:
 
 - Přístup k plnohodnotnému shellu (BASH)
 - Bezpečný přenos souborů přes SFTP a SCP
@@ -26,11 +26,11 @@ U vaší aplikace budou samozřejmě hodnoty jiné.
 
 ## Přístup k plnohodnotnému shellu (BASH)
 
-Shell je základní vlastnost SSH. Z Linuxu a Mac OS X se ke své aplikaci dostanete pomocí *openssh*, z Windows to je [Putty](http://www.putty.org/). Po přípojení dostanete plnou moc nad tím, v čem váš kód běží. Můžete ovlivnit supervisora, proměnné prostředí, používat Midnight Commander, vim, volat svoje vlastní skripty a mnoho dalšího. Pokud zkusíte na Roští toto, jiný hosting už vám vyhovovat nebude.
+Shell je základní vlastnost SSH. Z Linuxu a Mac OS X se ke své aplikaci dostanete pomocí *openssh*, z Windows to je [Putty](http://www.putty.org/) nebo lepší možností je [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10) (WSL). Po přípojení dostanete plnou moc nad tím, v čem váš kód běží. Můžete ovlivnit supervisora, proměnné prostředí, používat Midnight Commander, vim, volat svoje vlastní skripty a mnoho dalšího.
 
 ## Bezpečný přenos souborů přes SFTP a SCP
 
-SSH ale není jen o příkazové řádce. Je to univerzální kanál pro bezpečný přenos dat a jako takový umí i přenášet soubory. Podporu SFTP i SCP. Pomocí SCP se vám bude dobře provádět automatický deployment a SFTP můžete použít stejně jako FTP klienta. Proti FTP je SFTP bezpečnější, používá moderní protokol a nemá problémy s českými znaky. Na Linuxu ho podporuje každá distribuce, na Windows sáhněte po [WinSCP](https://winscp.net/eng/download.php).
+SSH ale není jen o příkazové řádce. Je to univerzální kanál pro bezpečný přenos dat a jako takový umí i přenášet soubory. Podporu SFTP i SCP. Pomocí SCP se vám bude dobře provádět automatický deployment a SFTP můžete použít stejně jako FTP klienta. Proti FTP je SFTP bezpečnější, používá moderní protokol a nemá problémy s českými znaky. Na Linuxu ho podporuje každá distribuce, na Windows sáhněte po [WinSCP](https://winscp.net/eng/download.php), případně *sftp* příkazu ve WSL.
 
 ## SOCK proxy
 
@@ -59,7 +59,7 @@ Roští běží na SSH serveru Dropbear, který podporuje maximálně 8192-bitov
 
 ## K čemu je klíč a jak vygenerovat klíč
 
-Klíče slouží pro pohodlnější a bezpečenější přístup k SSH serverům. Lokálně si vytvoříte pár public a private klíčů a public nahrajete na jeden či více serverů. SSH klient pak automaticky použije klíč místo hesla a heslo tedy nemusíte zadávat a přitom spojení zůstane bezpečné, dokonce více než s heslem. Na linuxu nebo v našem kontejneru se klíč generuje takto:
+Klíče slouží pro pohodlnější a bezpečnější přístup k SSH serverům. Lokálně si vytvoříte pár public a private klíčů a public nahrajete na jeden či více serverů. SSH klient pak automaticky použije klíč místo hesla a heslo tedy nemusíte zadávat a přitom spojení zůstane bezpečné, dokonce více než s heslem. Na linuxu nebo v našem kontejneru se klíč generuje takto:
 
     ssh-keygen -t rsa -b 4096 -C "<VÁŠ EMAIL>"
 
@@ -69,7 +69,7 @@ Po spuštění příkazu se vygeneruje klíč a budete dotázání na umístěn�
 
     ssh-copy-id -i '/home/<LOKÁLNÍ UŽIVATEL>/.ssh/<NÁZEV KLÍČE>' app@node-<X>.rosti.cz -p<PORT>
 
-Toto je nejlepší způsob jak dostat klíč na server. Klient se automaticky připojí na server a vytvoří složku *~/.ssh* s patřičnými oprávněními. V této složce pak vytvoří soubor *autorized_keys* s vaším klíčem. Od této chvíle nebudete dotazování na heslo a připojení bude bezpečnější.
+Toto je nejlepší způsob jak dostat klíč na server. Klient se automaticky připojí na server a vytvoří složku *~/.ssh* s patřičnými oprávněními. V této složce pak vytvoří soubor *authorized_keys* s vaším klíčem. Od této chvíle nebudete dotazování na heslo a připojení bude bezpečnější.
 
 ## Jak si vytvořit ssh alias abych si nemusel pamatovat všechny parametry?
 
@@ -81,4 +81,4 @@ Do souboru *~/.ssh/config* vložte následující text.
     Port <PORT>
     IdentityFile ~/.ssh/rosti
 
-Díky tomuto nastavení už nebudete muset nikde kopírovat hostname, port a uživatele. Vše proběhne automaticky při použítí příkazu ssh muj-web.cz.
+Díky tomuto nastavení už nebudete muset nikde kopírovat hostname, port a uživatele. Vše proběhne automaticky při použití příkazu `ssh muj-web.cz`.

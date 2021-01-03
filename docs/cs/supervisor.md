@@ -1,8 +1,8 @@
 # Supervisor
 
-Supervisor je klíčovou součástí všech obrazů na Roští a pokud chcete Roští využívat naplno, musíte vědět, jak ho použítvat. Supervisor je hlavní proces všech našich Docker obrazů a hlídá, že vaše aplikace běží. Pokud by náhodou spadla, pokusí se ji znovu nahodit. Oficiální dokumentaci [naleznete na supervisord.org](http://supervisord.org/).
+Supervisor je klíčovou součástí všech obrazů na Roští a pokud chcete Roští využívat naplno, musíte vědět, jak se ovládá. Supervisor je hlavní proces všech našich Docker obrazů a hlídá, že vaše aplikace běží. Pokud by náhodou spadla, pokusí se ji znovu nahodit. Pokud vás zajímají detaily, tak oficiální dokumentaci k němu naleznete [naleznete na supervisord.org](http://supervisord.org/).
 
-V nově vytvořených aplikacích běží pod supervisorem jeden až dva procesy, což je ukázková aplikace, která vám má dát funkční příklad toho, jak Roští vypadá a k ní ještě bývá Nginx (Python a Ruby). Konfigurace supervisoru se nachází v adresáři */srv/conf/supervisor.d/*. Když si ho otevřete například v Node.js aplikaci, uvidíte soubor *node.js* s tímto obsahem:
+V nově vytvořených aplikacích běží pod supervisorem jeden až dva procesy, což je ukázková aplikace, která vám má dát funkční příklad toho, jak Roští vypadá a k ní tam najdete ještě Nginx. Konfigurace supervisoru se nachází v adresáři */srv/conf/supervisor.d/*. Když si ho otevřete například u Node.js aplikace, uvidíte soubor *node* s podobným obsahem:
 
 ```ini
 [program:app]
@@ -17,7 +17,7 @@ stdout_logfile_backups=5
 redirect_stderr=true
 ```
 
-Tímto souborem říkáme supervisoru, že má spravovat program s názvem *app*, spustit ho pomocí */opt/node/bin/npm start* a že prostředí má mít upravenou proměnnou *PATH*, kde se nacházejí cesty, ve kterých systém hledá spustitelné soubory. Další parametry jsou:
+Tímto souborem říkáme supervisoru, že má spravovat program s názvem *app*, spustit ho pomocí */opt/node/bin/npm start* a že prostředí má mít upravenou proměnnou *PATH*, kde se nacházejí cesty, ve kterých systém hledá spustitelné soubory. Další parametry nastavují:
 
 |Parametr|Funkce|
 |-|-|
@@ -37,18 +37,18 @@ Když zkopírujete konfiguraci výše a vyplníte jiný parametr *program*, *com
 
 Supervisor se ovládá velmi snadno a to přes nástroj *supervisorctl*. Když přidáte nový konfigurák, zavoláte následující:
 
-```basb
+```bash
 supervisorctl reread
 supervisorctl update
 ```
 
-Akce *reread* načte znovu konfiguraci a *update* porovná současnou konfiguraci s tou načtenou a provede vše co je potřebné, aby současný stav korespondoval s tím v nové konfiguraci.
+Akce *reread* načte znovu konfiguraci a *update* porovná současnou konfiguraci s tou načtenou a provede vše co je potřebné, aby se aplikovaly požadované změny.
 
 ![Supervisor reread/update](../imgs/supervisor_reread_update.png)
 
 Někdy ale potřebujete proces zastavit, spustit nebo restartovat. To se dělá následovně:
 
-```basb
+```bash
 supervisorctl start app
 supervisorctl stop app
 supervisorctl restart app
@@ -64,4 +64,4 @@ Objeví se seznam procesů a jejich stav.
 
 ## Shrnutí
 
-Supervisor vám umožní spolu s aplikací provozovat u nespočet dalších daemonů. Například si můžete spustit libovolný počet memcached instancí, či Redisů, díky Supervisoru vám můžeme dát kontrolu nad vlastním Apachem nebo Nginxem a dostanete se velmi blízko tomu, co byste měli s virtuálním serverem, ale vše máte již připravené.
+Supervisor vám umožní spolu s aplikací provozovat u nespočet dalších daemonů. Například si můžete spustit libovolný počet memcached instancí, či Redisů, díky Supervisoru vám můžeme dát kontrolu nad vlastním Apachem nebo Nginxem a dostanete se velmi blízko tomu, co byste měli s virtuálním serverem, ale vše máte zároveň již připravené a funkční hned po vytvoření aplikace.

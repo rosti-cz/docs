@@ -1,8 +1,8 @@
 # MongoDB na Roští
 
-V prvních měsících, kdy jsme spustili nové Roští, měli jsme v něm i podporu pro MongoDB. Jednu sdílenou MongoDB databázi, podobně jako máme PostgreSQL a MariaDB. Po čase jsme ale zjistili, že MongoDB není úplně připravena na takový setup a že takto používaná není bezpečná. Podporu jsme zrušili bez náhrady, protože náhrada by vyžadovala samostatný kontejner pro každého uživatele a na to adminstrace není ještě připravená.
+V prvních měsících, kdy jsme spustili nové Roští, měli jsme v něm i podporu pro MongoDB. Jednu sdílenou MongoDB databázi, podobně jako máme PostgreSQL a MariaDB. Po čase jsme ale zjistili, že MongoDB není úplně připravena na takový setup a že takto používaná není bezpečná. Podporu jsme zrušili bez náhrady, protože náhrada by vyžadovala samostatný kontejner pro každého uživatele a na to administrace není ještě připravená.
 
-Nicméně na Roští je možné provozovat MongoDB v kontejneru společně s vaší aplikací a tato část dokumentace vám ukáže jak na to. Proti společné databázi jsou tu nějaké plusy a mínusy:
+Nicméně na Roští je možné provozovat MongoDB v kontejneru společně s vaší aplikací a tato část dokumentace vám ukáže jak na to. Proti společné databázi jsou tu nějaké plusy ale i mínusy:
 
 * \+ Bezpečnost
 * \+ Plná kontrola nad databází a jejím nastavení
@@ -17,9 +17,10 @@ Postup instalace je velmi jednoduchý. Stačí stáhnout balík s předkompilova
 
 ## Stažení
 
-Balík se statickými binárkami najdete [na adrese mongodb.com](https://www.mongodb.com/dr/fastdl.mongodb.org/linux/mongodb-linux-x86_64-debian81-3.6.2.tgz/download). Odkaz vede na verzi 3.6.2 a pokud potřebujete jinou, třeba novější, tak ji stačí v URL adrese upravit.
+Balík se statickými binárkami najdete [na adrese mongodb.com](https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1604-4.4.2.tgz). Odkaz vede na verzi 4.4.2 a pokud potřebujete jinou, třeba novější, 
+tak ji stačí v URL adrese upravit.
 
-Pokud máte kontejner pouze s 256 MB RAM, rozbalte archiv lokálně a obsah adresáře *bin/* nakopírujte do kontejneru do adresáře */srv/bin/*. Pokud tento adresář v kontejneru neexistuje, tak ho vytvořte. Jinak běží MongoDB dobře i na takto nízké RAM, ale samozřejmě záleží na charakteru vaší aplikace.
+Rozbalte archiv lokálně a obsah adresáře *bin/* nakopírujte do kontejneru do adresáře */srv/bin/*. Pokud tento adresář v kontejneru neexistuje, tak ho vytvořte. Jinak běží MongoDB dobře i na 256 MB RAM, tedy nejnižším balíčku, ale samozřejmě záleží na charakteru vaší aplikace.
 
 ## Supervisor
 
@@ -71,7 +72,7 @@ Tento příkaz zpřístupní port 27018 v kontejneru na lokálním portu stejné
 
 Pokud se Mongu něco nelíbí, detaily se dozvíte v jeho log souboru:
 
-    tail -f /srv/logs/mongodb.log
+    tail -f /srv/log/mongodb.log
 
 Vzhledem k povaze takto běžící databáze se musíte postarat ještě o zálohování. Vypínání kontejnerů nejde vždy úplně hladce, někdy dojde k selhání hardwaru a server se vypne bez řádného ukončení čehokoli, jindy může dojít k lidské chybě a kontejner nemá dost času ukončit běžící procesy. Také náš zálohovací skript nic nevypíná a kopíruje data tak jak leží na disku. I když k selháním nedochází každý den, je potřeba se na tuto situaci připravit. MongoDB má utilitku *mongodump*, která exportuje data do adresářové struktury, ze které je můžete opět obnovit. Je dobré udržovat nějakou historii, alespoň několik dní, ale to záleží na potřebách vaší aplikace. Zálohy stačí nahrát někam do */srv* a obsah */srv* už pak zálohujeme my. Přes mongodump zařídíte, že tyto zálohy budou konzistentní, což data běžící databáze být nemusí. Pozor, abyste si data nezveřejnili přes HTTP server, který v kontejneru běží také.
 

@@ -20,7 +20,7 @@ SPF záznam si můžete doplnit sami. Pro Roští servery vypadá takto:
 
 Pokud odesíláte poštu i z jiných serverů, použijte [tento nástroj](http://www.spfwizard.net/) na generování SPF záznamů.
 
-Druhou technologií pomáhající se spamem je DKIM. Tentokrát jde o to, že zprávy odcházející ze serveru *smtp.rosti.cz* jsou podepisovány naším privátním klíčem. Veřejnou část klíče si umístíte do DNS zóny a servery, kterým od vás chodí pošta, tento podpis porovnávají s tím, co najdou v zóně vaší domény. Díky tomu server zjistí, zda zpráva šla ze serveru, který má privátní klíč a může se lépe rozhodnout, zda se jedná či nejedná o spam. Zóny vedené na Roští mají DKIM záznam nastavený automaticky a to i zpětně, pokud používáte náš mail server. Emaily jsou podepisované jen pokud jdou ze serveru *smtp.rosti.cz*. Server mail.rosti.cz emaily nepodepisuje a neměli byste ho používat pro odesílání pošty.
+Druhou technologií pomáhající se spamem je DKIM. Tentokrát jde o to, že zprávy odcházející ze serveru *smtp.rosti.cz* jsou podepisovány naším privátním klíčem. Veřejnou část klíče si umístíte do DNS zóny a servery, kterým od vás chodí pošta, tento podpis porovnávají s tím, co najdou v zóně vaší domény. Díky tomu server zjistí, zda zpráva šla ze serveru, který má privátní klíč a může se lépe rozhodnout, zda se jedná či nejedná o spam. 
 
 Záznam pro ověření DKIM podpisu vypadá na Roští takto:
 

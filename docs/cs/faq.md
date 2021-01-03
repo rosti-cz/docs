@@ -1,6 +1,6 @@
 # Nejčastější otázky
 
-Na některé otázky na podpoře odpovídáme často a tak jsme vytvořili seznam těch nejlepších včetně odpovědí.
+Na některé otázky na podpoře odpovídáme často a tak jsme vytvořili seznam těch nejčastějších včetně odpovědí.
 
 ## Co je zahrnuto v ceně hostingu?
 
@@ -18,7 +18,7 @@ Zálohování v současné době řešíme na vyhrazený zálohovací server a d
 
 ## Kolik stojí vypnutá aplikace
 
-Vypnutím aplikace uvolníte většinu prostředků, které aplikace používala, s vyjímkou diskového prostoru. Data aplikace ale stále držíme na disku a zálohujeme ji. Kvůli tomu u vypnutých aplikací strháváme kredit za diskový prostor. V současné době účtujeme u vypnuté aplikace 5 Kč za GB.
+Vypnutím aplikace uvolníte většinu prostředků, které aplikace používala, s výjimkou diskového prostoru. Data aplikace ale stále držíme na disku a zálohujeme ji. Kvůli tomu u vypnutých aplikací strháváme kredit za diskový prostor. V současné době účtujeme u vypnuté aplikace 5 Kč za GB. Tato částka je účtována i v případě, kdy je aplikace vypnuta z důvodu nedostatku kreditu.
 
 ## Jak je omezený SSH přístup
 
@@ -34,7 +34,7 @@ Umožňujeme připojení jen přes SSH tunel. Jak se to dělá najdete v [člán
 
 ## Chystáte se nasadit novou verzi technologie X?
 
-Většinou se snažíme držet nejnovějších verzí, tento proces ještě nemáme automatizovaný a musíme ho dělat ručně. Takže nás klidně postrčte [na podpoře](mailto:podpora@rosti.cz).
+Většinou se snažíme držet nejnovějších verzí, tento proces ale nemáme automatizovaný a musíme to dělat ručně. Takže nás klidně postrčte [na podpoře](mailto:podpora@rosti.cz).
 
 ## Je nějak omezený Cron?
 
@@ -42,7 +42,7 @@ Cron není nějak omezený. Běží ve vašem kontejneru a konzumuje jeho prost�
 
 ## Jaké používáte verze MariaDB a PostgreSQL?
 
-Používáme distribuční verze z Debianu Jessie, což je MariaDB 10.0 a PostgreSQL 8.4.
+V současné době používáme MariaDB 10.4 a PostgreSQL 12.1.
 
 
 
