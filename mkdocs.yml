@@ -1,6 +1,6 @@
 site_name: Dokumentace Roští.cz
 nav:
-    - Domů: cs/main.md
+    - Domů: index.md
     - "Quickstart průvodce":
       - "1. První aplikace": "cs/quickstart/first_app.md"
       - "2. Jednoduchý deployment": cs/quickstart/first_deployment.md
