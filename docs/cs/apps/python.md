@@ -18,7 +18,9 @@ Virtualenv se nedá přesouvat a při aktualizaci Runtime a změně verze Python
 
 ```shell
 supervisorctl stop app
+
 rosti # Tady změníme verzi Pythonu
+
 rm -rf /srv/venv
 python -m venv /srv/venv
 source /srv/venv/bin/activate
@@ -39,7 +41,7 @@ Na Roští pro tyto případy používáme Nginx, který lze snadno nasměrovat 
 Jeho obsah je:
 
     server {
-        listen       0.0.0.0:8000;použít lomítko na konci. Oba řádky musí končit stejně, takže buď
+        listen       0.0.0.0:8000;
         listen       [::]:8000;
         location / {
             proxy_pass         http://127.0.0.1:8080/;
@@ -52,7 +54,7 @@ Jeho obsah je:
         #}
     }
 
-Zakomentovanou sekci můžete odkomentovat pak cesta (path) */static/* bude servírovat obsah adresáře */srv/static/*. V některých případech raději použijete */srv/app/static*, takže podle toho změňte cestu v tomto souboru. Když máte hotovo, tak zavolejte:
+Zakomentovanou sekci můžete odkomentovat a pak cesta (path) */static/* bude servírovat obsah adresáře */srv/static/*. Obojí změňte tak, aby cesta a URL path korespondovala s vašá aplikací. Když máte hotovo, tak zavolejte:
 
     supervisorctl restart nginx
 

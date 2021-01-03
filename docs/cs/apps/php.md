@@ -1,12 +1,12 @@
 # PHP
 
-V každém Runtime je dostupných několik verzí PHP, mezi kterými je možné přepínat. Při přepnutí verze není potřeba dělat nic speciálního. Na co si ale musíte dát pozor je konec podpory používané verze PHP v novějších Runtime obrazech. Pokud je vaše verze PHP odstraněna z Runtime obrazu, na který jste přepnuli, je potřeba se přihlásit přes SSH do kontejneru a zavolat nástroj *rosti*, kde vyberete verzi novou. Po restartu aplikace v supervisoru by mělo všechno znovu najet:
+V každém Runtime je dostupných několik verzí PHP, mezi kterými je možné přepínat. Při přepnutí verze není potřeba dělat nic speciálního, pouze restartovat *php-fpm* v supervisoru. Na co si ale musíte dát pozor je konec podpory používané verze PHP v novějších Runtime obrazech. Pokud je vaše verze PHP odstraněna z Runtime obrazu, na který jste přepnuli, je potřeba se přihlásit přes SSH do kontejneru a zavolat nástroj *rosti*, kde vyberete verzi novou. Po restartu aplikace v supervisoru by mělo všechno znovu najet:
 
     supervisorctl restart app
 
 ## Nastavení php.ini
 
-PHP má celou řadu nastavené, které je nutné změnit pro běh některých aplikací. Může to být *max_execution_time*, *memory_limit* nebo jiné. Změnu můžete provést v souboru:
+PHP má celou řadu nastavení, které je nutné změnit pro běh některých aplikací. Může to být *max_execution_time*, *memory_limit* nebo jiné. Změnu můžete provést v souboru:
 
     /srv/conf/php-fpm/php.ini
 
@@ -21,7 +21,7 @@ Nastavení PHP-FPM se schová v těchto dvou souborech:
 
 V prvním najdete pool, který používá výchozí aplikace a který můžete bez problémů použít i pro tu vaši. V druhém souboru se nachází globální konfigurace pro všechny pooly a zpravidla není potřeba na něj sahat.
 
-Nejdůležitější změnou, co budete pravděpodobně u první souboru řešit, jen nastavení počtu workerů. U některých aplikací, které posílají spoustu requestů na server, se může stát, že se zahltí všechny dostupné workery a pro uživatele se pak server tváří, jako kdyby nereagoval. Počet workerů jde navýšit v konfiguraci PHP-FPM a to v souboru:
+Nejdůležitější změnou, co budete pravděpodobně u prvního souboru řešit, jen nastavení počtu workerů. U některých aplikací, které posílají spoustu requestů na server, se může stát, že se zahltí všechny dostupné workery a pro uživatele se pak server tváří, jako kdyby nereagoval. Počet workerů jde navýšit v konfiguraci PHP-FPM a to v souboru:
 
     /srv/conf/php-fpm/pool.d/app.conf
 
