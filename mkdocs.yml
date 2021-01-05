@@ -1,4 +1,5 @@
 site_name: Dokumentace Roští.cz
+site_description: Dokumentace k hostingovým službám Roští.cz.
 nav:
     - Domů: index.md
     - "Quickstart průvodce":
