@@ -164,7 +164,7 @@ Než přejdeme dál, podíváme se, jak putuje požadavek, který přijde do na�
 
 ![Kompletní schéma kontejneru](../../imgs/first_deployment_2.png)
 
-Komunikace mezi naším load balancerem a vaší aplikace je šifrována na úrovni síťové vrstvy a HTTPS řeší až load balancer. Veškerá komunikace v naší infrastruktuře, které jde skrze internet, je tedy šifrována.
+Komunikace mezi naším load balancerem a vaší aplikace je šifrována na úrovni síťové vrstvy a HTTPS řeší až load balancer. Veškerá komunikace v naší infrastruktuře, která jde skrze internet, je tedy šifrována.
 
 To bude z této části všechno a můžeme se [přesunout k databázím](databases.md).
 
