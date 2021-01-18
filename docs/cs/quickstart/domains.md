@@ -50,4 +50,4 @@ Tady doménu a případně její www variantu nebo další subdomény dopíšeme
 
 Je možné, že změny v DNS chvíli potrvají, ale během hodiny by mělo vše fungovat. Doménu, kterou jsme vám dali na testování, můžete používat dál nebo ji smazat.
 
-Tímto máte našeho quickstart průvodce hotového a víte vše potřebné pro nasazování aplikací na Roští. Rozhodně si ale projděte i další stránky této dokumentace, protože tam mohou být informace, které se vám mohou hodit.
+Než se pustíte do zkoumání co všechno dalšího Rošté umí, mrkněte na poslední část tohoto průvodce, která vám ukáže, [jak použít nástroj rostictl](rostictl.md).

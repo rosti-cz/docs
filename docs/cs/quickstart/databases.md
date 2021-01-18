@@ -32,4 +32,4 @@ Použili jsme SSH přístup k aplikaci vytvořené v předchozích částech a p
 
 Pokud vše proběhlo správně, máte databázi dostupnou stejně jako kdyby běžela na vašem počítači a můžete k ní přistupovat nástroji na které jste zvyklí.
 
-Nezbývá než se přesunout do [poslední části tohoto návodu a to jsou domény](domains.md).
+Aby byla vaše aplikace kompletní, posledním krokem je [nastavení domén](domains.md).
