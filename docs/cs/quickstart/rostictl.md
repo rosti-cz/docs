@@ -15,7 +15,7 @@ Ale pojďme se podívat, jak se *rostictl* používá.
 ## Instalace
 
 !!! warning "Upozornění"
-Projekt *rostictl* se nachází zatím v beta fázi vývoje. Neznamená to, že by smazal všechna vaše data, ale je možné, že občas narazíte na něco, co nefunguje jak by mělo. Pokud se tak stane, dejte nám prosím vědět do [issues na GitHubu](https://github.com/rosti-cz/rostictl/issues) nebo nám [napište email](mailto:podpora@rosti.cz).
+    Projekt *rostictl* se nachází zatím v beta fázi vývoje. Neznamená to, že by smazal všechna vaše data, ale je možné, že občas narazíte na něco, co nefunguje jak by mělo. Pokud se tak stane, dejte nám prosím vědět do [issues na GitHubu](https://github.com/rosti-cz/rostictl/issues) nebo nám [napište email](mailto:podpora@rosti.cz).
 
 *Rostictl* je napsané v Golang a [distribuujeme ho](https://github.com/rosti-cz/rostictl/releases) jako zdrojový kód a staticky linkované binárky pro nejpopulárnější platformy. Těmi jsou Linux, Mac OS X a Windows. Na Windows ale doporučujeme používat linuxovou verzi ve [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10) (WSL).
 
