@@ -7,7 +7,7 @@ nav:
       - "2. Jednoduchý deployment": cs/quickstart/first_deployment.md
       - "3. Databáze": cs/quickstart/databases.md
       - "4. Nastavení domény": cs/quickstart/domains.md
-      - "4. Použití nástroje rostictl": cs/quickstart/rostictl.md
+      - "5. Použití nástroje rostictl": cs/quickstart/rostictl.md
     - Technologie:
         - Python: cs/apps/python.md
         - PHP: cs/apps/php.md
