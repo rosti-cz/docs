@@ -16,6 +16,7 @@ Snažili jsme se přímočaře popsat, jak Roští funguje a jak tam nasadit va�
 * [2. Jednoduchý deployment](cs/quickstart/first_deployment.md)
 * [3. Databáze](cs/quickstart/databases.md)
 * [4. Nastavení domény](cs/quickstart/domains.md)
+* [5. Použití nástroje rostictl](cs/quickstart/rostictl.md)
 
 ## Specifika jednotlivých technologií
 
