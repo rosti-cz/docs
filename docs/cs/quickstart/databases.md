@@ -22,6 +22,12 @@ Začněte kliknutím na tlačítko s ikonou oka. Objeví se základní informace
 
 Stejné parametry můžete použít i pri připojení k databázi z vaší aplikace.
 
+V případě, že bychom vytvořili PostgreSQL databázi, tak připojení k té je možné z kontejneru pomocí:
+
+    psql -h store5.rosti.cz -U quick_st_1894 quick_st_1894
+
+Kde *quick_st_1894* a *store5.rosti.cz* musíme nahradit za údaje pro naši databázi.
+
 ## Přístup z internetu
 
 Databáze nemáme přístupné z internetu, ale pokud potřebujete s databází pracovat na svém lokálním počítači, můžete použít SSH tunel. Pro výše vytvořenou databázi se takový tunel tvoří takto:
