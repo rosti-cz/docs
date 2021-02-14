@@ -21,12 +21,12 @@ Ale pojďme se podívat, jak se *rostictl* používá.
 
 Protože jde pouze o jeden binární soubor, je instalace na Linuxu a ve WSL jednoduchá:
 
-    sudo wget -o /usr/local/bin/rostictl [URL](https://github.com/rosti-cz/rostictl/releases/download/v0.1/rostictl-0.1.linux.amd64) && sudo chmod 755 /usr/local/bin/rostictl
+    sudo wget -O /usr/local/bin/rostictl https://github.com/rosti-cz/rostictl/releases/download/v0.1/rostictl-0.1-2.linux.amd64 && sudo chmod 755 /usr/local/bin/rostictl
 
 Na Mac OS X je postup podobný, jen */usr/local/bin* není ve výchozím stavu v proměnné *PATH*. Tak je lepší se držet vašeho domovského adresáře. Za předpokladu, že používáte Bash, je instalace takováto:
 
     mkdir -p ~/.bin
-    wget -o ~/.bin/rostictl [URL](https://github.com/rosti-cz/rostictl/releases/download/v0.1/rostictl-0.1.darwin.amd64) && chmod 755 ~/.bin/rostictl
+    wget -O ~/.bin/rostictl https://github.com/rosti-cz/rostictl/releases/download/v0.1/rostictl-0.1.darwin.amd64 && chmod 755 ~/.bin/rostictl
     echo "export PATH=~/.bin:\$PATH" > ~/.bashrc
 
 Všechny dostupné binárky najdete [na GitHubu](https://github.com/rosti-cz/rostictl/releases).
