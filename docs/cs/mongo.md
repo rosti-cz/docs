@@ -17,7 +17,7 @@ Postup instalace je velmi jednoduchý. Stačí stáhnout balík s předkompilova
 
 ## Stažení
 
-Balík se statickými binárkami najdete [na adrese mongodb.com](https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1604-4.4.2.tgz). Odkaz vede na verzi 4.4.2 a pokud potřebujete jinou, třeba novější, 
+Balík se statickými binárkami najdete [na adrese mongodb.com](https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-debian10-5.0.3.tgz). Odkaz vede na verzi 5.0.3 a pokud potřebujete jinou, třeba novější, 
 tak ji stačí v URL adrese upravit.
 
 Rozbalte archiv lokálně a obsah adresáře *bin/* nakopírujte do kontejneru do adresáře */srv/bin/*. Pokud tento adresář v kontejneru neexistuje, tak ho vytvořte. Jinak běží MongoDB dobře i na 256 MB RAM, tedy nejnižším balíčku, ale samozřejmě záleží na charakteru vaší aplikace.
