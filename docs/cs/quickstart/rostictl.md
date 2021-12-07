@@ -155,6 +155,15 @@ Tady je aktuální reference pro *Rostifile*. Pro jeho vytvoření použijte př
     - rostictl
     - cli
 
+## Podrobně o souboru .rosti.state
+
+Tady je aktuální reference pro *.rosti.state*. Soubor obsahuje referenci na již deploynutou aplikaci. Identifikátory lze získat z URL detailu aplikace: `https://admin.rosti.cz/<company_id>/apps/detail/<app_id>/`
+
+    # ID aplikace
+    app_id: 1234
+    
+    # ID firmy
+    company_id: 1234
 
 ## Další příkazy
 
