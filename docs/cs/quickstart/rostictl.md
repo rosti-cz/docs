@@ -110,6 +110,10 @@ Tady je aktuální reference pro *Rostifile*. Pro jeho vytvoření použijte př
     # Technologie může být python, node či php.
     technology: python
     
+    # Verze technologie, vybraný Runtime musí tuto verzi obsahovat
+    # Když je prázdný, tak se vybere výchozí verze pro daný Runtime
+    technology_version: 3.10
+    
     # Pokud chcete zapnout HTTPS, tohle by mělo být true.
     https: true
     
