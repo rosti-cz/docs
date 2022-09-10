@@ -21,7 +21,7 @@ jobs:
     - name: Deploy
       env:
         SSHKEY: ${{ secrets.deploy_ssh_key }}
-        HOST: ${{ secrets.host }}
+        HOST: ssh.rosti.cz
         PORT: ${{ secrets.port }}
       run: |
         echo "$SSHKEY" > ssh.key
