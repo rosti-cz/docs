@@ -24,7 +24,7 @@ Přepnutí probíhá tak, že se změní symlink do:
 
 Po změně restartujte běžící aplikaci:
 
-    systemctl restart app
+    supervisorctl restart app
 
 A znovu se přihlaste přes SSH, aby se načetl aktualizovaný soubor *.bashrc*. Samozřejmě se ujistěte, že všechno běží jak má.
 
