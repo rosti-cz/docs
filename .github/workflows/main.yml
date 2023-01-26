@@ -24,7 +24,7 @@ jobs:
       env:
         SSHKEY: ${{ secrets.deploy_ssh_key }}
         HOST: ssh.rosti.cz
-        PORT: ${{ secrets.port }}
+        PORT: 13640
       run: |
         echo "$SSHKEY" > ssh.key
         chmod 600 ssh.key
