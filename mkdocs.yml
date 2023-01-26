@@ -14,6 +14,9 @@ nav:
         - Node.js: cs/apps/nodejs.md
         - Deno: cs/apps/deno.md
         - Golang: cs/apps/golang.md
+    - Frameworky:
+        - "Laravel": cs/frameworks/laravel.md
+        - "Next.js": cs/frameworks/nextjs.md
     - "Další informace":
         - "Platby za služby": cs/billing.md
         - "Runtime prostředí": cs/runtime.md
