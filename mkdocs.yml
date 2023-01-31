@@ -17,6 +17,7 @@ nav:
     - Frameworky:
         - "Laravel": cs/frameworks/laravel.md
         - "Next.js": cs/frameworks/nextjs.md
+        - "Strapi": cs/frameworks/strapi.md
     - "Další informace":
         - "Platby za služby": cs/billing.md
         - "Runtime prostředí": cs/runtime.md
