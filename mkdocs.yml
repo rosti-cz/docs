@@ -28,6 +28,7 @@ nav:
         - "Cron": cs/cron.md
         - "Memcached a Redis": cs/memcached_redis.md
         - "MongoDB": cs/mongo.md
+        - "Websockety": cs/websockets.md
         - "SMTP server pro odchozí emaily": cs/smtp.md
         - "API": cs/api.md
         - "FAQ": cs/faq.md
