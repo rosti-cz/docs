@@ -31,6 +31,7 @@ Snažili jsme se přímočaře popsat, jak Roští funguje a jak tam nasadit va�
 
 * [Laravel](cs/frameworks/laravel.md)
 * [Next.js](cs/frameworks/nextjs.md)
+* [Strapi](cs/frameworks/strapi.md)
 
 ## Ostatní
 
