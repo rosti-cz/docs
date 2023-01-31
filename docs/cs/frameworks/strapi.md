@@ -50,7 +50,11 @@ Přejdeme do souboru */srv/conf/supervisor.d/node.conf* a řádek začínající
 
     directory=/srv/app/my-strapi
 
-Kromě této změny ještě musíme nastavit doménu, na které Strapi poběží. Jednu pro nás vygenerovala administrace pod doménou *rostiapp.cz* a najdeme ji v administraci v info kartě. Přejdeme do souboru */srv/app/my-strapi/config/server.js* a přidáme tam parametr *url* podobně jako tady:
+Ve stejném souboru ještě změníme řádek začínající *command=* na:
+
+    command=/srv/bin/primary_tech/npm run develop
+
+Kromě těchto změn ještě musíme nastavit doménu, na které Strapi poběží. Jednu pro nás vygenerovala administrace pod doménou *rostiapp.cz* a najdeme ji v administraci v info kartě. Přejdeme do souboru */srv/app/my-strapi/config/server.js* a přidáme tam parametr *url* podobně jako tady:
 
     module.exports = ({ env }) => ({
         host: env('HOST', '0.0.0.0'),
