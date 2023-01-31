@@ -11,7 +11,7 @@ Tento návod byl testován na Runtime *2023.01-1*, je ale pravděpodobně, že p
 
 Prvním krokem je vytvoření aplikace v administraci, kde Strapi poběží:
 
-![Vytvoření Node.js aplikace v administraci](../../imgs/strapi/admin.png)
+![Vytvoření Node.js aplikace v administraci](../../imgs/strapi/app.png)
 
 Vybereme větší balíček, alespoň *Normal+*, protože instalační proces i Strapi samotné má relativně vysoké nároky na paměť.
 
