@@ -27,6 +27,11 @@ Snažili jsme se přímočaře popsat, jak Roští funguje a jak tam nasadit va�
 * [Golang](cs/apps/golang.md)
 <!-- * [Ruby](apps/ruby.md) -->
 
+## Deployment u vybraných frameworků a nástrojů
+
+* [Laravel](cs/frameworks/laravel.md)
+* [Next.js](cs/frameworks/nextjs.md)
+
 ## Ostatní
 
 * [Platby za služby](cs/billing.md)
@@ -39,6 +44,7 @@ Snažili jsme se přímočaře popsat, jak Roští funguje a jak tam nasadit va�
 * [Cron](cs/cron.md)
 * [Memcached a Redis](cs/memcached_redis.md)
 * [MongoDB](cs/mongo.md)
+* [Websockety](cs/websockets.md)
 * [SMTP server pro odchozí emaily](cs/smtp.md)
 * [API](cs/api.md)
 * [FAQ](cs/faq.md)
