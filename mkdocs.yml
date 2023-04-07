@@ -20,6 +20,7 @@ nav:
         - "Strapi": cs/frameworks/strapi.md
     - "Další informace":
         - "Platby za služby": cs/billing.md
+        - "Výběr balíčku": cs/plans.md
         - "Runtime prostředí": cs/runtime.md
         - "Nástroj rosti.sh": cs/rosti_sh.md
         - "Adresářová struktura /srv": cs/srv.md
