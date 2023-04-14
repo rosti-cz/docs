@@ -31,6 +31,7 @@ Snažili jsme se přímočaře popsat, jak Roští funguje a jak tam nasadit va�
 
 * [Laravel](cs/frameworks/laravel.md)
 * [Next.js](cs/frameworks/nextjs.md)
+* [React static site](cs/frameworks/react-static.md)
 * [Strapi](cs/frameworks/strapi.md)
 
 ## Ostatní
@@ -42,6 +43,7 @@ Snažili jsme se přímočaře popsat, jak Roští funguje a jak tam nasadit va�
 * [Správa služeb běžících na pozadí](cs/supervisor.md)
 * [Připojení k SSH a databázím z venku](cs/ssh.md)
 * [Instalace extra balíčků do systému](cs/extra-packages.md)
+* [Více služeb v jedné aplikaci](cs/multidomains.md)
 * [Cron](cs/cron.md)
 * [Memcached a Redis](cs/memcached_redis.md)
 * [MongoDB](cs/mongo.md)
