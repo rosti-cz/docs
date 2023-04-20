@@ -35,9 +35,10 @@ Snažili jsme se přímočaře popsat, jak Roští funguje a jak tam nasadit va�
 * [Strapi](cs/frameworks/strapi.md)
 
 ## Ostatní
-
 * [Platby za služby](cs/billing.md)
+* [Výběr balíčku](cs/plans.md)
 * [Runtime prostředí](cs/runtime.md)
+* [CI/CD](cs/cicd.md)
 * [Nástroj rosti.sh](cs/rosti_sh.md)
 * [Adresářová struktura /srv](cs/srv.md)
 * [Správa služeb běžících na pozadí](cs/supervisor.md)
