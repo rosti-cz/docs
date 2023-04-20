@@ -42,5 +42,6 @@
         "workery",
         "workerů"
     ],
-    "cSpell.language": ",cs"
+    "cSpell.language": ",cs",
+    "cSpell.enabled": true
 }
