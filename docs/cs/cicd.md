@@ -16,12 +16,15 @@ I naše základní workflow pro nasazení kódu je pro každý jazyk jiné, tak�
 době podporujeme:
 
 * Node.js
+* PHP
 
 Pro každý podporovaný jazyk najdete v administraci seznam požadavků, které váš kód musí
 splnit, aby naše workflow ve výchozím stavu fungovalo. Pro Node.js to je:
 
 * `npm run start` spouští HTTP server na portu 8080
 * kód poběží v /srv/app
+
+U PHP je jediná podmínka, že kód musí být připravený běžet z adresáře */srv/app*.
 
 Nicméně každý projekt je jiný a workflow není vytesáno do kamene. Po jeho instalaci
 ho můžete podle libosti upravovat. Administrace ho sama od sebe nepřepíše.
@@ -51,12 +54,13 @@ se postará o bezpečné připojení přes SSH.
 Součástí workflow je i host key SSH serveru vaší aplikace, takže máte jistotu, že spojení
 je bezpečné a nedojde k nasazení kódu na špatný server.
 
-Workflow umí nakonfigurovat celé prostředí včetně poslední verze Node.js podporované vybraným
+Workflow umí nakonfigurovat celé prostředí včetně poslední verze Node.js/PHP/... podporované vybraným
 Runtime. Administrace po instalaci ale workflow už nemění, takže případná aktualizace je na
 vás. Můžete workflow znovu nainstalovat z administrace nebo ho upravit přímo v repositáři.
 
-Workflow nastavuje i Nginx a supervisord, aby bylo možné případně něco změnit přímo
-v kódu workflow a nemuseli jste přidávat další kroky.
+Kde to dává smysl, tak workflow nastavuje i Nginx a supervisord, aby bylo možné případně něco změnit přímo
+v kódu workflow a nemuseli jste přidávat další kroky. U PHP se toto neděje, protože tam není potřeba
+restartovat žádný proces a deployment tak je rychlejší.
 
 Nasazení probíhá přes rsync, který zkopíruje kód z repositáře přímo do */srv/app* v aplikaci
 a **všechno ostatní smaže**. Na to musíte myslet, pokud do */srv/app* ukládáte nějaká uživatelská
