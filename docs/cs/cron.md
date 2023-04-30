@@ -15,3 +15,13 @@ Tady je ukázka jak to funguje:
 <script type="text/javascript" src="https://asciinema.org/a/6t1rutdek6wyacktz8ffm6jfr.js" id="asciicast-6t1rutdek6wyacktz8ffm6jfr" async></script>
 
 Malou zkratkou může být použití nástroje *rosti*, kde je možné crontab jednoduše editovat a *rosti* se postará o správnou instalaci. Stačí spustit příkaz *rosti* a vybrat v menu *cron*.
+
+## Node.js
+
+U některých skriptů je potřeba stejné prostředí jako máte, když se připojíte přes SSH. Cron ale sám od sebe nenačítá */srv/.bashrc*, takže třeba node nebo python, ve správné verzi, nejsou ve výchozím stavu dostupné. Proto je v některých případech potřeba příkaz v crontabu obalit takto:
+
+```bash
+/bin/bash -c "source /srv/.bashrc; cd /srv/app; ... &> /srv/log/cron.log"
+```
+
+Kde *...* nahradíte vlastním příkazem, který jste chtěli původně spouštět. Díky *&> /srv/log/cron.log* se bude výstup logovat na standardní místo v aplikaci.
