@@ -10,7 +10,7 @@ Všechny aktuálně dostupné verze technologií je možné vidět v administrac
 
 To nás přivádí k aktualizaci, která se liší podle jednotlivých technologií. Pokud tedy chcete změnit verzi technologie na novém nebo i současném Runtimu, použijte příkaz *rosti*, proveďte změnu a pak přejděte do dokumentace ke konkrétní technologii a mrkněte, co je potřeba u ní udělat po změně Runtime:
 
-* [Python](/apps/python.md)
+* [Python](apps/python.md)
 * [PHP](apps/php.md)
 * [Node.js](apps/nodejs.md)
 * [Deno](apps/deno.md)
