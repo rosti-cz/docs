@@ -36,7 +36,7 @@ Pythoní webové servery jsou relativně pomalé a tak se nehodí pro servírov�
 
 Na Roští pro tyto případy používáme Nginx, který lze snadno nasměrovat do adresáře se statickým obsahem a ten zpřístupnit třeba na */static/* vaší aplikace. Ve výchozím stavu je vše připraveno v souboru:
 
-    /srv/conf/nginx.d/python.conf
+    /srv/conf/nginx.d/app.conf
 
 Jeho obsah je:
 
