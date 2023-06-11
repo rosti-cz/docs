@@ -17,7 +17,7 @@ export PATH=$PATH:/usr/sbin:/sbin:/opt/node/bin:/srv/node/bin
 
 Navíc je zde */srv/node/bin*.
 
-Při používání *npm* pozor na akci *search*, která při prvním spuštění indexuje repozitář, což vyžaduje stovky MB RAM. Můžete si dočasně navýšit limit v administraci nebo hledat na svém lokálním počítači a na serveru spouštět rovnou *install*, který neindexuje.
+Při používání *npm* pozor na akci *search*, která při prvním spuštění indexuje repositář, což vyžaduje stovky MB RAM. Můžete si dočasně navýšit limit v administraci nebo hledat na svém lokálním počítači a na serveru spouštět rovnou *install*, který neindexuje.
 
 !!! important ".bashrc"
     Naše kontejnery používají jako shell BASH a obsah *.bashrc* se vkládá do prostředí BASHe vždy, když je nový BASH shell spuštěn. To se běžně děje, když se přihlásíte do kontejneru přes SSH. Díky tomu můžete do prostředí shellu přidat nastavení různých programů, upravovat proměnnou PATH nebo spustit nějaký program, který se má spouštět vždy při přihlášení.
