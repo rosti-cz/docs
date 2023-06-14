@@ -1,6 +1,6 @@
 # CI/CD integrace
 
-Administrace pro vaše aplikace umí vygenerovat tzv. GitHub Workflow, které nasadí kód pokud:
+Administrace umí pro vaše aplikace vygenerovat tzv. GitHub Workflow, které nasadí kód pokud:
 
 * Je do vybrané větve poslán nový commit,
 * nebo je vytvořen nový release v rozhraní GitHub
@@ -16,6 +16,7 @@ I naše základní workflow pro nasazení kódu je pro každý jazyk jiné, tak�
 době podporujeme:
 
 * Node.js
+* Node.js static (staticky vygenerovaný web)
 * PHP
 
 Pro každý podporovaný jazyk najdete v administraci seznam požadavků, které váš kód musí
@@ -28,6 +29,8 @@ U PHP je jediná podmínka, že kód musí být připravený běžet z adresář
 
 Nicméně každý projekt je jiný a workflow není vytesáno do kamene. Po jeho instalaci
 ho můžete podle libosti upravovat. Administrace ho sama od sebe nepřepíše.
+
+Poznámky k jednotlivým technologiím najdete na konci této stránky.
 
 ## Instalace
 
@@ -67,3 +70,32 @@ a **všechno ostatní smaže**. Na to musíte myslet, pokud do */srv/app* uklád
 data. Ta je lepší ukládat mimo adresář */srv/app*, resp. mimo adresář, kam má přístup Nginx.
 Toto pravidlo je důležité hlavně u PHP, kde se může snadno stát, že zveřejníte soubory, které
 by měly jinak zůstat skryté.
+
+## Různé typy vygenerovaných workflow
+
+### Node.js
+
+Node.js workflow nasazuje plnotučnou Node.js aplikaci. Pokud vaše aplikace spouští HTTP server při
+zavolání `npm run start` a sestavuje se na `npm run build`, měla by s tímto workflow fungovat bez
+problémů. Naše testování ale provádíme pouze s Next.js frameworkem, takže je možné, že u jiných
+frameworků budete muset udělat nějaké menší změny.
+
+Dejte si pozor, aby váš kód spouštěl HTTP server na portu **8080**. Pokud používáte jiný port,
+je potřeba změnit nastavení Nginxu uvnitř workflow na řádku s *proxy_pass*.
+
+### Node.js static
+
+Workflow pro statické weby vygenerované například pomocí Next.js nebo Nuxt.js. Build step
+je nachystaný pro framework Next.js a pokud používáte jiný framework, budete si muset tuto
+část upravit. V dalších krocích pak dojde k nastavení Nginxu, zkopírování vygenerovaných
+souborů a reloadnutí nastavení Nginxu na serveru.
+
+V rámci tohoto workflow probíhá build uvnitř CICD, takže tomuto typu aplikace stačí náš Mini
+balíček.
+
+### PHP
+
+Nasazení PHP aplikace je jednoduché jako nakopírování dat na server a přesně to dělá workflow
+pro tento jazyk. Je možné, že vaše aplikace bude mít další požadavky jako třeba volání
+*composeru* a instalaci závislostí. O takové kroky už si musíte workflow upravit podle sebe.
+Inspirovat se můžete ve workflow pro Node.js.
