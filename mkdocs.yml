@@ -16,6 +16,7 @@ nav:
         - Golang: cs/apps/golang.md
     - Frameworky:
         - "Laravel": cs/frameworks/laravel.md
+        - "WordPress": cs/frameworks/wordpress.md
         - "Next.js": cs/frameworks/nextjs.md
         - "React static site": cs/frameworks/react-static.md
         - "Strapi": cs/frameworks/strapi.md
