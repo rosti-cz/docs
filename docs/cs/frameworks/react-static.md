@@ -14,3 +14,8 @@ Vytvořit appku, vybrat default a balíček mini
 Nastavit heslo
 Zkopírovat soubory
 Profit!
+
+* [Build script pro PHP 7.x](/scripts/build_php.sh)
+
+
+ln -s /srv/php/php-7.4.13/bin /srv/bin/primary_tech
