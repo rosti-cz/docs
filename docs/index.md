@@ -36,6 +36,7 @@ Snažili jsme se přímočaře popsat, jak Roští funguje a jak tam nasadit va�
 
 ## Ostatní
 * [Platby za služby](cs/billing.md)
+* [Zálohování](cs/backup.md)
 * [Výběr balíčku](cs/plans.md)
 * [Runtime prostředí](cs/runtime.md)
 * [CI/CD](cs/cicd.md)

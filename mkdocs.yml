@@ -22,6 +22,7 @@ nav:
         - "Strapi": cs/frameworks/strapi.md
     - "Další informace":
         - "Platby za služby": cs/billing.md
+        - "Zálohování": cs/backup.md
         - "Výběr balíčku": cs/plans.md
         - "Runtime prostředí": cs/runtime.md
         - "CI/CD": cs/cicd.md
