@@ -31,6 +31,10 @@ Poslední krok je restart *php-fpm*:
 systemctl restart app
 ```
 
+Je možné, že něco nebude fungovat tak jak má. V takovém případě mrkněte do logu `/srv/log/app.log`, kam NewRelic agent posílá svůj výstup.
+
+Další možnosti konfigurace `php.ini` najdete v souboru `scripts/newrelic.ini.template` a příklad nastavení NewRelic daemona zase v `scripts/newrelic.cfg.template`.
+
 ## Update
 
 V případě aktualizace stáhněte archiv znovu do `/srv/src` a změňte cesty v souboru `/srv/conf/php-fpm/php.ini`. Poté restartujte *php-fpm*.
