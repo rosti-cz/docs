@@ -14,7 +14,7 @@ nav:
         - Node.js: cs/apps/nodejs.md
         - Deno: cs/apps/deno.md
         - Golang: cs/apps/golang.md
-    - Frameworky:
+    - "Frameworky a nástroje":
         - "Laravel": cs/frameworks/laravel.md
         - "WordPress": cs/frameworks/wordpress.md
         - "Next.js": cs/frameworks/nextjs.md

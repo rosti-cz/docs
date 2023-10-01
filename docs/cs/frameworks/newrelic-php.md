@@ -2,7 +2,7 @@
 
 NewRelic je služba, která do detailu monitoruje výkon vaší aplikace a pokud pozorujete nějaký problém, velmi pravděpodobně vám ukáže, kde se přesně nachází. Instalace na Roští není úplně přímočará, protože instalační skript chce root přístup, ale s tím si dokážeme poradit.
 
-Začneme tím, že si stáhnete instalační balíček [ze stránek NewRelicu](https://docs.newrelic.com/docs/apm/agents/php-agent/installation/php-agent-installation-tar-file/#download). V tom návodu použijeme balíček ve verzi **10.12.0.1**, tak se určitě přesvědčte, že je to ta aktuální, případně ta kterou podporuje vaše verze PHP. Nenechte se zmást názvem *PHP5*. Jedná se o verzi kompatibilní i s *PHP 7* a *PHP 8*.
+Začneme tím, že si stáhnete instalační balíček [ze stránek NewRelicu](https://docs.newrelic.com/docs/apm/agents/php-agent/installation/php-agent-installation-tar-file/#download). V tom návodu použijeme balíček ve verzi **10.12.0.1**, tak se určitě přesvědčte, že je to ta aktuální, případně ta která podporuje vaši verzi PHP. Nenechte se zmást názvem *PHP5*. Jedná se o verzi kompatibilní i s *PHP 7* a *PHP 8*.
 
 ```
 mkdir ~/src
