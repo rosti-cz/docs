@@ -27,7 +27,7 @@ Snažili jsme se přímočaře popsat, jak Roští funguje a jak tam nasadit va�
 * [Golang](cs/apps/golang.md)
 <!-- * [Ruby](apps/ruby.md) -->
 
-## Deployment u vybraných frameworků a nástrojů
+## Frameworky a další nástroje
 
 * [Laravel](cs/frameworks/laravel.md)
 * [Next.js](cs/frameworks/nextjs.md)
