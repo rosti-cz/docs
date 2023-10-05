@@ -12,7 +12,7 @@ tar xf newrelic-php5-10.12.0.1-linux.tar.gz
 cd newrelic-php5-10.12.0.1-linux
 ```
 
-V dalším kroku zkopírujeme a upravímw konfigurační soubory. Nezapomeňte ve skriptu níže změnit NEWRELIC_LICENCE_KEY na váš licence key. Můžete to udělat i později v souboru **/srv/conf/php-fpm/php.ini**.
+V dalším kroku zkopírujeme a upravíme konfigurační soubory. Nezapomeňte ve skriptu níže změnit NEWRELIC_LICENCE_KEY na váš licence key. Můžete to udělat i později v souboru **/srv/conf/php-fpm/php.ini**.
 
 ```
 cp scripts/newrelic.cfg.template /srv/conf/newrelic.conf
@@ -21,9 +21,11 @@ echo "[newrelic]
 newrelic.license = "NEWRELIC_LICENCE_KEY"
 newrelic.logfile = "/dev/stdout"
 newrelic.appname = "PHP Application"
-newrelic.daemon.logfile = "/dev/stdout
+newrelic.daemon.logfile = "/dev/stdout"
 newrelic.daemon.location = "/srv/src/newrelic-php5-10.12.0.1-linux/daemon/newrelic-daemon.x64" >> /srv/conf/php-fpm/php.ini
 ```
+
+V adresáři `/srv/src/newrelic-php5-10.12.0.1-linux/agent/x64/` je více PHP extensions. V příkladu výše je poslední dostupná verze, ale pro starší verze PHP budete pravděpodobně potřebovat i starší verzi extension.
 
 Poslední krok je restart *php-fpm*:
 
