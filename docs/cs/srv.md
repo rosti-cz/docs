@@ -13,8 +13,8 @@ Všechno, co je mimo adresář */srv* je smazáno při některých operacích s 
 
 Pokud si chcete aplikaci zazálohovat, stačí vám zkopírovat adresář */srv* a budete mít všechno co je k vaší aplikaci relevantní. Zálohovat můžete třeba takovýmto příkazem:
 
-    ssh app@node-16.rosti.cz -p 24509 tar cjf -C / - srv > backup.tar.bz2
+    ssh app@ssh.rosti.cz -p 24509 tar cjf -C / - srv > backup.tar.bz2
 
-Nezapomeňte změnit adresu nodu a SSH port.
+Nezapomeňte změnit SSH port.
 
 

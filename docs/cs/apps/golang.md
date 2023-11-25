@@ -6,13 +6,13 @@ Naše Runtime prostředí obsahuje různé verze Golang kompilátoru. Používá
 
 Nejbezpečnější způsob nasazení nové verze vašeho kódu je zkopírovat kód přímo do kontejneru a zkompilovat ho tam. Postup je stejný jako u kompilace ve vašem vývojovém prostředí a celý proces může vypadat třeba takto:
 
-    rsync -av --delete -e "ssh -p 24509" cesta/ke/golang/kodu/ app@node-16.rosti.cz:/srv/app/
-    ssh -p 24509 app@node-16.rosti.cz
+    rsync -av --delete -e "ssh -p 24509" cesta/ke/golang/kodu/ app@ssh.rosti.cz:/srv/app/
+    ssh -p 24509 app@ssh.rosti.cz
     cd app
     go build
     supervisorctl restart app
 
-Rsync nakopíruje změny. V příkladu výše jsou použity port a adresa nodu, které se neshoduje s tím, co dostala přiděleno vaše aplikace. Obojí tedy změňte podle informací z administrace. To samé platí pro další řádek, kde se připojujeme přes SSH do kontejneru. Pak přejdeme do adresáře app, kam jsme nakopírovali kód a sestavíme ho pomocí *go build*. Nakonec restartujeme běžící proces a máme hotovo.
+Rsync nakopíruje změny. V příkladu výše je použit port, který se neshoduje s tím, co dostala přiděleno vaše aplikace. Změňte ho tedy podle informací z administrace. To samé platí pro další řádek, kde se připojujeme přes SSH do kontejneru. Pak přejdeme do adresáře app, kam jsme nakopírovali kód a sestavíme ho pomocí *go build*. Nakonec restartujeme běžící proces a máme hotovo.
 
 Můžete ale zavolat *go build* lokálně a pomocí rsync jen zkopírovat finální binárku a nakonec restartovat proces běžící v kontejneru pomocí *supervisorctl*.
 

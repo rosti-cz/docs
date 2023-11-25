@@ -8,11 +8,19 @@ Supervisor je nástroj, který spravuje procesy běžící na pozadí, což vaš
 
 ![Ruby aplikace - nastavení parametrů](../../imgs/ruby_app_param.png)
 
-## Nasazení aplikace
+## Runtime 2023.12-1 a pozdější
+
+## Před runtime 2023.12-1
+
+V runtime 2023.12-1 jsme Unicorn nahradili [aplikačním serverem Passenger](https://github.com/phusion/passenger), který běží ve standalone režimu, což znamená, že kromě samotného Passengeru automaticky naběhne i Nginx, který je Passengerem spravovaný.
+
+Nasazení kódu je jednoduché - stačí ho nakopírovat do adresáře **/srv/app/public**.
+
+### Nasazení aplikace
 
 Kontejner s Ruby má na Roští stejnou strukturu jako kontejnery pro jiné technologie, takže pokud už u nás něco hostujete, budete to mít jednodušší. Po připojení do vašeho kontejneru přes SSH nebo SFTP nakopírujte svůj kód do adresáře */srv/app*. Sem patří všechen kód, který má být veřejný.
 
-Ukázková aplikace běží pod webovým serverem Unicorn[](http://unicorn.bogomips.org/)  na portu 8080. Před Unicorn je ještě navěšený váš vlastní Nginx, který Unicornu dělá reverzní proxy a můžete v něm kromě různých přesměrování řešit také cache a servírování statických souborů. Nginx běží na portu 8000, což je port, na který náš load balancer posílá požadavky na nastavené domény.
+Ukázková aplikace běží pod [webovým serverem Unicorn](http://unicorn.bogomips.org/) na portu 8080. Před Unicorn je ještě navěšený váš vlastní Nginx, který Unicornu dělá reverzní proxy a můžete v něm kromě různých přesměrování řešit také cache a servírování statických souborů. Nginx běží na portu 8000, což je port, na který náš load balancer posílá požadavky na nastavené domény.
 
 Pravděpodobně budete chtít trochu poupravit spouštění vašeho kódu a to se dělá v souboru */srv/conf/supervisor.d/ruby.conf*, jehož obsah vypadá podobně jako tento:
 
@@ -43,7 +51,7 @@ supervisorctl restart app
 Podobnosti jsou vysvětlený v textu o supervisoru odkazovaném výše.
 
 
-## Nginx
+### Nginx
 
 Nginx je již nakonfigurovaný a nejčastěji budete přidávat do konfigurace servírování statických souborů. To je možné vyřešit takto:
 

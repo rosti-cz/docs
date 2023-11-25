@@ -11,15 +11,15 @@ Přístup k aplikaci přes SSH je alfou a omegou Roští. Málo kde ho dostanete
 
 Najdete je v info kartě aplikace a vypadají takto:
 
-    app@node-4.rosti.cz:12360
+    app@ssh.rosti.cz:12360
 
 Kde:
 
 * **app** je uživatel
-* **node-4.rosti.cz** je server
+* **ssh.rosti.cz** je server
 * **12360** je port
 
-U vaší aplikace budou samozřejmě hodnoty jiné.
+U vaší aplikace budou hodnoty jiné.
 
 !!! important "Důležitá poznámka"
     Uživatel *app* je pro všechny aplikace stejný. *Server* i *port* se pak mohou aplikace od aplikace lišit. V info kartě všechny důležité údaje vypisujeme včetně URI a příkazu pro příkazovou řádku.
@@ -37,7 +37,7 @@ SSH ale není jen o příkazové řádce. Je to univerzální kanál pro bezpeč
 SOCK proxy vám umožní dívat se na web z pohledu vaší aplikace. Pokud zavoláte v Linuxu následující:
 
 ```bash
-ssh app@node-<X>.rosti.cz -p 10xxx -D 1234
+ssh app@ssh.rosti.cz -p 10xxx -D 1234
 ```
 
 Tak se na lokálním portu 1234 otevře SOCK proxy, na kterou můžete nasměrovat svůj prohlížeč. Všechny stránky které budete procházet teď budete procházet skrze vzdálený server stejně jako by to dělala vaše aplikace.
@@ -48,9 +48,9 @@ Tuto vlastnost umí na Windows zprostředkovat Putty.
 
 SSH tunely jsou mocným nástrojem, který vám na Roští zpřístupní přístup k databázi. Když chcete například zpřístupnit interní port MySQL databáze, zavoláte následující příkaz:
 
-    ssh -L 127.0.0.1:3306:storeX.rosti.cz:3306 -p PORT app@node-Y.rosti.cz
+    ssh -L 127.0.0.1:3306:storeX.rosti.cz:3306 -p PORT app@ssh.rosti.cz
 
-Kde **PORT**, **X** a **Y** nahradíte za SSH port vaší aplikace, číslo databázového serveru kde máte databázi a číslo server kde máte aplikaci samotnou. 
+Kde **PORT** a **X** nahradíte za SSH port vaší aplikace a číslo databázového serveru kde máte databázi. 
 
 
 ## Omezení
@@ -67,7 +67,7 @@ Po spuštění příkazu se vygeneruje klíč a budete dotázání na umístěn�
 
 ## Jak dostat klíč na server
 
-    ssh-copy-id -i '/home/<LOKÁLNÍ UŽIVATEL>/.ssh/<NÁZEV KLÍČE>' app@node-<X>.rosti.cz -p<PORT>
+    ssh-copy-id -i '/home/<LOKÁLNÍ UŽIVATEL>/.ssh/<NÁZEV KLÍČE>' app@ssh.rosti.cz -p<PORT>
 
 Toto je nejlepší způsob jak dostat klíč na server. Klient se automaticky připojí na server a vytvoří složku *~/.ssh* s patřičnými oprávněními. V této složce pak vytvoří soubor *autorized_keys* s vaším klíčem. Od této chvíle nebudete dotazování na heslo a připojení bude bezpečnější.
 
@@ -76,9 +76,9 @@ Toto je nejlepší způsob jak dostat klíč na server. Klient se automaticky p�
 Do souboru *~/.ssh/config* vložte následující text.
 
     Host muj-web.cz
-    Hostname node-<X>.rosti.cz
+    Hostname ssh.rosti.cz
     User app
     Port <PORT>
     IdentityFile ~/.ssh/rosti
 
-Díky tomuto nastavení už nebudete muset nikde kopírovat hostname, port a uživatele. Vše proběhne automaticky při použítí příkazu ssh muj-web.cz.
+Díky tomuto nastavení už nebudete muset nikde kopírovat hostname, port a uživatele. Vše proběhne automaticky při použití příkazu ssh muj-web.cz.

@@ -65,7 +65,7 @@ A to je vše. Po opětovném přihlášení do SSH by měl fungovat i *mongo* kl
 
 Pokud se chcete připojit k této MongoDB na svém vlastním počítači, pomůže SSH tunel:
 
-    ssh -p <PORT> -L 27018:127.0.0.1:27018 app@node-<ID>.rosti.cz
+    ssh -p <PORT> -L 27018:127.0.0.1:27018 app@ssh.rosti.cz
 
 Tento příkaz zpřístupní port 27018 v kontejneru na lokálním portu stejného čísla.
 

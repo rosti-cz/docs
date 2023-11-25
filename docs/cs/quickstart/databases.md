@@ -32,9 +32,9 @@ Kde *quick_st_1894* a *store5.rosti.cz* musíme nahradit za údaje pro naši dat
 
 Databáze nemáme přístupné z internetu, ale pokud potřebujete s databází pracovat na svém lokálním počítači, můžete použít SSH tunel. Pro výše vytvořenou databázi se takový tunel tvoří takto:
 
-    ssh -L 127.0.0.1:3306:store5.rosti.cz:3306 -p 24509 app@node-16.rosti.cz
+    ssh -L 127.0.0.1:3306:store5.rosti.cz:3306 -p 24509 app@ssh.rosti.cz
 
-Použili jsme SSH přístup k aplikaci vytvořené v předchozích částech a protunelovali port databáze 3306 na lokální port 3306. **Nezapomeňte změnit port v parametru -p, node a případně adresu databáze**. Ani jedno nemusí být stejné jako v příkladu výše.
+Použili jsme SSH přístup k aplikaci vytvořené v předchozích částech a protunelovali port databáze 3306 na lokální port 3306. **Nezapomeňte změnit port v parametru -p a případně adresu databáze**. Ani jedno nemusí být stejné jako v příkladu výše.
 
 Pokud vše proběhlo správně, máte databázi dostupnou stejně jako kdyby běžela na vašem počítači a můžete k ní přistupovat nástroji na které jste zvyklí.
 
