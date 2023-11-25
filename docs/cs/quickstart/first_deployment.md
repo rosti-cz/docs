@@ -10,9 +10,9 @@ Všichni uživatelé a jejich aplikace mají společný load balancer, který b�
 
 Pojďme se připojit do aplikace, kterou jsme v minulé části vytvořili:
 
-    ssh -p 24509 app@node-16.rosti.cz
+    ssh -p 24509 app@ssh.rosti.cz
 
-Uživatelské jméno *app* je pro všechny aplikace stejné. Port a adresa nodu se ale mění a u vaší aplikace bude obojí jiné. Pro připojení doporučujeme využít SSH klienta v Linuxu či na Mac OS X. Na Windows můžete použít Linux for Windows Subsystem for Linux (WSL) nebo třeba Putty. Nicméně je možné využít libovolného SSH klienta. Přes SSH se připojujete přímo do kontejneru, kde vaše aplikace poběží. Kromě SSH přístupu můžete použít i SCP nebo SFTP na kopírování souborů.
+Uživatelské jméno *app* je pro všechny aplikace stejné. Port se ale mění a u vaší aplikace bude obojí jiné. Pro připojení doporučujeme využít SSH klienta v Linuxu či na Mac OS X. Na Windows můžete použít Linux for Windows Subsystem for Linux (WSL) nebo třeba Putty. Nicméně je možné využít libovolného SSH klienta. Přes SSH se připojujete přímo do kontejneru, kde vaše aplikace poběží. Kromě SSH přístupu můžete použít i SCP nebo SFTP na kopírování souborů.
 
 Když se připojíte do kontejneru, co jsme vytvořili v předchozí části, najdete tam ukázkové nastavení, které můžete využít pro nasazení vlastního kódu. S výjimkou PHP je **základní princip předhodit Nginxu, který už v kontejneru je, HTTP server, který poslouchá na portu 8080**. Na ten Nginx ve výchozím nastavení přesměrovává požadavky, které na něj přijdou. PHP je nastavené trochu jinak, protože u něj používáme PHP-FPM a tak komunikace mezi procesem s vaší aplikací nepoužívá HTTP protokol ale variantu na FastCGI protokol.
 
