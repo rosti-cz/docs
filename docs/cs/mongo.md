@@ -60,6 +60,23 @@ Nakonec stačí upravit soubor */srv/.bashrc*, konkrétně export proměnné *PA
 
     export PATH=$PATH:/usr/sbin:/sbin:/opt/node/bin:/srv/bin
 
+## Instalace Mongo tools
+
+Pokud potřebujete nainstalovat i Mongo tools ([odkaz na stažení](https://www.mongodb.com/try/download/database-tools)) pro jednodušší backup a monitoring databáze, můžete použít tento postup:
+
+```bash
+wget https://fastdl.mongodb.org/tools/db/mongodb-database-tools-debian12-x86_64-100.9.4.tgz
+tar xf mongodb-database-tools-debian12-x86_64-100.9.4.tgz
+cd mongodb-database-tools-debian12-x86_64-100.9.4
+cp bin/* /srv/bin/
+cd ..
+rm -rf mongodb-database-tools-debian12-x86_64-100.9.4 mongodb-database-tools-debian12-x86_64-100.9.4.tgz
+```
+
+Verzi *100.9.4* můžet nahradit za nějakou novější pokud se od updatu tohoto dokumentu nějaká objevila.
+
+
+
 ## Závěrem
 
 A to je vše. Po opětovném přihlášení do SSH by měl fungovat i *mongo* klient. 
