@@ -23,3 +23,5 @@ flowchart LR
 * **ns2.rosti.cz**
 
 V případě CZ domén je možné použít NSSET s názvem **ROSTICZ**.
+
+Alternativou je vedení DNS záznamů u registrátora domény a v takovém případě můžete u nás doménu ze sekce DNS smazat.
