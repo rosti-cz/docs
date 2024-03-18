@@ -38,6 +38,7 @@ nav:
         - "MongoDB": cs/mongo.md
         - "Websockety": cs/websockets.md
         - "SMTP server pro odchozí emaily": cs/smtp.md
+        - "Špatné NS záznamy": cs/wrong_ns.md
         - "API": cs/api.md
         - "FAQ": cs/faq.md
     - "Stará dokumentace": old/index.md

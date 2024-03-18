@@ -53,6 +53,7 @@ Snažili jsme se přímočaře popsat, jak Roští funguje a jak tam nasadit va�
 * [Websockety](cs/websockets.md)
 * [SMTP server pro odchozí emaily](cs/smtp.md)
 * [API](cs/api.md)
+* [Špatné NS záznamy](cs/wrong_ns.md)
 * [FAQ](cs/faq.md)
 <!-- * [HTTPS](https.md) -->
 <!-- * [Nginx (přesměrování, více domén s jiným obsahem)](nginx.md) -->
