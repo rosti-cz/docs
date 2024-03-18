@@ -46,3 +46,6 @@ theme: readthedocs
 markdown_extensions:
   - admonition
   - pymdownx.details
+plugins:
+    - search
+    - mermaid2
