@@ -20,6 +20,7 @@ nav:
         - "Next.js": cs/frameworks/nextjs.md
         #- "React static site": cs/frameworks/react-static.md
         - "Strapi": cs/frameworks/strapi.md
+        - "Vite.js": cs/frameworks/vite.md
         - "NewRelic APM PHP agent": cs/frameworks/newrelic-php.md
     - "Další informace":
         - "Platby za služby": cs/billing.md
