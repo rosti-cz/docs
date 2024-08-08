@@ -16,3 +16,5 @@ To nás přivádí k aktualizaci, která se liší podle jednotlivých technolog
 * [Deno](apps/deno.md)
 * [Ruby](apps/ruby.md)
 * [Golang](apps/golang.md)
+* [Bun](cs/apps/bun.md)
+* [OpenJDK](cs/apps/openjdk.md)

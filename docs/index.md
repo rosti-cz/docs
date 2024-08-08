@@ -25,6 +25,8 @@ Snažili jsme se přímočaře popsat, jak Roští funguje a jak tam nasadit va�
 * [Node.js](cs/apps/nodejs.md)
 * [Deno](cs/apps/deno.md)
 * [Golang](cs/apps/golang.md)
+* [Bun](cs/apps/bun.md)
+* [OpenJDK](cs/apps/openjdk.md)
 <!-- * [Ruby](apps/ruby.md) -->
 
 ## Frameworky a další nástroje
