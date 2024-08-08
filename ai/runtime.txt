@@ -1,0 +1,106 @@
+Naše Runtime je docker image, který obsahuje zkompilované různé verze následujících jazyků: python, golang, php, ruby, nodejs, deno, bun, openjdk.
+Jednotlivé aplikace používají různé verze Runtime a běží v docker kontejneru.
+
+V kontejneru běží také SSH daemon a Cron daemon.
+
+Jazyky jsou dostupné v adresáři /opt/techs ve formátu /opt/techs/jazyk-verze, například /opt/techs/python-3.12.0.
+Po aktivaci je primární technologie dostupná v /srv/bin/primary_tech, kde jsou všechny relevantní binární soubory. Tato cesta je i v PATH, ale v supervisordu se musí použít.
+Python používá venv v /srv/venv, který se vytváří automaticky pomocí python z /srv/bin/primary_tech/python a je automaticky aktivovaný. V supervisordu se musí použít /srv/venv/bin/python.
+
+V runtime jde vybrat primární jazyk, který se nastavuje z webového administrátorského rozhraní. Pak je možné aktualizovat na jinou verzi jazyka opět z webového rozhraní nebo pomocí příkazu rosti přes SSH.
+Primární technologie se ve výchozím stavu volí během vytváření aplikace v administraci.
+
+Po spuštení rosti se objeví menu, kde je první položka tech, po odkliknutí se vylistuje seznam podporovaných jazyků a po potvrzení se jazyk změní na vybranou verzi.
+Jazyk v systému nazýváme technologie.
+Kromě jazyka je možné vybrat services kde je možné aktivovat redis nebo memcached. Obojí jde aktivovat i z webové administrace.
+
+Další volbou je možnost změnit crontab. 
+Crontab je umístěn v souboru /srv/conf/crontab a pokud se změní v tomto souboru, je potřeba zavolat příkaz: crontab /srv/conf/crontab
+Aby se nastavil i v systému.
+
+Procesy na pozadí jsou spravovány nástrojem supervisord. Ten má konfiguraci v /srv/conf/supervisor.d/.
+V každém kontejneru je Nginx, který se chová jako reverzní proxy k procesu s uživatelským kódem aplikace.
+
+Nginx má svoji konfiguraci v /srv/conf/nginx.d, která vypadá takto:
+server {
+        listen       0.0.0.0:8000;
+        listen       [::]:8000;
+        location / {
+                proxy_pass         http://127.0.0.1:8080/;
+                proxy_redirect     default;
+                proxy_set_header   X-Real-IP  $remote_addr;
+                proxy_set_header   Host       $host;
+        }
+        #location /static/ {
+        #        alias /srv/static/;
+        #}
+}
+
+Po změně konfigurace supervisordu je potřeba zavolat:
+
+supervisorctl reread
+supervisorctl update
+
+Kde reread načte novou konfiguraci a update ji aplikuje.
+
+Změna konfigurace nginxu se dá načíst buď pomocí nginx -s reload nebo supervisorctl restart nginx
+
+Všechny jazyky mají po kontejneru s aplikací výchozí kód, který se nachází v /srv/app.
+Do /srv/app by měl uživatel nahrát i svůj kód. Adresář /srv/app ale není povinný, jen doporučený a
+je do něj nastavena výchozí konfigurace nginxu a supervisordu.
+V souboru /srv/conf/supervisor.d/JAZYK.conf je pak konfigurace k vybrané primární technologii.
+Tady je ukázka pro Python:
+
+[program:app]
+command=/srv/venv/bin/fastapi run calculator/main.py
+directory=/srv/app
+autostart=true
+autorestart=true
+stdout_logfile=/srv/log/python.log
+stdout_logfile_maxbytes=2MB
+stdout_logfile_backups=5
+redirect_stderr=true
+
+Kde se spouští fastapi web server.
+
+Soubor s logem ve výchozím stavu vždy cestu /srv/log/JAZYK.log.
+Nginx je pak v /srv/log/nginx.log
+Logy rotuje sám supervisord.
+
+Tady je příklad pro OpenJDK:
+
+[program:app]
+command=/srv/bin/primary_tech/java /srv/app/app.java
+environment=PATH="/srv/bin/primary_tech:/usr/local/bin:/usr/bin:/bin:/srv/.npm-packages/bin"
+stopasgroup=true
+directory=/srv/app
+process_name=app
+autostart=true
+autorestart=true
+stdout_logfile=/srv/log/openjdk.log
+stdout_logfile_maxbytes=2MB
+stdout_logfile_backups=5
+stdout_capture_maxbytes=2MB
+stdout_events_enabled=false
+redirect_stderr=true
+
+Je možné aktivovat i sekundární technologii pomocí příkazu activate_tech. Ten je pak dostupný
+stejně jako primární, ale prostředí se nezkonfiguruje pro jeho použití. Nenahraje se tedy
+ukázková aplikace a konfigurace.
+Sekundární jazyky umístěný v /srv/bin/active_JAZYK a tyto cesty jsou dostupné v PATH.
+
+Základem pro všechny jazyky je, aby kód aplikace spustil HTTP server na portu 8080. Na portu 8000
+poslouchá Nginx, který požadavky přesměrovává právě na 8080.
+
+Nginx se dá nastavit pro rychlé servírování statického obsahu pomocí:
+location /static/ {
+    alias /srv/static/;
+}
+
+Pro kopírování dat použij rsync.
+SSH přístup do aplikace je ve formátu: ssh -p PORT app@ssh.rosti.cz
+Mění se vždy jen PORT, který je možné najít u aplikace v administraci.
+Heslo se nastavuje v administraci. Při vytváření aplikace je možné uploadovat i SSH klíče.
+Vždy uváděj příklad, jak se připojit do aplikace přes SSH.
+
+Golang kód je možné buildovat v CI/CD nebo přímo v kontejneru s aplikací.
