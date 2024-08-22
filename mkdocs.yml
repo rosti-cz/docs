@@ -45,7 +45,24 @@ nav:
         - "API": cs/api.md
         - "FAQ": cs/faq.md
     - "Stará dokumentace": old/index.md
-theme: readthedocs
+#theme: readthedocs
+theme: 
+  name: material
+  palette:
+    - scheme: default
+      primary: green
+      accent: indigo
+      toggle:
+        icon: material/brightness-7 
+        name: Tmavý mód
+
+    # Palette toggle for dark mode
+    - scheme: slate
+      primary: green
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Světlý mód
 markdown_extensions:
   - admonition
   - pymdownx.details
