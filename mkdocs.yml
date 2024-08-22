@@ -48,6 +48,12 @@ nav:
 #theme: readthedocs
 theme: 
   name: material
+  features:
+  - navigation.instant
+  - navigation.instant.prefetch
+  - navigation.tracking
+  - navigation.expand
+  - navigation.top
   palette:
     - scheme: default
       primary: green
