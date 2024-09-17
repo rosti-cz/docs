@@ -10,6 +10,8 @@ Roští.cz nenabízí emailové schránky, ale je zde možnost odesílat poštu 
 |SMTP port  | 587 | Pro odesílání pošty nepoužívejte port 25, je často blokovaný poskytovateli připojení k internetu |
 |Šifrování|*TLS*, někdy též *starttls*|Je nutné zapnout, bez něj nepůjde přihlášení|
 
+SMTP server má aktuálně nastavený limit na maximálně **30 emailů za minutu**.
+
 ## SPF a DKIM
 
 SPF je záznam v DNS zóně vaší domény, který říká ostatním mail serverům, z jakých serverů bude chodit vaše pošta. Když pak někdo bude posílat emaily ze serverů mimo tento seznam, příchozí server bude vědět, že jde o spam a takové zprávy odmítne nebo s nimi bude zacházet opatrněji. SPF nastavujeme pro domény se zónou u nás automaticky. U starších domén ale může záznam chybět a nemůžeme ho doplnit automaticky, protože nevíme, odkud poštu ve skutečnosti odesíláte.
