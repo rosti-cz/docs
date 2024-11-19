@@ -49,6 +49,7 @@ Snažili jsme se přímočaře popsat, jak Roští funguje a jak tam nasadit va�
 * [Připojení k SSH a databázím z venku](cs/ssh.md)
 * [Instalace extra balíčků do systému](cs/extra-packages.md)
 * [Více služeb v jedné aplikaci](cs/multidomains.md)
+* [Přesměrování www domény](cs/www.md)
 * [Cron](cs/cron.md)
 * [Memcached a Redis](cs/memcached_redis.md)
 * [MongoDB](cs/mongo.md)
