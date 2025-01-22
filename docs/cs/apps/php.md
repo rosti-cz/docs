@@ -43,3 +43,29 @@ Ve stejném souboru je k jednotlivým hodnotám i dokumentace. Pokud provedete n
 Výchozí hodnoty jsou nastaveny relativně nízko, což může být pro aplikace jako je Wordpress nebo Woocart málo, v závislosti na nainstalovaných pluginech a počtu uživatelů připojených v jednom čase.
 
 Počet workerů budete velmi pravděpodobně chtít změnit v případě, že přejdete na některý z vyšších balíčků, kde je k dispozici více paměti.
+
+## Reverzní proxy
+
+Aplikace na Roští běží za reverzní proxy, resp. za dvěma, kde jedna je na našem load balanceru a druhá uvnitř kontejneru s aplikací. V obou případech se o proxy stará webový server Nginx.
+
+Z tohoto důvodu může špatně fungovat detekce HTTPS nebo si některé frameworky mohou špatně detekovat IP adresu či doménu, na které běží. Je tedy nutné v kódu počítat s tím, že reálná IP adresa uživatele a protokol chodí v několika `X-` hlavičkách.
+
+```
+Host: app-xxxx.rostiapp.cz
+X-Forwarded-For: 90.154.122.8
+X-Forwarded-Proto: https
+X-Real-Ip: 90.154.122.8
+```
+
+S tímto má problém třeba WordPress, který špatně detekuje HTTPS a končí v redirect smyčce. Snadno se to dá obejít tímto nastavením ve `wp-config.php`:
+
+```php
+$_SERVER['HTTPS']='on';
+```
+
+U Nette frameworku zase dochází k chybě přesměrování, kdy Nette přidává do URL port 8000. Aby se to nedělo, je potřeba přidat následující řádky v `config.neon`:
+
+```
+http:
+    proxy: 127.0.0.1
+```
