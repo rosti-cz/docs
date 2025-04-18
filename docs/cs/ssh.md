@@ -61,24 +61,23 @@ Roští běží na SSH serveru Dropbear, který podporuje maximálně 8192-bitov
 
 Klíče slouží pro pohodlnější a bezpečnější přístup k SSH serverům. Lokálně si vytvoříte pár public a private klíčů a public nahrajete na jeden či více serverů. SSH klient pak automaticky použije klíč místo hesla a heslo tedy nemusíte zadávat a přitom spojení zůstane bezpečné, dokonce více než s heslem. Na linuxu nebo v našem kontejneru se klíč generuje takto:
 
-    ssh-keygen -t rsa -b 4096 -C "<VÁŠ EMAIL>"
+    ssh-keygen -t ed25519 -C "<VÁŠ EMAIL>"
 
 Po spuštění příkazu se vygeneruje klíč a budete dotázání na umístění a heslo ke klíči, které doporučujeme nastavit.
 
 ## Jak dostat klíč na server
 
-    ssh-copy-id -i '/home/<LOKÁLNÍ UŽIVATEL>/.ssh/<NÁZEV KLÍČE>' app@ssh.rosti.cz -p<PORT>
+Veřejnou část SSH klíče nakopírujte do souboru **/srv/.ssh/authorized_keys** pomocí SSH přístupu s heslem.
 
-Toto je nejlepší způsob jak dostat klíč na server. Klient se automaticky připojí na server a vytvoří složku *~/.ssh* s patřičnými oprávněními. V této složce pak vytvoří soubor *authorized_keys* s vaším klíčem. Od této chvíle nebudete dotazování na heslo a připojení bude bezpečnější.
+Klíče se také automaticky nakopírují během vytváření aplikace, pokud máte v administraci nějaké uložené. Po vytvoření kontejneru s aplikací již není možné z administrace SSH klíče spravovat a je nutné ručně editovat soubor **/srv/.ssh/authorized_keys**.
 
 ## Jak si vytvořit ssh alias abych si nemusel pamatovat všechny parametry?
 
 Do souboru *~/.ssh/config* vložte následující text.
 
     Host muj-web.cz
-    Hostname ssh.rosti.cz
-    User app
-    Port <PORT>
-    IdentityFile ~/.ssh/rosti
+      Hostname ssh.rosti.cz
+      User app
+      Port <PORT>
 
 Díky tomuto nastavení už nebudete muset nikde kopírovat hostname, port a uživatele. Vše proběhne automaticky při použití příkazu `ssh muj-web.cz`.
