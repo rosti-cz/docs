@@ -8,10 +8,6 @@
         "markdown"
     ],
     "cSpell.words": [
-        "HSTS",
-        "Python",
-        "Pythonu",
-        "Pythoní",
         "balancerem",
         "bin",
         "binárce",
@@ -20,10 +16,15 @@
         "deploymentu",
         "frameworky",
         "hostingu",
+        "HSTS",
         "kreditov",
         "kreditový",
         "m",
+        "Nginxu",
         "pooly",
+        "Python",
+        "Pythoní",
+        "Pythonu",
         "quickstart",
         "rce",
         "request",
@@ -35,13 +36,13 @@
         "rozkliknut",
         "rozkliknutí",
         "shellu",
+        "stacku",
         "supervisoru",
         "venv",
         "virtualenv",
         "worker",
-        "workery",
-        "workerů"
+        "workerů",
+        "workery"
     ],
-    "cSpell.language": ",cs",
-    "cSpell.enabled": true
+    "cSpell.language": ",cs"
 }

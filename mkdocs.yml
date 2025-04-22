@@ -2,12 +2,15 @@ site_name: Dokumentace Roští.cz
 site_description: Dokumentace k hostingovým službám Roští.cz.
 nav:
     - Domů: index.md
-    - "Quickstart průvodce":
+    - "Aplikace":
       - "1. První aplikace": "cs/quickstart/first_app.md"
       - "2. Jednoduchý deployment": cs/quickstart/first_deployment.md
       - "3. Databáze": cs/quickstart/databases.md
       - "4. Nastavení domény": cs/quickstart/domains.md
       - "5. Použití nástroje rostictl": cs/quickstart/rostictl.md
+    - "Stacky":
+      - Quickstack průvodce pro stacky: cs/stacks/quickstart.md
+      - Rozdíl mezi aplikacemi a stacky: cs/stacks/apps-vs-stacks.md
     - Technologie:
         - Python: cs/apps/python.md
         - PHP: cs/apps/php.md
