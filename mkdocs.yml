@@ -9,7 +9,7 @@ nav:
       - "4. Nastavení domény": cs/quickstart/domains.md
       - "5. Použití nástroje rostictl": cs/quickstart/rostictl.md
     - "Stacky":
-      - Quickstack průvodce pro stacky: cs/stacks/quickstart.md
+      - Quickstack průvodce: cs/stacks/quickstart.md
       - Rozdíl mezi aplikacemi a stacky: cs/stacks/apps-vs-stacks.md
     - Technologie:
         - Python: cs/apps/python.md
