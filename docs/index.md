@@ -8,7 +8,7 @@ Z principu je Roští.cz vhodné pro menší a střední stateful aplikace, kde 
 
 Níže najdete jednotlivé kapitoly tohoto průvodce, ale pro rychlý start vám postačí ta první. Později se můžete vracet k těm dalším a rozšířit si znalosti o našem systému.
 
-## Quickstart průvodce
+## Aplikace
 
 Snažili jsme se přímočaře popsat, jak Roští funguje a jak tam nasadit vaši aplikaci. Když si tyhle čtyři části projdete, budete vědět o Roští téměř všechno a pokud už máte zkušenosti s Linuxem, zorientujete se velmi rychle. I tak, pokud narazíte na nesrovnalost, nebo nebude něco jasné, použijte prosím náš online chat, [kontaktní formulář](https://rosti.cz/kontakt/) a nebo [email](mailto:podpora@rosti.cz) a nebojte se zeptat.
 
@@ -17,6 +17,13 @@ Snažili jsme se přímočaře popsat, jak Roští funguje a jak tam nasadit va�
 * [3. Databáze](cs/quickstart/databases.md)
 * [4. Nastavení domény](cs/quickstart/domains.md)
 * [5. Použití nástroje rostictl](cs/quickstart/rostictl.md)
+
+## Stacky
+
+Stacky jsou hosting založený na *docker-compose.yml*. Jde o univerzálnější službu než jsou Aplikace, ale zároveň vyžaduje více zkušeností s docker obrazy a kontejnery.
+
+* [Quickstart průvodce](cs/stacks/quickstart.md)
+* [Rozdíl mezi aplikacemi a stacky](cs/stacks/apps-vs-stacks.md)
 
 ## Specifika jednotlivých technologií
 
