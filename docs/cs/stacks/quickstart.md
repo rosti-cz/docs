@@ -28,7 +28,6 @@ Soubor *docker-compose.yml* pak popisuje jak spustit kontejnery s vašimi služb
 Příklad *docker-compose.yml*:
 
 ```docker-compose
-version: "3"
 services:
   miniflux:
     image: miniflux/miniflux:latest
@@ -105,7 +104,7 @@ Stack sedí na jednom z našich node serverů a přicházející trafik vypadá 
 ```mermaid
 flowchart LR
   subgraph Roští
-    proxy["Reverzní proxy s HTTPS"] -- 10.x.x.x --> stack["IP adresa stack kontejner"] -- "port 80" --> port["Service"]
+    proxy["Reverzní proxy s HTTPS"] -- 10.x.x.x --> stack["IP adresa stack kontejneru"] -- "port 80" --> port["Service"]
   end
   Internet -- lb.rosti.cz --> proxy
 ```
@@ -133,7 +132,7 @@ V případě subdomén je možné použít *CNAME* záznam na *lb.rosti.cz*.
 Řádky výše se dají shrnout do následujících instrukcí:
 
 * Nasměrujete doménu na nás pomocí NS záznamů či NSSETu a přidáte DNS zónu v administraci v sekci DNS,
-* nebo nastavíte A, AAAA či CNAME záznamy u vašeho registrátora pro konkrétní domény a subdomén a v takovém případě není potřeba nic přidávat v sekci DNS v administraci.
+* nebo nastavíte A, AAAA či CNAME záznamy u vašeho registrátora pro konkrétní domény a subdomény a v takovém případě není potřeba nic přidávat v sekci DNS v administraci.
 
 Změny v DNS záznamech mohou nějaký čas trvat v závislosti na nastavení TTL jednotlivých domén a záznamů. Většinou je ale vše připraveno během jedné hodiny, ale záleží na nastavení TTL u jednotlivých záznamů. Před změnou záznamů doporučujeme TTL snížit.
 
@@ -157,6 +156,6 @@ Prošli jsme si základní kroky k vytvoření stacku, tak nezbývá než klikno
 
 ## Poznámky na závěr
 
-Zálohování máme implementované jako vytvoření snapshotu souborového systému a zkopírování celého image se stackem na zálohovací server. U některých služeb, jako jsou třeba databáze, je tak lepší dělat někam pravidelné dumpy, aby bylo možné databázi obnovit v případě nekonzistence databázových dat“. K zálohování dochází jednou denně a jsou uchovávány po dobu 14 dnů.
+Zálohování máme implementované jako vytvoření snapshotu souborového systému a zkopírování celého image se stackem na zálohovací server. U některých služeb, jako jsou třeba databáze, je tak lepší dělat někam pravidelné dumpy, aby bylo možné databázi obnovit v případě nekonzistence databázových dat. K zálohování dochází jednou denně a jsou uchovávány po dobu 14 dnů.
 
 Do obsazeného diskového prostoru se počítá všechno včetně systémových souborů. Základní systém má kolem 3 GB, zbytek už je pro vás. Pokud překročíte kvótu, stack se nevypne, ale budeme vám účtovat každý extra obsazený GB.
