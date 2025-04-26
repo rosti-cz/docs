@@ -1,96 +1,102 @@
 # MongoDB na Roští
 
-V prvních měsících, kdy jsme spustili nové Roští, měli jsme v něm i podporu pro MongoDB. Jednu sdílenou MongoDB databázi, podobně jako máme PostgreSQL a MariaDB. Po čase jsme ale zjistili, že MongoDB není úplně připravena na takový setup a že takto používaná není bezpečná. Podporu jsme zrušili bez náhrady, protože náhrada by vyžadovala samostatný kontejner pro každého uživatele a na to administrace není ještě připravená.
+Nejjednodušší cesta, jak na Roští nasadit MongoDB, je přes Stacky. Bohužel licenční podmínky MongoDB nám neumožňují instalaci usnadnit, ale s následujícím návodem to je snadné i bez podpory v administraci.
 
-Nicméně na Roští je možné provozovat MongoDB v kontejneru společně s vaší aplikací a tato část dokumentace vám ukáže jak na to. Proti společné databázi jsou tu nějaké plusy ale i mínusy:
+K rozjetí MongoDB bude potřeba:
 
-* \+ Bezpečnost
-* \+ Plná kontrola nad databází a jejím nastavení
-* \+ Volba verze databáze
-* \- Využívá RAMku společně s aplikací
-* \- Chybí oficiální podpora
-* \- Uživatel se musí sám postarat o zálohování
-* \- A také o monitoring běžící databáze
-* \- V extrémním případě se může stát, že stažené Mongo nebude kompatibilní s novou verzi obrazu
+1. Spustit Stack s MongoDB a MongoDB express
+2. Nainstalovat mongodb klienta do aplikace (pokud je Mongo určené pro aplikaci)
 
-Postup instalace je velmi jednoduchý. Stačí stáhnout balík s předkompilovanými binárkami, nakopírovat ho do aplikace a upravit pár konfiguračních souborů.
+## Stack s MongoDB
 
-## Stažení
+Začneme vytvořením nového Stacku. Velikost instance si vyberte podle potřeb databáze.
 
-Balík se statickými binárkami najdete [na adrese mongodb.com](https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-debian10-5.0.3.tgz). Odkaz vede na verzi 5.0.3 a pokud potřebujete jinou, třeba novější, 
-tak ji stačí v URL adrese upravit.
+![MongoDB new stack](../imgs/mongodb/mongodb-new-stack.png)
 
-Rozbalte archiv lokálně a obsah adresáře *bin/* nakopírujte do kontejneru do adresáře */srv/bin/*. Pokud tento adresář v kontejneru neexistuje, tak ho vytvořte. Jinak běží MongoDB dobře i na 256 MB RAM, tedy nejnižším balíčku, ale samozřejmě záleží na charakteru vaší aplikace.
+Pokud použijete MongoDB pro kód hostovaný ve stacku, můžete kontejnery s MongoDB dát do stejného stacku.
 
-## Supervisor
-
-V kontejnerech na Roští běží vše pod daemonem supervisor, který umí efektivně spravovat procesy na pozadí a postará se o jejich restartování, pokud se něco napoprvé nepovede. Zároveň sbírá zprávy ze stdout a stderr a ukládá se do adresáře */srv/log*. Jemu tedy musíme říct, že má od teď spravovat i naše MongoDB. To uděláme tak, že vytvoříme soubor */srv/conf/supervisor.d/mongodb.conf* a uložíme do něj:
-
-    [program:mongodb]
-    command=/srv/bin/mongod --dbpath /srv/var/mongodb
-    autostart=true
-    autorestart=true
-    stdout_logfile=/srv/log/mongodb.log
-    stdout_logfile_maxbytes=2MB
-    stdout_logfile_backups=5
-    stdout_capture_maxbytes=2MB
-    stdout_events_enabled=false
-    redirect_stderr=true
-
-Dále je potřeba vytvořit adresář pro data:
-
-    mkdir -p /srv/var/mongodb
-
-Pak přes SSH zavoláme:
-
-    supervisorctl reread
-    supervisorctl update
-
-A Mongo by se mělo rozjet. Kdykoli ho můžete zkontrolovat přes:
-
-    supervisorctl status
-
-Případně interaktivně pomocí:
-
-    supervisorctl
-
-## Proměnná PATH
-
-Nakonec stačí upravit soubor */srv/.bashrc*, konkrétně export proměnné *PATH*, do které přidáme */srv/bin* pokud tam ještě není. Řádek v *.bashrc* s proměnnou PATH by měl vypadat takto:
-
-    export PATH=$PATH:/usr/sbin:/sbin:/opt/node/bin:/srv/bin
-
-## Instalace Mongo tools
-
-Pokud potřebujete nainstalovat i Mongo tools ([odkaz na stažení](https://www.mongodb.com/try/download/database-tools)) pro jednodušší backup a monitoring databáze, můžete použít tento postup:
-
-```bash
-wget https://fastdl.mongodb.org/tools/db/mongodb-database-tools-debian12-x86_64-100.9.4.tgz
-tar xf mongodb-database-tools-debian12-x86_64-100.9.4.tgz
-cd mongodb-database-tools-debian12-x86_64-100.9.4
-cp bin/* /srv/bin/
-cd ..
-rm -rf mongodb-database-tools-debian12-x86_64-100.9.4 mongodb-database-tools-debian12-x86_64-100.9.4.tgz
+```yaml
+services:
+  mongo:
+    image: mongo:8.0
+    ports:
+      - '27017:27017'
+    volumes:
+    - ./data_db:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    restart: always
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 80:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_USER}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_PASSWORD}
+      ME_CONFIG_MONGODB_URL: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@mongo:27017/
+      ME_CONFIG_BASICAUTH: true
+      ME_CONFIG_BASICAUTH_USERNAME: ${EXPRESS_USER}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${EXPRESS_PASSWORD}
 ```
 
-Verzi *100.9.4* můžet nahradit za nějakou novější pokud se od updatu tohoto dokumentu nějaká objevila.
+![MongoDB compose](../imgs/mongodb/mongodb-compose.png)
 
+Pokud má být MongoDB přístupné z vnitřní sítě Roští, tak je potřeba uvést port 27017 v *ports*. Pokud budete MongoDB používat jen v rámci stacku, tak *ports* můžete vynechat. Zvolte si také správnou verzi MongoDB. Pokud vyberete například *8.0*, *8* nebo třeba *latest*, tak kombinace tlačítek *Pull* a *Up* v administraci databázi aktualizuje.
 
+V *docker-compose.yml* máme nějaké proměnné, jejichž hodnoty nastavíme v *.env*. Hesla a uživatelská jména si zvolte podle sebe.
 
-## Závěrem
+```env
+MONGO_USER=root
+MONGO_PASSWORD=mypass
+EXPRESS_USER=admin
+EXPRESS_PASSWORD=mypass
+```
 
-A to je vše. Po opětovném přihlášení do SSH by měl fungovat i *mongo* klient. 
+MongoDB express je administrační rozhraní MongoDB a pokud jste už klikli na tlačítko *Upravit* ve formuláři s *docker-compose.yml* a *.env*, tak běží na doméně, kterou vám systém přidělil a kterou najdete v info kartě stacku.
 
-Pokud se chcete připojit k této MongoDB na svém vlastním počítači, pomůže SSH tunel:
+![MongoDB express](../imgs/mongodb/express.png)
 
-    ssh -p <PORT> -L 27018:127.0.0.1:27018 app@ssh.rosti.cz
+A to je z instalace všechno.
 
-Tento příkaz zpřístupní port 27018 v kontejneru na lokálním portu stejného čísla.
+## Instalace klienta do aplikace
 
-Pokud se Mongu něco nelíbí, detaily se dozvíte v jeho log souboru:
+Jestli máte MongoDB pro potřeby nějaké aplikace, tak se vám u ní budou hodit CLI nástroje pro práci s databází. Zkopírováním následujícího skriptu do terminálu aplikace nainstalujete mongosh, mongodump a další utilitky:
 
-    tail -f /srv/log/mongodb.log
+```
+export MONGO_TOOLS_VERSION=100.12.0
+export MONGO_VERSION=2.5.0
 
-Vzhledem k povaze takto běžící databáze se musíte postarat ještě o zálohování. Vypínání kontejnerů nejde vždy úplně hladce, někdy dojde k selhání hardwaru a server se vypne bez řádného ukončení čehokoli, jindy může dojít k lidské chybě a kontejner nemá dost času ukončit běžící procesy. Také náš zálohovací skript nic nevypíná a kopíruje data tak jak leží na disku. I když k selháním nedochází každý den, je potřeba se na tuto situaci připravit. MongoDB má utilitku *mongodump*, která exportuje data do adresářové struktury, ze které je můžete opět obnovit. Je dobré udržovat nějakou historii, alespoň několik dní, ale to záleží na potřebách vaší aplikace. Zálohy stačí nahrát někam do */srv* a obsah */srv* už pak zálohujeme my. Přes mongodump zařídíte, že tyto zálohy budou konzistentní, což data běžící databáze být nemusí. Pozor, abyste si data nezveřejnili přes HTTP server, který v kontejneru běží také.
+export DEBIAN_VERSION=`cat /etc/debian_version | cut -d"." -f 1`
 
+mkdir -p /srv/bin
+wget https://fastdl.mongodb.org/tools/db/mongodb-database-tools-debian${DEBIAN_VERSION}-x86_64-${MONGO_TOOLS_VERSION}.tgz
+tar xf mongodb-database-tools-debian${DEBIAN_VERSION}-x86_64-${MONGO_TOOLS_VERSION}.tgz
+mv mongodb-database-tools-debian${DEBIAN_VERSION}-x86_64-${MONGO_TOOLS_VERSION}/bin/* /srv/bin/
+rm -rf mongodb-database-tools-debian${DEBIAN_VERSION}-x86_64-${MONGO_TOOLS_VERSION}
+rm -f mongodb-database-tools-debian${DEBIAN_VERSION}-x86_64-${MONGO_TOOLS_VERSION}.tgz
 
+wget https://downloads.mongodb.com/compass/mongosh-${MONGO_VERSION}-linux-x64.tgz
+tar xf mongosh-${MONGO_VERSION}-linux-x64.tgz
+mv mongosh-${MONGO_VERSION}-linux-x64/bin/* /srv/bin/
+rm -rf mongosh-${MONGO_VERSION}-linux-x64
+rm -f mongosh-${MONGO_VERSION}-linux-x64.tgz
+```
+
+Proměnné *MONGO_TOOLS_VERSION* a *MONGO_VERSION* můžete upravit podle aktuálně dostupný verzí na odkazech:
+
+* [https://www.mongodb.com/try/download/shell](https://www.mongodb.com/try/download/shell) -> MONGO_VERSION
+* [https://www.mongodb.com/try/download/database-tools](https://www.mongodb.com/try/download/database-tools) -> MONGO_TOOLS_VERSION
+
+Aktualizace se provádí stejným skriptem, stačí tedy upravit verze a zkopírovat celý skript znovu do terminálu.
+
+Abyste si usnadnili práci, můžete od souboru */srv/.bashrc* přidat tento řádek:
+
+```
+alias mongo="mongosh mongodb://[uživatelské jméno]:[heslo]@[IP adresa stacku]:27017/"
+```
+
+A při dalším přihlášení bude fungovat příkaz `mongo`, který spustí Mongo Shell rovnou proti vaši nové databázi.
+
+![mongosh](../imgs/mongodb/mongosh.png)
