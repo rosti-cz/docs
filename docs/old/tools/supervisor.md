@@ -1,5 +1,9 @@
 # Supervisor
 
+!!! danger "Stará dokumentace"
+
+    Toto je dokumentace pro naše starší obrazy a postupy v ní nemusí fungovat na nových Runtime obrazech. Informace v této části dokumentace platí pro aplikace před rokem 2020.
+
 Supervisor je klíčovou součástí všech obrazů na Roští a pokud chcete Roští využívat naplno, musíte vědět, jak ho použítvat. Supervisor je hlavní proces všech našich Docker obrazů a hlídá, že vaše aplikace běží. Pokud by náhodou spadla, pokusí se ji znovu nahodit. Oficiální dokumentaci [naleznete na supervisord.org](http://supervisord.org/).
 
 V nově vytvořených aplikacích běží pod supervisorem jeden až dva procesy, což je ukázková aplikace, která vám má dát funkční příklad toho, jak Roští vypadá a k ní ještě bývá Nginx (Python a Ruby). Konfigurace supervisoru se nachází v adresáři */srv/conf/supervisor.d/*. Když si ho otevřete například v Node.js aplikaci, uvidíte soubor *node.js* s tímto obsahem:

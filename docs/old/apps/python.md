@@ -1,5 +1,9 @@
 # Python
 
+!!! danger "Stará dokumentace"
+
+    Toto je dokumentace pro naše starší obrazy a postupy v ní nemusí fungovat na nových Runtime obrazech. Informace v této části dokumentace platí pro aplikace před rokem 2020.
+
 Podporujeme Python ve všech jeho nejčastěji používaných verzích. Dokážeme ale zařídit třeba Python 2.6 nebo i 2.5. V takovém případě se na nás obraťte. Nejnovější verze řady 2 a 3 jsou k dispozici standardně.
 
 ## Nejkratší cesta k běžící aplikaci

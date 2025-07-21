@@ -1,5 +1,9 @@
 # Staré Roští
 
+!!! danger "Stará dokumentace"
+
+    Toto je dokumentace pro naše starší obrazy a postupy v ní nemusí fungovat na nových Runtime obrazech. Informace v této části dokumentace platí pro aplikace před rokem 2020.
+
 Kromě Roští.cz, které propagujeme na naší [hlavní stránce](https://rosti.cz), máme ještě staré Roští. Jedná se o část naší infrastruktury, která je obsluhována naší původní administrací na doméně [stare.rosti.cz](https://stare.rosti.cz). Historie za tímto projektem je složitější a jeho vývoj je nyní omezen jen na ty nejnutnější věci.
 
 Staré Roští je rozděleno na dvě části:

@@ -1,5 +1,9 @@
 # Konec emailových služeb na Roští.cz
 
+!!! danger "Stará dokumentace"
+
+    Toto je dokumentace pro naše starší obrazy a postupy v ní nemusí fungovat na nových Runtime obrazech. Informace v této části dokumentace platí pro aplikace před rokem 2020.
+
 S platností od 31.5.2018 na Roští ukončíme emailové služby. O důvodech jsme se rozepsali [v oznámení na našem blogu](http://blog.rosti.cz/dulezite-zmeny-na-rosti/). Emaily pro nás byly jen doplňkovou službou, kterou jsme provozovali z toho důvodu, že tak nějak patřila k hostingovým službám obecně. Za emaily jsme nikdy nechtěli žádné peníze a v současné době se náklady na jejich provoz dostali do bodu, že už bychom v tom dál pokračovat nemohli. Emaily jsou pro nás přibližně třetinou všech výdajů a zároveň z nich neplynou žádné příjmy. Blížící se potřeba nového emailového serveru byla tak pro nás poslední kapkou a rozhodli jsme se k tomuto kroku.
 
 Dnes už si nemyslíme, že by emaily měly být běžnou součástí hostingu, když je všude okolo spousta specializovaných služeb, které je pokryjí za pár dolarů mnohem spolehlivěji. A o těchto slubách je primárně tato stránka dokumentace. Zjistíte tu kam můžete svou poštu odmigrovat a jaké nástroje jsou k tomu k dispozici.

@@ -1,5 +1,9 @@
 # Slovník pojmů
 
+!!! danger "Stará dokumentace"
+
+    Toto je dokumentace pro naše starší obrazy a postupy v ní nemusí fungovat na nových Runtime obrazech. Informace v této části dokumentace platí pro aplikace před rokem 2020.
+
 Na Roští používáme termíny, které nemusíte znát, ale pro pochopení, jak Roští funguje, se vám budou hodit.
 
 ## Docker

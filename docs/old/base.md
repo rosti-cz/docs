@@ -1,5 +1,9 @@
 # Základní informace
 
+!!! danger "Stará dokumentace"
+
+    Toto je dokumentace pro naše starší obrazy a postupy v ní nemusí fungovat na nových Runtime obrazech. Informace v této části dokumentace platí pro aplikace před rokem 2020.
+
 Roští je hostingová služba pro stateful aplikace. Je sice postavený na kontejnerech managovaných Dockerem, ale směrem k uživateli má tvář klasického hostingu s několika věcmi navíc. Především má každá aplikace vlastní prostředí (kontejner) a nemůže zasahovat do běhu aplikací, které běží na stejném serveru. Všechny aplikace sice sdílejí systémové prostředky, ale limity jsou nastaveny tak, aby jedna aplikace nemohla využít kompletní výkon celého serveru.
 
 ## Pro koho je Roští

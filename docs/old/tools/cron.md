@@ -1,5 +1,9 @@
 # Cron
 
+!!! danger "Stará dokumentace"
+
+    Toto je dokumentace pro naše starší obrazy a postupy v ní nemusí fungovat na nových Runtime obrazech. Informace v této části dokumentace platí pro aplikace před rokem 2020.
+
 Cron slouží pro automatické spouštění úloh a každá aplikace má vlastního cron daemona přímo v kontejneru. Úlohy se spouští pod stejným uživatelem jako běží aplikace. Bohužel nemůžeme úplně zachovat standardní postupy práce s cronem jako v normálním unixovém systému, ale museli jsme je ohnout pro kontejnery.
 
 Seznam úkolů se drží v tzv. crontabu a ten najdete v */srv/conf/crontab*. Změny provádějte v tomto souboru. Po jeho uložení se ještě neprojeví. Reload pravidel můžete provést buď restartem kontejneru a nebo přes SSH zavoláním:

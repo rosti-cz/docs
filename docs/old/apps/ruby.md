@@ -1,5 +1,9 @@
 # Ruby
 
+!!! danger "Stará dokumentace"
+
+    Toto je dokumentace pro naše starší obrazy a postupy v ní nemusí fungovat na nových Runtime obrazech. Informace v této části dokumentace platí pro aplikace před rokem 2020.
+
 Před čtením následujících řádků se prosím podívejte na stránku se [základními informacemi](../base.md) a [základními pojmy](../aword.md).
 
 Obraz pro Ruby vytváříme kompilací zdrojových kódů ze stránky [ruby-lang.org](http://ruby-lang.org). Díky tomu vám můžeme nabízet nejnovější verze vašeho oblíbeného jazyka. Společně s Ruby obsahuje obraz základní konfiguraci supervisoru a jednoduchou aplikaci, od které se můžete při nasazování vaší aplikace odrazit.
