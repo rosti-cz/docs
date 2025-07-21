@@ -1,5 +1,9 @@
 # Memcached
 
+!!! danger "Stará dokumentace"
+
+    Toto je dokumentace pro naše starší obrazy a postupy v ní nemusí fungovat na nových Runtime obrazech. Informace v této části dokumentace platí pro aplikace před rokem 2020.
+
 Memcached je key-value databáze vyvinutá hlavně k použití jako cache. Složitost uložení nebo získání dat z klíče je O(1), takže je konstantně rychlá, bez ohledu na to, co do ní uložíte. Její implementace není ani nějak komplikovaná, je to pouhých 13 000 řádek Cčkového kódu, takže i přes její relativní mládí je to odladěný a snadno distribuovatelný nástroj.
 
 Nasazení na Roští není nějak složité, stačí spustit:

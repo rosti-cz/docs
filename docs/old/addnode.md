@@ -1,5 +1,9 @@
 # Přidání Node.js do kontejneru
 
+!!! danger "Stará dokumentace"
+
+    Toto je dokumentace pro naše starší obrazy a postupy v ní nemusí fungovat na nových Runtime obrazech. Informace v této části dokumentace platí pro aplikace před rokem 2020.
+
 Moderní frameworky potřebují Node.js pro kompilaci CSS souborů, skriptů nebo minifikaci HTML šablon či HTML výstupu a protože na Roští máte k dispozici SSH přístup, můžete díky tomu přidat Node.js i do ne-Node.js kontejerů. Stačí spustit následující:
 
 ```bash

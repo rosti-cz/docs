@@ -1,5 +1,9 @@
 # Runtime
 
+!!! danger "Stará dokumentace"
+
+    Toto je dokumentace pro naše starší obrazy a postupy v ní nemusí fungovat na nových Runtime obrazech. Informace v této části dokumentace platí pro aplikace před rokem 2020.
+
 Roští v roce 2020 přešlo na nový formát běhových prostředí, které jsme doposud všude nazývali image. Nově teď budeme mluvit o Runtime nebo Runtime imagi, v češtině pak o běhovém prostředí. I když se může stát, že se toho mění hodně, tak jde spíše o změnu v procesech než že bychom měnili kompletně celou koncepci.
 
 Nový Runtime se proti původním obrazům liší v několika ohledech:

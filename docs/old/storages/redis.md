@@ -1,5 +1,9 @@
 # Redis
 
+!!! danger "Stará dokumentace"
+
+    Toto je dokumentace pro naše starší obrazy a postupy v ní nemusí fungovat na nových Runtime obrazech. Informace v této části dokumentace platí pro aplikace před rokem 2020.
+
 Redis je populární key-value databáze, kterou můžete implementovat cache, message brokera nebo ji používat na sdílení dat mezi různými procesy. Za určitých okolností lze do Redisu ukládat i data perzistentního charakteru, ale je to databáze, která pracuje primárně s pamětí RAM, takže není určená na desítky GB dat. Více o Redisu se můžete dočíst třeba zde:
 
 * http://www.zdrojak.cz/clanky/redis-key-value-databaze-v-pameti-i-na-disku/

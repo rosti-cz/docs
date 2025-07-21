@@ -1,5 +1,9 @@
 # PHP
 
+!!! danger "Stará dokumentace"
+
+    Toto je dokumentace pro naše starší obrazy a postupy v ní nemusí fungovat na nových Runtime obrazech. Informace v této části dokumentace platí pro aplikace před rokem 2020.
+
 *V této části dokumentace najdete informace k imagům s PHP 7.x. PHP 5.6 je postupně na ústupu a nedoporučujeme ho dále používat.*
 
 PHP kód se na Roští z principu nasazuje o něco snadněji. Podporujeme širokou škálu verzí PHP od 5.6 po ty nejnovější, vždy se skokem v minoritní verzi, takže:

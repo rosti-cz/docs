@@ -1,5 +1,9 @@
 # MongoDB na Roští
 
+!!! danger "Stará dokumentace"
+
+    Toto je dokumentace pro naše starší obrazy a postupy v ní nemusí fungovat na nových Runtime obrazech. Informace v této části dokumentace platí pro aplikace před rokem 2020.
+
 V prvních měsících, kdy jsme spustili nové Roští, měli jsme v něm i podporu pro MongoDB. Jednu sdílenou MongoDB databázi, podobně jako máme PostgreSQL a MariaDB. Po čase jsme ale zjistili, že MongoDB není úplně připravena na takový setup a že takto používaná není bezpečná. Podporu jsme zrušili bez náhrady, protože náhrada by vyžadovala samostatný kontejner pro každého uživatele a na to admiinstrace není ještě připravená.
 
 Nicméně na Roští je možné provozovat MongoDB v kontejneru společně s vaší aplikací a tato část dokumentace vám ukáže jak na to. Proti společné databázi jsou tu nějaké plusy a mínusy:

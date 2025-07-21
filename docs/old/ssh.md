@@ -1,5 +1,9 @@
 ## SSH přístup
 
+!!! danger "Stará dokumentace"
+
+    Toto je dokumentace pro naše starší obrazy a postupy v ní nemusí fungovat na nových Runtime obrazech. Informace v této části dokumentace platí pro aplikace před rokem 2020.
+
 Přístup k aplikaci přes SSH je alfou a omegou Roští. Málo kde ho dostanete a přitom je při vývoji i nasazování tak neocenitelným nástrojem. Podívejte se, co všechno můžete s SSH u své aplikace dělat:
 
 - Přístup k plnohodnotnému shellu (BASH)

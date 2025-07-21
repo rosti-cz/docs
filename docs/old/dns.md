@@ -1,5 +1,9 @@
 # DNS a domény
 
+!!! danger "Stará dokumentace"
+
+    Toto je dokumentace pro naše starší obrazy a postupy v ní nemusí fungovat na nových Runtime obrazech. Informace v této části dokumentace platí pro aplikace před rokem 2020.
+
 Roští zatím neregistruje domény, ale postará se o vaše DNS záznamy. Je lepší, pokud nasměrujete vaše domény na naše DNS servery, můžeme pak editovat DNS záznamy podle toho, jak postupuje vývoj Roští.cz. Neměníme adresy často, ale jednou za pár let musíme, protože se objevují nové služby a nástroje, které různým způsobem usnadňují život našim uživatelům. Naposledy šlo například o přidání ochrany přes DDOS útoky.
 
 Až budete registrovat doménu, tak v případě, že se jedná o _.cz_ doménu, nastavte ji *NSSET* na *ROSTICZ*.

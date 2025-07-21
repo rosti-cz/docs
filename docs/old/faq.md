@@ -1,5 +1,9 @@
 # Nejčastější otázky
 
+!!! danger "Stará dokumentace"
+
+    Toto je dokumentace pro naše starší obrazy a postupy v ní nemusí fungovat na nových Runtime obrazech. Informace v této části dokumentace platí pro aplikace před rokem 2020.
+
 Na některé otázky na podpoře odpovídáme pořád dokola. Ty, které se objevují nejčastěji, uvádíme tady.
 
 ## Co je zahrnuto v ceně hostingu?

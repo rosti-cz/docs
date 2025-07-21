@@ -1,5 +1,9 @@
 # Node.js
 
+!!! danger "Stará dokumentace"
+
+    Toto je dokumentace pro naše starší obrazy a postupy v ní nemusí fungovat na nových Runtime obrazech. Informace v této části dokumentace platí pro aplikace před rokem 2020.
+
 Podpora Node.js je u nás stejně dobrá jako u jiných jazyků. Na rozdíl od staré administrace je již stabilní a můžete nasazovat Node.js aplikace bez obav.
 
 Když v administraci vytvoříte Node.js aplikací, na pozadí se z vybraného Node.js image vytvoří kontejner, do kterého se můžete hned přihlásit. Standardně v něm běží jednoduchý Node.js aplikace se základními informacemi, abyste se měli od čeho odrazit.

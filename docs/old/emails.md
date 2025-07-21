@@ -1,5 +1,9 @@
 ## E-mailové služby
 
+!!! danger "Stará dokumentace"
+
+    Toto je dokumentace pro naše starší obrazy a postupy v ní nemusí fungovat na nových Runtime obrazech. Informace v této části dokumentace platí pro aplikace před rokem 2020.
+
 V současné době Roští.cz už nenabízí emailové schránky, ale zůstala možnost odesílat poštu přes náš SMTP server.
 
 |Parametr|Hodnota|Poznámka|

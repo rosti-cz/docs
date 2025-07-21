@@ -1,5 +1,9 @@
 # Přesměrování
 
+!!! danger "Stará dokumentace"
+
+    Toto je dokumentace pro naše starší obrazy a postupy v ní nemusí fungovat na nových Runtime obrazech. Informace v této části dokumentace platí pro aplikace před rokem 2020.
+
 Ve výchozím stavu Roští pracuje se všemi doménami přiřazenými k aplikaci stejně.
 To znamená, že pokud máte doménu *www.example.com* a doménu *example.com*, na
 obou bude stejný obsah. V reálném světě je ale lepší, pokud je jedna z domén

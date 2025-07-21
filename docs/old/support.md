@@ -1,5 +1,9 @@
 # Jak kontaktovat podporu
 
+!!! danger "Stará dokumentace"
+
+    Toto je dokumentace pro naše starší obrazy a postupy v ní nemusí fungovat na nových Runtime obrazech. Informace v této části dokumentace platí pro aplikace před rokem 2020.
+
 Než nám napíšete, podívejte se prosím do této dokumentace, zda neřeší váš problém. V případě že jste nic nenašli a nebo se jedná o nějakou chybu v naší platformě, napište nám buď na email [podpora.rosti.cz](mailto:podpora@rosti.cz) nebo [pomocí formuláře](https://rosti.cz/kontakt/) na našem webu.
 
 Běžně dostáváme tyto typy dotazů:

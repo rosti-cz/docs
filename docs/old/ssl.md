@@ -1,5 +1,9 @@
 # SSL, TLS a Let's encrypt
 
+!!! danger "Stará dokumentace"
+
+    Toto je dokumentace pro naše starší obrazy a postupy v ní nemusí fungovat na nových Runtime obrazech. Informace v této části dokumentace platí pro aplikace před rokem 2020.
+
 Roští umí šifrovat provoz mezi klientem a load balancerem. Provoz mezi load
 balancerem a vaší aplikací, tedy ten co je v naší interní síti, je šifrovaný
 na úrovni síťové vrstvy pomocí Wireguardz. Tento způsob implementace se
