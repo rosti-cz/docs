@@ -2,7 +2,11 @@
 
 Stack je kontejner, ve kterém běží Docker a můžete si v něm spouštět vlastní sadu kontejnerů nadefinovanou pomocí `docker-compose.yml`. Pro kopírování dat a debugging máte k dispozici *SSH* a *SFTP*. Jedná se o službu pro provoz HTTP serverů, kde není možné zpřístupnit ven jakýkoli port, ale pouze jeden HTTP port (80), na který budou přes reverzní proxy nasměrovány vybrané domény. Na vnitřní síti je možné spustit libovolné služby. Například databáze, message brokery, migrační kontejnery, proxy servery a podobně.
 
-Níže najdete návod, jak postupovat při vytváření nového stacku.
+Níže najdete návod, jak postupovat při vytváření nového stacku. Zkrácenou verzi návodu můžete shlédnout i v našem videu:
+
+<div>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0Iknowl6cpY?si=x0qwajNRkHw_4r7A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
 
 ## Vytvoření stacku
 
