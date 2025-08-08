@@ -108,3 +108,4 @@ A na doméně, kterou administrace přidělila vaší aplikaci na začátku toho
 * Strapi vyžaduje spoustu paměti, takže pokud se chová nestabilně, zvedněte balíček v administraci.
 * **Než vytvoříte prvního uživatele, nezapomeňte v administraci zapnout HTTPS.**
 * Řetězec *my-strapi* v tomto návodu můžete vyměnit za vlastní název instance.
+* Pokud během instalace a používání narazíte na problém s velikostí haldy (heap), použijte proměnnou prostředí `NODE_OPTIONS=--max-old-space-size=2048` nebo parametr `--max-old-space-size=2048` při volání Node.js. Obojí jde přidat do souboru `package.json`, do Supervisordu nebo při volání z příkazové řádky. Ve výchozím stavu je Node.js omezeno na využití maximálně 1.4 GB RAM a Strapi na tento limit umí narazit.
