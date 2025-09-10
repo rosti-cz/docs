@@ -54,6 +54,7 @@ Stacky jsou hosting založený na *docker-compose.yml*. Jde o univerzálnější
 * [Adresářová struktura /srv](cs/srv.md)
 * [Správa služeb běžících na pozadí](cs/supervisor.md)
 * [Připojení k SSH a databázím z venku](cs/ssh.md)
+* [Aktivace alternativní technologie](cs/alternative_techs.md)
 * [Instalace extra balíčků do systému](cs/extra-packages.md)
 * [Více služeb v jedné aplikaci](cs/multidomains.md)
 * [Přesměrování www domény](cs/www.md)
