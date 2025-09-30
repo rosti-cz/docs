@@ -25,6 +25,7 @@ Stacky jsou hosting založený na *docker-compose.yml*. Jde o univerzálnější
 * [Quickstart průvodce](cs/stacks/quickstart.md)
 * [Rozdíl mezi aplikacemi a stacky](cs/stacks/apps-vs-stacks.md)
 * [MGM kontejner](cs/stacks/mgm.md)
+* [Routování s Traefik](cs/stacks/traefik.md)
 
 ## Specifika jednotlivých technologií
 
