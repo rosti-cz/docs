@@ -307,4 +307,3 @@ app-staging:
 
 * [Oficiální Traefik dokumentace](https://doc.traefik.io/traefik/)
 * [Docker Provider dokumentace](https://doc.traefik.io/traefik/providers/docker/)
-* [Let's Encrypt konfigurace](https://doc.traefik.io/traefik/https/acme/)
