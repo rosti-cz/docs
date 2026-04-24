@@ -27,7 +27,7 @@ V závislosti na velikosti provozovaných služeb si vyberte profil. Berte v úv
 
 Hned po vytvoření stacku administrace zobrazí formulář pro nastavení souborů *docker-compose.yml* a *.env*. Soubor *.env* může být použit jako úložiště pro konfiguraci a hesla.
 
-Soubor *docker-compose.yml* pak popisuje jak spustit kontejnery s vašimi službami. Jde o standardní docker-compose formát, jehož referenci najdete [v jeho dokumentaci](https://docs.docker.com/reference/compose-file/). Uvádějte v něm **jen vlastní kontejnery** — reverzní proxy ([Traefik](traefik.md)) a webový terminál ([mgm](mgm.md)) jsou Roštím spravované systémové služby a v uživatelském compose se neuvádějí. Zapínat a vypínat se dají v záložce **System** v detailu stacku.
+Soubor *docker-compose.yml* pak popisuje jak spustit kontejnery s vašimi službami. Jde o standardní docker-compose formát, jehož referenci najdete [v jeho dokumentaci](https://docs.docker.com/reference/compose-file/). Uvádějte v něm **jen vlastní kontejnery** — kontejner [mgm](mgm.md) (SSH a webový terminál) je Roštím spravovaná systémová služba a v uživatelském compose se neuvádí. Zapínat a vypínat ho lze v záložce **System** v detailu stacku.
 
 Příklad *docker-compose.yml*:
 
@@ -36,11 +36,8 @@ services:
   miniflux:
     image: miniflux/miniflux:latest
     restart: always
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.miniflux.rule=PathPrefix(`/`)"
-      - "traefik.http.routers.miniflux.entrypoints=web"
-      - "traefik.http.services.miniflux.loadbalancer.server.port=8080"
+    ports:
+      - "80:8080"
     environment:
       - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@pgsql/${POSTGRES_DB}?sslmode=disable
       - RUN_MIGRATIONS=1
@@ -62,9 +59,9 @@ Tady jsme vytvořili dvě služby. První je samotná aplikace, v tomto případ
 
 Všimněte si, že jsme nepoužili docker volumes, ale mountujeme adresář `./pgsql-data` s databázovými daty do kontejneru s databází. Tohle je na Roští preferovaný způsob pro ukládání persistentních dat. Takový stack je jednodušší přestěhovat do jiného kontejneru i obnovit ze zálohy.
 
-Co se týká exportování portů, do stacku z internetu vede **jediný HTTP port — 80** a drží si ho systémový Traefik. Vaše HTTP služby tam dostanete přes Traefik labely (jako u `miniflux` výše): `traefik.enable=true`, pravidlo na `entrypoints=web` a u kontejnerů, které vystavují víc než jeden port (nebo žádný přes `EXPOSE`), ještě `traefik.http.services.<jméno>.loadbalancer.server.port=<port>`. Mezi sebou se služby v `services` adresují názvem (zde `miniflux` a `pgsql`), což je vidět v `DATABASE_URL`.
+Co se týká exportování portů, do stacku z internetu vede **jediný HTTP port — 80**. Stačí ho v `docker-compose.yml` namapovat na port aplikace pomocí klíče `ports`, jako u `miniflux` výše (`"80:8080"`). Mezi sebou se služby v `services` adresují názvem (zde `miniflux` a `pgsql`), což je vidět v `DATABASE_URL`.
 
-Pokud potřebujete na portu 80 spustit vlastní reverzní proxy (Nginx, Caddy, …) nebo aplikaci, která si chce port 80 namapovat sama (`ports: ["80:..."]`), vypněte v záložce **System** přepínač *Traefik*. Detaily viz [Traefik](traefik.md).
+Pokud potřebujete na portu 80 obsluhovat víc domén/aplikací najednou, můžete si jako jeden ze svých kontejnerů přidat reverzní proxy (Nginx, Caddy, Traefik, …) a port 80 namapovat na ni. Volitelná systémová instalace Traefiku je popsaná v [Traefik](traefik.md).
 
 !!! note "Compose souboru se přímo na serveru nedotýkejte"
     `docker-compose.yml` v `/srv/stack` má v hlavičce komentář, který upozorňuje, že soubor spravuje administrace. Cokoli, co tam upravíte přes SSH, bude při příští změně z administrace přepsáno. Spolehlivý způsob změn je formulář v záložce *Compose*.
