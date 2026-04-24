@@ -8,12 +8,11 @@ Od přechodu na systémový compose soubor je mgm součástí samostatného comp
 
 ## Zapnutí a vypnutí
 
-V detailu stacku je záložka **System**, kde se dají systémové služby zapínat a vypínat:
+V detailu stacku je záložka **System**, kde se dá mgm zapínat a vypínat:
 
 * **mgm** — SSH přístup pro uživatele `root` a webový terminál. Když mgm vypnete, ztratíte SSH i webový terminál spravovaný Roštím. Pokud SSH potřebujete, musíte si ho nakonfigurovat ve vlastním kontejneru.
-* **Traefik** — reverzní proxy na portu 80. Více v [dokumentaci k Traefiku](traefik.md).
 
-Výchozí stav je, že jsou obě služby zapnuté. Po každé změně přepínače Roští vygeneruje nový TTYD token a systémový compose se znovu nasadí.
+Výchozí stav je, že je mgm zapnuté. Po každé změně přepínače Roští vygeneruje nový TTYD token a systémový compose se znovu nasadí.
 
 ## Co mgm obsahuje
 
