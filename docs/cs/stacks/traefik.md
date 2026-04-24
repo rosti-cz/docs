@@ -1,50 +1,65 @@
-# Traefik Stack
+# Traefik
 
-Traefik je moderní reverse proxy a load balancer, který se vyznačuje automatickým objevováním služeb a dynamickou konfigurací. Ve stacku Traefik slouží jako centrální bod pro směrování HTTP provozu mezi různými kontejnery.
+Traefik je moderní reverse proxy a load balancer s automatickým objevováním služeb a dynamickou konfigurací. Ve stacku slouží jako jediný vstupní bod pro HTTP provoz a směruje požadavky podle Docker labelů na vaše kontejnery.
 
-## Základní koncept
+## Jak Traefik na Roští funguje
 
-Traefik funguje jako "brána" - všechen externí provoz prochází přes něj a podle nakonfigurovaných pravidel se směruje na konkrétní kontejnery. Hlavní výhody:
+Traefik je u stacků **systémová, Roštím spravovaná služba**. V uživatelském `docker-compose.yml` ho **neuvádíte** — žije v samostatném compose souboru `/srv/system/docker-compose.yml`, společně s `mgm` kontejnerem. Zapnutí a vypnutí se ovládá v administraci v záložce **System**:
 
-* **Automatické objevování** - služby se registrují pomocí Docker labels
-* **Dynamická konfigurace** - změny se projeví okamžitě bez restartů
-* **Load balancing** - distribuce zátěže mezi více instancemi
+* **Traefik = on** (výchozí): Roští spustí Traefik kontejner, který si bere port 80 stacku, a vy do něj routujete labely.
+* **Traefik = off**: port 80 zůstane volný — můžete v něm spustit vlastní reverzní proxy nebo přímo aplikaci s `ports: ["80:..."]`.
 
-## Výchozí konfigurace
+## Jediný vstupní HTTP port
 
-Po vytvoření stacku získáte tuto základní konfiguraci:
+Do stacku z internetu vede jen jeden HTTP port — **80**. Vaše aplikace se na něj dostane jedním ze dvou způsobů:
+
+1. **Přes Traefik (výchozí)**
+
+   Kontejner port 80 nepublikuje. Místo toho přes labely říká Traefiku „pošli mi ten provoz":
+
+   ```yaml
+   services:
+     myapp:
+       image: myapp:latest
+       restart: always
+       labels:
+         - "traefik.enable=true"
+         - "traefik.http.routers.myapp.rule=PathPrefix(`/`)"
+         - "traefik.http.routers.myapp.entrypoints=web"
+         # Volitelně, pokud kontejner vystavuje víc portů přes EXPOSE
+         # nebo není-li EXPOSE vůbec, řekněte Traefiku, kam routovat:
+         # - "traefik.http.services.myapp.loadbalancer.server.port=8080"
+   ```
+
+   Pokud má image v `Dockerfile` jediný `EXPOSE`, label se `loadbalancer.server.port` není potřeba — Traefik tento port najde sám. Pokud kontejner žádný port nevystavuje, label musíte uvést.
+
+2. **Bez Traefiku**
+
+   V záložce **System** vypněte přepínač *Traefik*. Roští Traefik kontejner zastaví a port 80 uvolní. Pak musí být v uživatelském compose přesně jeden kontejner, který si port 80 mapuje:
+
+   ```yaml
+   services:
+     myapp:
+       image: myapp:latest
+       restart: always
+       ports:
+         - "80:8080"
+   ```
+
+   V tomto režimu si o případné rozdělení provozu mezi víc domén/aplikací musíte postarat sami (např. vlastním Nginxem nebo Caddy).
+
+!!! warning "Nemíchejte oba způsoby"
+    Pokud je Traefik zapnutý, nezkoušejte zároveň v některém kontejneru `ports: ["80:..."]` — port už drží Traefik a kontejner se nespustí.
+
+## Výchozí konfigurace stacku
+
+Po vytvoření stacku dostanete uživatelský compose, který obsahuje **jen vaše kontejnery**. Reverzní proxy a webový terminál jsou skryté v systémovém compose. Výchozí příklad vypadá takto:
 
 ```yaml
 services:
-  # Management container with a web-based terminal
-  mgm:
-    image: harbor.rosti.cz/rosti-public/mgm:latest
-    environment:
-      TTYD_TOKEN: ABCDEF
-      SET_SHELL: fish # Options: bash, fish, zsh
-    volumes:
-    - /srv/stack:/srv/stack
-    - /root/.docker/:/root/.docker/
-    - /run/docker.sock:/run/docker.sock
-    ports:
-    - 1234:1234
-  
-  # Reverse proxy container
-  traefik:
-    image: "traefik:v3.4"
-    restart: always
-    security_opt:
-    - no-new-privileges:true
-    command:
-    - "--providers.docker=true"
-    - "--providers.docker.exposedbydefault=false"
-    - "--entryPoints.web.address=:80"
-    ports:
-    - "80:80"
-    volumes:
-    - /run/docker.sock:/run/docker.sock:ro
-  
-  # Your containers go here
+  # Vaše kontejnery patří sem. Kontejnery mgm (SSH / webový terminál)
+  # a Traefik (reverzní proxy na portu 80) spravuje Roští v samostatném
+  # systémovém compose souboru a můžete je zapnout či vypnout v záložce System.
   welcome:
     image: harbor.rosti.cz/rosti-public/welcome:latest
     restart: always
@@ -54,25 +69,7 @@ services:
       - "traefik.http.routers.welcome.entrypoints=web"
 ```
 
-## Komponenty stacku
-
-### Management kontejner (mgm)
-
-Poskytuje webový terminál dostupný na portu `1234` pro správu stacku. 
-
-!!! warning "Důležité upozornění"
-    Pokud odstraníte `mgm` kontejner, přestane fungovat webový terminál v administraci. Pro obnovu funkčnosti můžete přidat mgm kontejner z připravených snippetů v administraci.
-
-### Traefik
-
-Hlavní reverse proxy s těmito nastaveními:
-- Naslouchá na portu `80`
-- Automaticky objevuje Docker kontejnery
-- Služby se nezveřejňují automaticky (`exposedbydefault=false`)
-
-### Welcome kontejner
-
-Demonstrační služba ukazující základní použití Traefik labels.
+Tady je ukázán první způsob: kontejner `welcome` se zveřejňuje přes Traefik labely.
 
 ## Směrování provozu
 
