@@ -89,7 +89,7 @@ chmod 777 ./pgsql-data
 ```
 
 !!! warning "Důležité"
-    Skript se spouští jen **jednou při prvním nasazení**, ne při každém `docker compose up`. Pokud stack nasazujete znovu (deploy nového receptu nebo nový stack), skript se spustí znovu.
+    Skript se spouští jen **jednou při prvním nasazení receptu**, ne při každém `docker compose up`. Pokud stejný recept nasadíte znovu do nového stacku, skript se spustí znovu.
 
 !!! tip "Tip"
     Vždy přidejte `set -e` na začátek skriptu — při selhání libovolného příkazu se nasazení zastaví a zobrazí chybu místo aby pokračovalo s nekonzistentním stavem.
