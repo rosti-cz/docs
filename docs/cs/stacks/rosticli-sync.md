@@ -29,7 +29,7 @@ Sync prochází těmito kroky v pořadí:
 `docker-compose.yml` musí splňovat tato pravidla:
 
 - Hlavní služba musí používat image `localhost/app:latest` — to je přesný název, pod kterým Roští image na server nahraje.
-- Port 80 musí být namapován na port, na kterém aplikace naslouchá (Roštíčka reverzní proxy očekává port 80).
+- Port 80 musí být namapován na port, na kterém aplikace naslouchá (naše reverzní proxy očekává port 80).
 - Každá služba musí mít `restart: unless-stopped`, jinak se po restartu serveru nespustí.
 
 Příklad minimálního `docker-compose.yml`:
@@ -47,7 +47,7 @@ services:
       - ./data:/data
 ```
 
-Pokud aplikace potřebuje databázi nebo jiné backing služby (PostgreSQL, Redis, …), přidejte je jako další služby. Jen hlavní aplikace používá `localhost/app:latest` — ostatní služby používají standardní image z Docker Hubu:
+Pokud aplikace potřebuje databázi nebo jiné závislosti (PostgreSQL, Redis, …), přidejte je jako další služby. Jen hlavní aplikace používá `localhost/app:latest` — ostatní služby používají standardní image z Docker Hubu:
 
 ```yaml
 services:
@@ -73,7 +73,7 @@ services:
 
 ### Pomocí AI nástroje
 
-Pokud `Dockerfile` nebo `docker-compose.yml` chybí a máte nainstalovaný některý z podporovaných AI nástrojů, `sync` vám nabídne jejich vygenerování automaticky:
+Pokud `Dockerfile` nebo `docker-compose.yml` chybí a máte nainstalovaný některý z podporovaných AI nástrojů, `sync` vám nabídne jejich vygenerování automaticky pomocí AI:
 
 ```
 $ rosticli stacks sync
@@ -98,7 +98,9 @@ Podporované nástroje (hledají se v `PATH`):
 | Codex | `codex` |
 | Aider | `aider` |
 
-Pokud je dostupný jen jeden nástroj, `sync` se rovnou zeptá na potvrzení. Vybraný nástroj se spustí s předem připraveným promptem, který obsahuje pravidla pro Roști (správný název image, port 80, `restart: unless-stopped` atd.). Po jeho dokončení `sync` zkontroluje, zda soubory vznikly, a pokračuje.
+Pokud je dostupný jen jeden nástroj, `sync` se rovnou zeptá na potvrzení. Vybraný nástroj se spustí s předem připraveným promptem, který obsahuje pravidla pro Roští (správný název image, port 80, `restart: unless-stopped` atd.). Po jeho dokončení `sync` zkontroluje, zda soubory vznikly, a pokračuje.
+
+Některé AI nástroje je potřeba po skončení jejich práce ukončit ručně. Sync bude pak pokračovat.
 
 ## Základní příkazy pro práci se stackem
 
