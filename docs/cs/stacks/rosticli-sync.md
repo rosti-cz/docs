@@ -1,4 +1,4 @@
-# Jednoduchý docker deployment
+# Jednoduchý a rychlý deployment přes CLI
 
 `rosticli stacks sync` je příkaz, který v jednom kroku sestaví Docker image z vašeho projektu, nahraje ho na Roští a spustí stack. Stačí mít v pracovním adresáři `Dockerfile` a `docker-compose.yml` a spustit:
 
