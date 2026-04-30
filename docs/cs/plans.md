@@ -22,3 +22,11 @@ Výběrem poddimenzovaného balíčku se vystavujete riziku, že bude aplikace n
 Balíčky je možné měnit kdykoli a účtovány jsou od okamžiku, kdy změnu provedete. Můžete si tedy
 vyzkoušet, kolik přesně vaše aplikace potřebuje procesorového času a paměti a poté vybrat třeba cenově výhodnější balíček.
 Více informací k rozhodnutí najdete v administraci v sekci grafy.
+
+## Limity procesů a připojení
+
+Každý balíček má kromě RAM, CPU a disku nastaveny dva další limity:
+
+**Limit procesů (PIDs)** omezuje celkový počet procesů a vláken, které může aplikace najednou spustit. Výchozí hodnota je 512. Pokud ji vaše aplikace překročí, nové procesy nepůjde spustit a aplikace může selhat s chybou podobnou `fork: retry: Resource temporarily unavailable`. To se typicky stává u aplikací, které spouštějí hodně paralelních workerů, nebo při build fázi závislostí (npm install, pip install, …).
+
+**Limit připojení (Max connections)** omezuje počet souběžných HTTP připojení, která reverzní proxy přijme pro vaši aplikaci. Výchozí hodnota je 8192. Při překročení tohoto limitu vrátí reverzní proxy chybu `503`. Pokud očekáváte vysokou návštěvnost, kontaktujte podporu.

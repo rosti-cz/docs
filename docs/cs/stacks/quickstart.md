@@ -23,6 +23,12 @@ A ty si na následujících řádcích rozepíšeme. Nejprve ale musíme stack v
 
 V závislosti na velikosti provozovaných služeb si vyberte profil. Berte v úvahu, že do diskového prostoru se počítá vše včetně dat systému.
 
+Každý profil má kromě vCPU, RAM a disku nastaveny také dva limity:
+
+**Limit procesů (PIDs)** omezuje celkový počet procesů a vláken běžících v rámci stacku. Pokud ho vaše kontejnery překročí, Docker nebude moci spouštět nové procesy a aplikace mohou hlásit chyby jako `fork: retry: Resource temporarily unavailable`.
+
+**Limit připojení (Max connections)** omezuje počet souběžných HTTP připojení na port 80, která reverzní proxy přijme. Při překročení vrátí proxy chybu `503`. V případě potřeby vyššího limitu kontaktujte podporu.
+
 ### Nastavení docker-compose.yml a .env
 
 Hned po vytvoření stacku administrace zobrazí formulář pro nastavení souborů *docker-compose.yml* a *.env*. Soubor *.env* může být použit jako úložiště pro konfiguraci a hesla.
