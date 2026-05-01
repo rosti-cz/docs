@@ -1,9 +1,9 @@
 # Jednoduchý a rychlý deployment přes CLI
 
-`rosticli stacks sync` je příkaz, který v jednom kroku sestaví Docker image z vašeho projektu, nahraje ho na Roští a spustí stack. Stačí mít v pracovním adresáři `Dockerfile` a `docker-compose.yml` a spustit:
+`rosticli stacks push` je příkaz, který v jednom kroku sestaví Docker image z vašeho projektu, nahraje ho na Roští a spustí stack. Stačí mít v pracovním adresáři `Dockerfile` a `docker-compose.yml` a spustit:
 
 ```
-rosticli stacks sync
+rosticli stacks push
 ```
 
 Při prvním spuštění se automaticky vytvoří nový stack (pokud ještě neexistuje) a uloží se jeho identifikátor do souboru `.rostistate`. Při každém dalším volání `sync` se stack **aktualizuje** — nahraje se nový image a stack se restartuje. Aktualizace aplikace je tedy vždy jen jeden příkaz.
@@ -76,7 +76,7 @@ services:
 Pokud `Dockerfile` nebo `docker-compose.yml` chybí a máte nainstalovaný některý z podporovaných AI nástrojů, `sync` vám nabídne jejich vygenerování automaticky pomocí AI:
 
 ```
-$ rosticli stacks sync
+$ rosticli stacks push
 
 ==> Checking prerequisites
 ! Dockerfile and docker-compose.yml are not found in the current directory.
@@ -135,7 +135,7 @@ rosticli stacks start
 Kdykoli chcete nasadit novou verzi kódu, stačí znovu spustit:
 
 ```
-rosticli stacks sync
+rosticli stacks push
 ```
 
 Sync je idempotentní — pokud se nic nezměnilo, projde beze škody. Pokud se změnil kód, sestaví nový image a provede rolling restart.

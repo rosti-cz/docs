@@ -10,7 +10,7 @@ nav:
       - "5. Použití nástroje rostictl": cs/quickstart/rostictl.md
     - "Stacky":
       - Quickstack průvodce: cs/stacks/quickstart.md
-      - Jednoduchý a rychlý deployment přes CLI: cs/stacks/rosticli-sync.md
+      - Jednoduchý a rychlý deployment přes CLI: cs/stacks/rosticli-push.md
       - Rozdíl mezi aplikacemi a stacky: cs/stacks/apps-vs-stacks.md
       - MGM kontejner: cs/stacks/mgm.md
       - Routování s Traefik: cs/stacks/traefik.md
