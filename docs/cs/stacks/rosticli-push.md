@@ -1,4 +1,4 @@
-# Jednoduchý a rychlý deployment přes CLI
+# Nasazení přes CLI (`rosticli stacks push`)
 
 `rosticli stacks push` je příkaz, který v jednom kroku sestaví Docker image z vašeho projektu, nahraje ho na Roští a spustí stack. Stačí mít v pracovním adresáři `Dockerfile` a `docker-compose.yml` a spustit:
 
@@ -6,13 +6,21 @@
 rosticli stacks push
 ```
 
-Při prvním spuštění se automaticky vytvoří nový stack (pokud ještě neexistuje) a uloží se jeho identifikátor do souboru `.rostistate`. Při každém dalším volání `sync` se stack **aktualizuje** — nahraje se nový image a stack se restartuje. Aktualizace aplikace je tedy vždy jen jeden příkaz.
+Při prvním spuštění se automaticky vytvoří nový stack (pokud ještě neexistuje) a uloží se jeho identifikátor do souboru `.rostistate`. **Nemusíte stack předem vytvářet v administraci** — příkaz se vás zeptá na název a profil (velikost VM) a stack vytvoří sám. Při každém dalším volání příkazu se stack **aktualizuje** — nahraje se nový image a stack se restartuje. Aktualizace aplikace je tedy vždy jen jeden příkaz.
 
-## Co sync dělá
+Pokud chcete příkaz spustit pro konkrétní existující stack, předejte jeho ID příznakem `--stack-id`:
 
-Sync prochází těmito kroky v pořadí:
+```
+rosticli stacks push --stack-id 42
+```
 
-1. **Kontrola prerekvizit** — ověří, zda jsou přítomny `Dockerfile`, `docker-compose.yml` a příkaz `docker`.
+ID stacku najdete v administraci nebo ve výpisu `rosticli stacks list`. Pokud je adresář už spárovaný s jiným stackem (soubor `.rostistate`), příkaz upozorní na konflikt a odmítne pokračovat.
+
+## Co push dělá
+
+Push prochází těmito kroky v pořadí:
+
+1. **Kontrola prerekvizit** — ověří, zda jsou přítomny `Dockerfile`, `docker-compose.yml` a příkaz `docker`. Pokud chybí a máte k dispozici podporovaný AI nástroj, nabídne jejich vygenerování.
 2. **Výběr společnosti** — použije uloženou hodnotu z `.rostistate`, nebo se zeptá interaktivně.
 3. **Vytvoření stacku** — pokud stack ještě neexistuje, vytvoří ho (název se odvozuje od aktuálního adresáře, lze přepsat příznakem `--name`).
 4. **SSH klíč** — vygeneruje sdílený ed25519 klíč a nainstaluje ho na stack (jednorázově).
@@ -22,7 +30,41 @@ Sync prochází těmito kroky v pořadí:
 8. **Nahrání docker-compose.yml** — obsah souboru se nahraje na stack tak, jak je.
 9. **Spuštění** — `docker compose up -d`
 
+Po dokončení příkaz vypíše URL nasazené aplikace a připomene příkaz pro další nasazení.
+
 ## Příprava Dockerfile a docker-compose.yml
+
+### Pomocí AI nástroje
+
+Pokud `Dockerfile` nebo `docker-compose.yml` chybí, `push` to automaticky detekuje. Pokud máte na počítači nainstalovaný a nakonfigurovaný některý z podporovaných AI nástrojů, nabídne ho k vygenerování obou souborů:
+
+```
+$ rosticli stacks push
+
+==> Checking prerequisites
+! Dockerfile and docker-compose.yml are not found in the current directory.
+An AI coding assistant can generate them for this project.
+
+Available AI tools:
+  [1] Claude Code (claude)
+  [2] GitHub Copilot (copilot)
+  [3] OpenCode (opencode)
+  [4] Skip / create files manually
+Select [1-4]:
+```
+
+Podporované nástroje (hledají se v `PATH`):
+
+| Nástroj | Příkaz |
+|---|---|
+| Claude Code | `claude` |
+| GitHub Copilot | `copilot` |
+| OpenCode | `opencode` |
+| Codex | `codex` |
+
+Pokud je dostupný jen jeden nástroj, `push` se rovnou zeptá na potvrzení. Vybraný nástroj se spustí s předem připraveným promptem, který obsahuje pravidla pro Roští (správný název image, port 80, `restart: unless-stopped` atd.). Po jeho dokončení `push` zkontroluje, zda soubory vznikly, a pokračuje.
+
+Některé AI nástroje je potřeba po skončení jejich práce ukončit ručně. Push pak bude pokračovat.
 
 ### Ručně
 
@@ -71,40 +113,9 @@ services:
       - ./data/postgres:/var/lib/postgresql/data
 ```
 
-### Pomocí AI nástroje
-
-Pokud `Dockerfile` nebo `docker-compose.yml` chybí a máte nainstalovaný některý z podporovaných AI nástrojů, `sync` vám nabídne jejich vygenerování automaticky pomocí AI:
-
-```
-$ rosticli stacks push
-
-==> Checking prerequisites
-! Dockerfile and docker-compose.yml are not found in the current directory.
-An AI coding assistant can generate them for this project.
-
-Available AI tools:
-  [1] Claude Code (claude)
-  [2] OpenCode (opencode)
-  [3] Skip / create files manually
-Select [1-3]:
-```
-
-Podporované nástroje (hledají se v `PATH`):
-
-| Nástroj | Příkaz |
-|---|---|
-| Claude Code | `claude` |
-| OpenCode | `opencode` |
-| Codex | `codex` |
-| Aider | `aider` |
-
-Pokud je dostupný jen jeden nástroj, `sync` se rovnou zeptá na potvrzení. Vybraný nástroj se spustí s předem připraveným promptem, který obsahuje pravidla pro Roští (správný název image, port 80, `restart: unless-stopped` atd.). Po jeho dokončení `sync` zkontroluje, zda soubory vznikly, a pokračuje.
-
-Některé AI nástroje je potřeba po skončení jejich práce ukončit ručně. Sync bude pak pokračovat.
-
 ## Základní příkazy pro práci se stackem
 
-Po úspěšném `sync` jsou stack ID a SSH endpoint uloženy v `.rostistate`. Všechny příkazy níže je načtou automaticky, pokud je voláte ze stejného adresáře.
+Po úspěšném `push` jsou stack ID a SSH endpoint uloženy v `.rostistate`. Všechny příkazy níže je načtou automaticky, pokud je voláte ze stejného adresáře.
 
 **Zobrazení informací o stacku:**
 
@@ -138,4 +149,14 @@ Kdykoli chcete nasadit novou verzi kódu, stačí znovu spustit:
 rosticli stacks push
 ```
 
-Sync je idempotentní — pokud se nic nezměnilo, projde beze škody. Pokud se změnil kód, sestaví nový image a provede rolling restart.
+Push je idempotentní — pokud se nic nezměnilo, projde beze škody. Pokud se změnil kód, sestaví nový image a provede rolling restart.
+
+## Přechod na automatizované CI/CD
+
+Jakmile ruční `push` nestačí a chcete, aby se každý commit nebo release automaticky nasadil bez ručního spuštění, použijte příkaz `setup-cicd`:
+
+```
+rosticli stacks setup-cicd
+```
+
+Příkaz vytvoří GitHub Actions workflow, nakonfiguruje GitHub secrets a nastaví stack tak, aby si image po každém buildu sám stáhl a restartoval. Více o tomto způsobu nasazení najdete v sekci [Možnost 3: GitHub Actions](quickstart.md#moznost-3-automatizovane-cicd-pres-github-actions) v průvodci quickstartem.

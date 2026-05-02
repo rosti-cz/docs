@@ -1,5 +1,8 @@
 # Nástroj rostictl
 
+!!! warning "Zastaralý nástroj"
+    `rostictl` je deprecated a již není aktivně vyvíjen. Pro nové projekty doporučujeme přejít na **Stacky** a nový CLI nástroj **rosticli**, který nabízí jednodušší a výkonnější workflow. Více informací najdete v [průvodci Stacky](../stacks/quickstart.md) a na stránce [nasazení přes CLI](../stacks/rosticli-push.md).
+
 Když jsme přidali do naší služby API, nemělo to být jen rozšíření možností naší administrace o skriptování, ale měli jsme s ním i vlastní plány. Ty jsme zhmotnily do utilitky s názvem *rostictl*, která na první pohled umožňuje používat naše API v příkazové řádce, ale ve skutečnosti je to spíše workflow pro nasazení aplikací do naší infrastruktury. *Rostictl* používá naše API a integrovaného SSH klienta a zvládne:
 
 * Zkontrolovat váš projekt, zda má všechno co je potřeba,

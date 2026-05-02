@@ -2,22 +2,9 @@
 
 Stack je kontejner, ve kterém běží Docker a můžete si v něm spouštět vlastní sadu kontejnerů nadefinovanou pomocí `docker-compose.yml`. Pro kopírování dat a debugging máte k dispozici *SSH* a *SFTP*. Jedná se o službu pro provoz HTTP serverů, kde není možné zpřístupnit ven jakýkoli port, ale pouze jeden HTTP port (80), na který budou přes reverzní proxy nasměrovány vybrané domény. Na vnitřní síti je možné spustit libovolné služby. Například databáze, message brokery, migrační kontejnery, proxy servery a podobně.
 
-Níže najdete návod, jak postupovat při vytváření nového stacku. Zkrácenou verzi návodu můžete shlédnout i v našem videu:
-
-<div>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/0Iknowl6cpY?si=x0qwajNRkHw_4r7A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-</div>
-
 ## Vytvoření stacku
 
-Vytvoření nového stacku by se dalo shrnout do následujících bodů:
-
-* Vytvořit stack,
-* přidat docker-compose.yml a .env,
-* nastavit SSH klíče nebo heslo,
-* přiřadit domény.
-
-A ty si na následujících řádcích rozepíšeme. Nejprve ale musíme stack vytvořit v sekci Stacky.
+Nejprve stack vytvořte v sekci Stacky v administraci.
 
 ![Nový stack](../../imgs/stacks/create.png)
 
@@ -29,11 +16,17 @@ Každý profil má kromě vCPU, RAM a disku nastaveny také dva limity:
 
 **Limit připojení (Max connections)** omezuje počet souběžných HTTP připojení na port 80, která reverzní proxy přijme. Při překročení vrátí proxy chybu `503`. V případě potřeby vyššího limitu kontaktujte podporu.
 
-### Nastavení docker-compose.yml a .env
+## Nasazení aplikace
 
-Hned po vytvoření stacku administrace zobrazí formulář pro nastavení souborů *docker-compose.yml* a *.env*. Soubor *.env* může být použit jako úložiště pro konfiguraci a hesla.
+Po vytvoření stacku máte na výběr ze tří způsobů nasazení. Každý se hodí pro jinou situaci.
 
-Soubor *docker-compose.yml* pak popisuje jak spustit kontejnery s vašimi službami. Jde o standardní docker-compose formát, jehož referenci najdete [v jeho dokumentaci](https://docs.docker.com/reference/compose-file/). Uvádějte v něm **jen vlastní kontejnery** — kontejner [mgm](mgm.md) (SSH a webový terminál) je Roštím spravovaná systémová služba a v uživatelském compose se neuvádí. Zapínat a vypínat ho lze v záložce **System** v detailu stacku.
+### Možnost 1: Compose editor
+
+Nejjednodušší způsob — `docker-compose.yml` upravíte přímo ve webovém rozhraní v záložce *Compose* a kliknete na *Aktualizovat a spustit*. Žádné nástroje navíc nejsou potřeba.
+
+**Vhodné pro:** rychlé experimenty nebo veřejné image z Docker Hubu. Nevyžaduje žádné nástroje navíc.
+
+Soubor *docker-compose.yml* popisuje, jak spustit kontejnery s vašimi službami. Jde o standardní docker-compose formát, jehož referenci najdete [v jeho dokumentaci](https://docs.docker.com/reference/compose-file/). Uvádějte v něm **jen vlastní kontejnery** — kontejner [mgm](mgm.md) (SSH a webový terminál) je Roštím spravovaná systémová služba a v uživatelském compose se neuvádí. Zapínat a vypínat ho lze v záložce **System** v detailu stacku.
 
 Příklad *docker-compose.yml*:
 
@@ -93,6 +86,54 @@ Pokud v této fázi potřebujete nahrát ke službám nějaká data, tak můžet
 
 !!! warning "Upozornění"
     Je důležité všechny soubory udržet v adresáři /srv/stack, kde systém vaše data očekává.
+
+### Možnost 2: Nasazení přes CLI (`rosticli stacks push`)
+
+Příkaz `push` sestaví Docker image lokálně na vašem počítači a přenese ho přímo do stacku přes SSH. Příkaz je idempotentní — spusťte ho znovu kdykoli se změní kód.
+
+**Vhodné pro:** jednotlivce nebo malé týmy, kteří nasazují ze svého počítače a zatím nepotřebují plně automatizovaný pipeline.
+
+Pokud ještě nemáte `Dockerfile` nebo `docker-compose.yml`, nemusíte se bát — `rosticli stacks push` to automaticky detekuje. Pokud máte na počítači nainstalovaný a nakonfigurovaný některý z podporovaných AI nástrojů (Claude, Copilot, opencode nebo Codex), nabídne ho k vygenerování obou souborů.
+
+**Instalace rosticli** — [rosti.cz/cli](https://rosti.cz/cli)
+
+```
+Linux/macOS:  curl -fsSL https://rosti.cz/cli/install.sh | sh
+Windows:      irm https://rosti.cz/cli/install.ps1 | iex
+```
+
+Spusťte z adresáře vašeho projektu:
+
+```
+rosticli stacks push
+```
+
+Podrobný popis příkazu a jeho možností najdete na stránce [Jednoduchý a rychlý deployment přes CLI](rosticli-push.md).
+
+### Možnost 3: Automatizované CI/CD přes GitHub Actions
+
+Příkaz `setup-cicd` vytvoří GitHub Actions workflow, který při každém pushnutí sestaví Docker image, uloží ho do GitHub Container Registry a přikáže stacku, aby si ho stáhl a restartoval. Zároveň nakonfiguruje potřebné GitHub secrets a udělí stacku přístup k vašemu container registry.
+
+**Vhodné pro:** týmy nebo projekty, kde má každý commit nebo release automaticky nasadit novou verzi bez ručních kroků.
+
+Vyžaduje, aby měl váš projekt GitHub repozitář nastavený jako git remote `origin`.
+
+Pokud ještě nemáte `Dockerfile` nebo `docker-compose.yml`, příkaz to automaticky detekuje. Pokud máte na počítači nainstalovaný a nakonfigurovaný některý z podporovaných AI nástrojů (Claude, Copilot, opencode nebo Codex), nabídne ho k vygenerování obou souborů.
+
+**Instalace rosticli** — [rosti.cz/cli](https://rosti.cz/cli)
+
+```
+Linux/macOS:  curl -fsSL https://rosti.cz/cli/install.sh | sh
+Windows:      irm https://rosti.cz/cli/install.ps1 | iex
+```
+
+Spusťte z adresáře vašeho projektu:
+
+```
+rosticli stacks setup-cicd
+```
+
+## Správa stacku
 
 ### Správa služeb
 
