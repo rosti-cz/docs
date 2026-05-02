@@ -3,8 +3,11 @@
 `rosticli stacks push` je příkaz, který v jednom kroku sestaví Docker image z vašeho projektu, nahraje ho na Roští a spustí stack. Stačí mít v pracovním adresáři `Dockerfile` a `docker-compose.yml` a spustit:
 
 ```
+rosticli login    # pouze při prvním použití — otevře prohlížeč
 rosticli stacks push
 ```
+
+`rosticli login` otevře přihlašovací stránku v prohlížeči. Po potvrzení se token uloží a příkaz není třeba opakovat. Pokud preferujete ruční zadání tokenu, použijte `rosticli login --no-browser`.
 
 Při prvním spuštění se automaticky vytvoří nový stack (pokud ještě neexistuje) a uloží se jeho identifikátor do souboru `.rostistate`. **Nemusíte stack předem vytvářet v administraci** — příkaz se vás zeptá na název a profil (velikost VM) a stack vytvoří sám. Při každém dalším volání příkazu se stack **aktualizuje** — nahraje se nový image a stack se restartuje. Aktualizace aplikace je tedy vždy jen jeden příkaz.
 

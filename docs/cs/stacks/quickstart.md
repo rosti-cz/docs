@@ -105,8 +105,11 @@ Windows:      irm https://rosti.cz/cli/install.ps1 | iex
 Spusťte z adresáře vašeho projektu:
 
 ```
+rosticli login
 rosticli stacks push
 ```
+
+Příkaz `login` otevře prohlížeč s přihlašovací stránkou. Po potvrzení se token automaticky uloží. Pokud chcete token zadat ručně, použijte `rosticli login --no-browser`.
 
 Podrobný popis příkazu a jeho možností najdete na stránce [Jednoduchý a rychlý deployment přes CLI](rosticli-push.md).
 
@@ -127,7 +130,7 @@ Linux/macOS:  curl -fsSL https://rosti.cz/cli/install.sh | sh
 Windows:      irm https://rosti.cz/cli/install.ps1 | iex
 ```
 
-Spusťte z adresáře vašeho projektu:
+Spusťte z adresáře vašeho projektu (při prvním použití nejdřív `rosticli login`):
 
 ```
 rosticli stacks setup-cicd
