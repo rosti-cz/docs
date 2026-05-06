@@ -50,10 +50,13 @@ An AI coding assistant can generate them for this project.
 
 Available AI tools:
   [1] Claude Code (claude)
-  [2] GitHub Copilot (copilot)
-  [3] OpenCode (opencode)
-  [4] Skip / create files manually
-Select [1-4]:
+  [2] OpenCode (opencode)
+  [3] Gemini CLI (gemini)
+  [4] Cursor Agent (cursor-agent)
+  [5] Codex (codex)
+  [6] Aider (aider)
+  [7] Skip / create files manually
+Select [1-7]:
 ```
 
 Podporované nástroje (hledají se v `PATH`):
@@ -61,11 +64,13 @@ Podporované nástroje (hledají se v `PATH`):
 | Nástroj | Příkaz |
 |---|---|
 | Claude Code | `claude` |
-| GitHub Copilot | `copilot` |
 | OpenCode | `opencode` |
+| Gemini CLI | `gemini` |
+| Cursor Agent | `cursor-agent` (alternativně `cursor`) |
 | Codex | `codex` |
+| Aider | `aider` |
 
-Pokud je dostupný jen jeden nástroj, `push` se rovnou zeptá na potvrzení. Vybraný nástroj se spustí s předem připraveným promptem, který obsahuje pravidla pro Roští (správný název image, port 80, `restart: unless-stopped` atd.). Po jeho dokončení `push` zkontroluje, zda soubory vznikly, a pokračuje.
+Pokud je dostupný jen jeden nástroj, `push` se rovnou zeptá na potvrzení. Vybraný nástroj se spustí s předem připraveným promptem, který obsahuje pravidla pro Roští (správný název image, port 80, `restart: unless-stopped` atd.) a zároveň mu říká, aby po vytvoření nebo úpravě `Dockerfile` zkusil lokální `docker build` a případné chyby opravil. Po jeho dokončení `push` zkontroluje, zda soubory vznikly, a pokračuje.
 
 Některé AI nástroje je potřeba po skončení jejich práce ukončit ručně. Push pak bude pokračovat.
 
@@ -163,3 +168,52 @@ rosticli stacks setup-cicd
 ```
 
 Příkaz vytvoří GitHub Actions workflow, nakonfiguruje GitHub secrets a nastaví stack tak, aby si image po každém buildu sám stáhl a restartoval. Více o tomto způsobu nasazení najdete v sekci [Možnost 3: GitHub Actions](quickstart.md#moznost-3-automatizovane-cicd-pres-github-actions) v průvodci quickstartem.
+
+## Použití v automatizaci a AI nástrojích
+
+Příkazy `push` a `setup-cicd` lze spustit bez interaktivních dotazů pomocí příznaku `--no-input` doplněného o potřebné identifikátory:
+
+```
+rosticli stacks push --no-input --company-id 123 --profile-id 2 --name moje-app
+```
+
+```
+rosticli stacks setup-cicd --no-input --company-id 123 --profile-id 2 --name moje-app
+```
+
+Pokud `--no-input` použijete bez potřebných příznaků (např. máte více společností a neuvedete `--company-id`), příkaz skončí s chybou, která popisuje, co chybí.
+
+Pro AI asistenty můžete nainstalovat vestavěný skill příkazem `rosticli install-ai-skills`.
+
+Příkaz projde podporované nástroje (OpenCode, Cursor, Claude Code, Codex, Gemini CLI, Aider a VS Code), zjistí které jsou dostupné v `PATH` a nainstaluje `rosti-deploy` do správného umístění pro každý z nich.
+
+Pro pohodlnější práci v terminálu můžete vygenerovat shell completion: `rosticli completion bash`, `rosticli completion zsh` nebo `rosticli completion fish` (aliasy `rosticli completion shell` a `rosticli completion sh` fungují stejně jako `bash`).
+
+Příklady aktivace completion:
+
+```bash
+# Bash (uloží skript a načte ho v aktuálním shellu)
+rosticli completion bash > ~/.local/share/bash-completion/completions/rosticli
+source ~/.local/share/bash-completion/completions/rosticli
+
+# Zsh
+rosticli completion zsh > ~/.zfunc/_rosticli
+
+# Fish
+rosticli completion fish > ~/.config/fish/completions/rosticli.fish
+```
+
+### Příznaky
+
+| Příznak | Příkaz | Popis |
+|---|---|---|
+| `--company-id` | `push`, `setup-cicd` | ID společnosti (organization). Povinné pokud máte více společností a používáte `--no-input`. |
+| `--profile-id` | `push`, `setup-cicd` | ID profilu (velikost VM). Povinné při vytváření nového stacku s `--no-input`. |
+| `--name` | `push`, `setup-cicd` | Název stacku. Výchozí hodnota je název aktuálního adresáře. |
+| `--stack-id` | `push`, `setup-cicd` | Použije existující stack místo vytváření nového. |
+| `--no-input` | `push`, `setup-cicd` | Zakáže interaktivní dotazy — příkaz skončí chybou místo čekání na vstup. |
+| `--disable-ai` | `push`, `setup-cicd` | Zakáže nabídku AI generování Dockerfile/docker-compose.yml — příkaz skončí chybou, pokud soubory chybí. |
+| `--no-build` | `push` | Přeskočí `docker build` a `docker save` — nahraje jen compose a spustí stack. |
+| `--no-up` | `push` | Přeskočí finální `docker compose up`. |
+
+ID společnosti zjistíte příkazem `rosticli companies`. ID profilu pak zjistíte příkazem `rosticli stacks profiles`.

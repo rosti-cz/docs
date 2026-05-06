@@ -93,7 +93,7 @@ Příkaz `push` sestaví Docker image lokálně na vašem počítači a přenese
 
 **Vhodné pro:** jednotlivce nebo malé týmy, kteří nasazují ze svého počítače a zatím nepotřebují plně automatizovaný pipeline.
 
-Pokud ještě nemáte `Dockerfile` nebo `docker-compose.yml`, nemusíte se bát — `rosticli stacks push` to automaticky detekuje. Pokud máte na počítači nainstalovaný a nakonfigurovaný některý z podporovaných AI nástrojů (Claude, Copilot, opencode nebo Codex), nabídne ho k vygenerování obou souborů.
+Pokud ještě nemáte `Dockerfile` nebo `docker-compose.yml`, nemusíte se bát — `rosticli stacks push` to automaticky detekuje. Pokud máte na počítači nainstalovaný a nakonfigurovaný některý z podporovaných AI nástrojů (Claude, OpenCode, Gemini CLI, Cursor Agent, Codex nebo Aider), nabídne ho k vygenerování obou souborů a prompt zároveň AI řekne, aby `Dockerfile` ověřil lokálním `docker build` a případné chyby opravil.
 
 **Instalace rosticli** — [rosti.cz/cli](https://rosti.cz/cli)
 
@@ -109,6 +109,24 @@ rosticli login
 rosticli stacks push
 ```
 
+Pokud budete chtít nasazovat neinteraktivně s `--company-id` a `--profile-id`, použijte nejdřív `rosticli companies` a potom `rosticli stacks profiles --company-id <ID_SPOLECNOSTI>`.
+
+Pro AI asistenty můžete nainstalovat vestavěný skill příkazem `rosticli install-ai-skills`.
+
+Příkaz zkontroluje podporované AI nástroje a nainstaluje `rosti-deploy` jen tam, kde je odpovídající CLI dostupné v `PATH`.
+
+Pro pohodlnější práci v terminálu lze vygenerovat completion skript příkazem `rosticli completion bash`, `rosticli completion zsh` nebo `rosticli completion fish` (aliasy `shell` a `sh` generují Bash completion).
+
+Příklady:
+
+```bash
+# Bash
+rosticli completion bash > ~/.local/share/bash-completion/completions/rosticli
+
+# Fish
+rosticli completion fish > ~/.config/fish/completions/rosticli.fish
+```
+
 Příkaz `login` otevře prohlížeč s přihlašovací stránkou. Po potvrzení se token automaticky uloží. Pokud chcete token zadat ručně, použijte `rosticli login --no-browser`.
 
 Podrobný popis příkazu a jeho možností najdete na stránce [Jednoduchý a rychlý deployment přes CLI](rosticli-push.md).
@@ -121,7 +139,7 @@ Příkaz `setup-cicd` vytvoří GitHub Actions workflow, který při každém pu
 
 Vyžaduje, aby měl váš projekt GitHub repozitář nastavený jako git remote `origin`.
 
-Pokud ještě nemáte `Dockerfile` nebo `docker-compose.yml`, příkaz to automaticky detekuje. Pokud máte na počítači nainstalovaný a nakonfigurovaný některý z podporovaných AI nástrojů (Claude, Copilot, opencode nebo Codex), nabídne ho k vygenerování obou souborů.
+Pokud ještě nemáte `Dockerfile` nebo `docker-compose.yml`, příkaz to automaticky detekuje. Pokud máte na počítači nainstalovaný a nakonfigurovaný některý z podporovaných AI nástrojů (Claude, OpenCode, Gemini CLI, Cursor Agent, Codex nebo Aider), nabídne ho k vygenerování obou souborů a prompt zároveň AI řekne, aby `Dockerfile` ověřil lokálním `docker build` a případné chyby opravil.
 
 **Instalace rosticli** — [rosti.cz/cli](https://rosti.cz/cli)
 
@@ -135,6 +153,8 @@ Spusťte z adresáře vašeho projektu (při prvním použití nejdřív `rostic
 ```
 rosticli stacks setup-cicd
 ```
+
+Pro neinteraktivní režim (`--company-id`, `--profile-id`) platí stejný postup: `rosticli companies` a `rosticli stacks profiles --company-id <ID_SPOLECNOSTI>`.
 
 ## Správa stacku
 
