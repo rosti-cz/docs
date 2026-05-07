@@ -185,7 +185,7 @@ Pokud `--no-input` použijete bez potřebných příznaků (např. máte více s
 
 Pro AI asistenty můžete nainstalovat vestavěný skill příkazem `rosticli install-ai-skills`.
 
-Příkaz projde podporované nástroje (OpenCode, Cursor, Claude Code, Codex, Gemini CLI, Aider a VS Code), zjistí které jsou dostupné v `PATH` a nainstaluje `rosti-deploy` do správného umístění pro každý z nich.
+Příkaz projde podporované nástroje (OpenCode, Cursor, Claude Code, Codex, Gemini CLI, Aider, VS Code a GitHub Copilot), zjistí které jsou dostupné v `PATH` nebo podle lokální konfigurace a nainstaluje `rosti-deploy` do správného umístění pro každý z nich.
 
 Pro pohodlnější práci v terminálu můžete vygenerovat shell completion: `rosticli completion bash`, `rosticli completion zsh` nebo `rosticli completion fish` (aliasy `rosticli completion shell` a `rosticli completion sh` fungují stejně jako `bash`).
 
