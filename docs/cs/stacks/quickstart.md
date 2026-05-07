@@ -99,7 +99,7 @@ Pokud ještě nemáte `Dockerfile` nebo `docker-compose.yml`, nemusíte se bát 
 
 ```
 Linux/macOS:  curl -fsSL https://rosti.cz/cli/install.sh | sh
-Windows:      irm https://rosti.cz/cli/install.ps1 | iex
+Windows:      iex ([System.Text.Encoding]::UTF8.GetString((iwr -useb https://rosti.cz/cli/install.ps1).Content))
 ```
 
 Spusťte z adresáře vašeho projektu:
@@ -145,7 +145,7 @@ Pokud ještě nemáte `Dockerfile` nebo `docker-compose.yml`, příkaz to automa
 
 ```
 Linux/macOS:  curl -fsSL https://rosti.cz/cli/install.sh | sh
-Windows:      irm https://rosti.cz/cli/install.ps1 | iex
+Windows:      iex ([System.Text.Encoding]::UTF8.GetString((iwr -useb https://rosti.cz/cli/install.ps1).Content))
 ```
 
 Spusťte z adresáře vašeho projektu (při prvním použití nejdřív `rosticli login`):
