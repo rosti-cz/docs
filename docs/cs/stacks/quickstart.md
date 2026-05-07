@@ -113,7 +113,7 @@ Pokud budete chtít nasazovat neinteraktivně s `--company-id` a `--profile-id`,
 
 Pro AI asistenty můžete nainstalovat vestavěný skill příkazem `rosticli install-ai-skills`.
 
-Příkaz zkontroluje podporované AI nástroje a nainstaluje `rosti-deploy` jen tam, kde je odpovídající CLI dostupné v `PATH`.
+Příkaz zkontroluje podporované AI nástroje (včetně GitHub Copilot) a nainstaluje `rosti-deploy` jen tam, kde je odpovídající nástroj dostupný přes CLI nebo lokální konfiguraci.
 
 Pro pohodlnější práci v terminálu lze vygenerovat completion skript příkazem `rosticli completion bash`, `rosticli completion zsh` nebo `rosticli completion fish` (aliasy `shell` a `sh` generují Bash completion).
 
