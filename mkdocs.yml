@@ -52,7 +52,9 @@ nav:
         - "SMTP server pro odchozí emaily": cs/smtp.md
         - "Špatné NS záznamy": cs/wrong_ns.md
         - "DNSSEC": cs/dnssec.md
+        - "Doménové kontakty": cs/domain_contacts.md
         - "API": cs/api.md
+        - "Přístupové klíče (Passkeys)": cs/passkeys.md
         - "FAQ": cs/faq.md
     - "Stará dokumentace": old/index.md
 #theme: readthedocs
