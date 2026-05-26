@@ -93,7 +93,7 @@ Příkaz `push` sestaví Docker image lokálně na vašem počítači a přenese
 
 **Vhodné pro:** jednotlivce nebo malé týmy, kteří nasazují ze svého počítače a zatím nepotřebují plně automatizovaný pipeline.
 
-Pokud ještě nemáte `Dockerfile` nebo `docker-compose.yml`, nemusíte se bát — `rosticli stacks push` to automaticky detekuje. Pokud máte na počítači nainstalovaný a nakonfigurovaný některý z podporovaných AI nástrojů (Claude, OpenCode, Gemini CLI, Cursor Agent, Codex nebo Aider), nabídne ho k vygenerování obou souborů a prompt zároveň AI řekne, aby `Dockerfile` ověřil lokálním `docker build` a případné chyby opravil.
+Před prvním spuštěním `push` je třeba projekt inicializovat příkazem `stacks init`. Ten vygeneruje potřebné soubory (nebo nabídne jejich vytvoření přes AI) a připraví stack na Roští. Pokud máte na počítači nainstalovaný a nakonfigurovaný některý z podporovaných AI nástrojů (Claude, OpenCode, Gemini CLI, Cursor Agent, Codex nebo Aider), nabídne ho k vygenerování `Dockerfile` a `docker-compose.yml` a prompt zároveň AI řekne, aby `Dockerfile` ověřil lokálním `docker build` a případné chyby opravil.
 
 **Instalace rosticli** — [rosti.cz/cli](https://rosti.cz/cli)
 
@@ -105,31 +105,25 @@ Windows:      iex ([System.Text.Encoding]::UTF8.GetString((iwr -useb https://ros
 Spusťte z adresáře vašeho projektu:
 
 ```
-rosticli login
-rosticli stacks push
+rosticli login          # pouze při prvním použití
+rosticli stacks init    # první spuštění: vygeneruje soubory, vytvoří stack, připraví SSH
+rosticli stacks push    # sestaví image a nasadí
 ```
 
-Pokud budete chtít nasazovat neinteraktivně s `--company-id` a `--profile-id`, použijte nejdřív `rosticli companies` a potom `rosticli stacks profiles --company-id <ID_SPOLECNOSTI>`.
+Při každém dalším nasazení stačí spustit `rosticli stacks push`.
+
+Pokud budete chtít nasazovat neinteraktivně s `--company-id` a `--profile-id`, použijte nejdřív `rosticli companies` a potom `rosticli stacks profiles --company-id <ID_SPOLECNOSTI>`. Tyto příznaky patří k příkazu `init`:
+
+```
+rosticli stacks init --no-input --company-id <ID> --profile-id <ID> --name moje-app
+rosticli stacks push --no-input
+```
 
 Pro AI asistenty můžete nainstalovat vestavěný skill příkazem `rosticli install-ai-skills`.
 
-Příkaz zkontroluje podporované AI nástroje (včetně GitHub Copilot) a nainstaluje `rosti-deploy` jen tam, kde je odpovídající nástroj dostupný přes CLI nebo lokální konfiguraci.
-
-Pro pohodlnější práci v terminálu lze vygenerovat completion skript příkazem `rosticli completion bash`, `rosticli completion zsh` nebo `rosticli completion fish` (aliasy `shell` a `sh` generují Bash completion).
-
-Příklady:
-
-```bash
-# Bash
-rosticli completion bash > ~/.local/share/bash-completion/completions/rosticli
-
-# Fish
-rosticli completion fish > ~/.config/fish/completions/rosticli.fish
-```
-
 Příkaz `login` otevře prohlížeč s přihlašovací stránkou. Po potvrzení se token automaticky uloží. Pokud chcete token zadat ručně, použijte `rosticli login --no-browser`.
 
-Podrobný popis příkazu a jeho možností najdete na stránce [Jednoduchý a rychlý deployment přes CLI](rosticli-push.md).
+Podrobný popis příkazů a jejich možností najdete na stránce [Jednoduchý a rychlý deployment přes CLI](rosticli-push.md).
 
 ### Možnost 3: Automatizované CI/CD přes GitHub Actions
 
@@ -139,7 +133,7 @@ Příkaz `setup-cicd` vytvoří GitHub Actions workflow, který při každém pu
 
 Vyžaduje, aby měl váš projekt GitHub repozitář nastavený jako git remote `origin`.
 
-Pokud ještě nemáte `Dockerfile` nebo `docker-compose.yml`, příkaz to automaticky detekuje. Pokud máte na počítači nainstalovaný a nakonfigurovaný některý z podporovaných AI nástrojů (Claude, OpenCode, Gemini CLI, Cursor Agent, Codex nebo Aider), nabídne ho k vygenerování obou souborů a prompt zároveň AI řekne, aby `Dockerfile` ověřil lokálním `docker build` a případné chyby opravil.
+Stejně jako u `push`, i `setup-cicd` vyžaduje předchozí spuštění `stacks init`. Ten vygeneruje potřebné soubory (nebo nabídne jejich vytvoření přes AI) a připraví stack na Roští.
 
 **Instalace rosticli** — [rosti.cz/cli](https://rosti.cz/cli)
 
@@ -148,13 +142,20 @@ Linux/macOS:  curl -fsSL https://rosti.cz/cli/install.sh | sh
 Windows:      iex ([System.Text.Encoding]::UTF8.GetString((iwr -useb https://rosti.cz/cli/install.ps1).Content))
 ```
 
-Spusťte z adresáře vašeho projektu (při prvním použití nejdřív `rosticli login`):
+Spusťte z adresáře vašeho projektu:
 
 ```
+rosticli login          # pouze při prvním použití
+rosticli stacks init    # první spuštění: vygeneruje soubory, vytvoří stack
 rosticli stacks setup-cicd
 ```
 
-Pro neinteraktivní režim (`--company-id`, `--profile-id`) platí stejný postup: `rosticli companies` a `rosticli stacks profiles --company-id <ID_SPOLECNOSTI>`.
+Pro neinteraktivní režim platí stejný postup jako u Možnosti 2 — příznaky `--company-id`, `--profile-id` a `--name` patří k příkazu `init`:
+
+```
+rosticli stacks init --no-input --company-id <ID> --profile-id <ID> --name moje-app
+rosticli stacks setup-cicd --no-input
+```
 
 ## Správa stacku
 
