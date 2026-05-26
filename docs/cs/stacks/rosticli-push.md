@@ -1,63 +1,53 @@
 # Nasazení přes CLI (`rosticli stacks push`)
 
-`rosticli stacks push` je příkaz, který v jednom kroku sestaví Docker image z vašeho projektu, nahraje ho na Roští a spustí stack. Stačí mít v pracovním adresáři `Dockerfile` a `docker-compose.yml` a spustit:
+`rosticli stacks push` sestaví Docker image z vašeho projektu, nahraje ho na Roští a spustí stack. Před prvním spuštěním `push` je třeba projekt inicializovat příkazem `stacks init`, který vygeneruje potřebné soubory a vytvoří nebo přiřadí stack:
 
 ```
-rosticli login    # pouze při prvním použití — otevře prohlížeč
-rosticli stacks push
+rosticli login          # pouze při prvním použití — otevře prohlížeč
+rosticli stacks init    # první spuštění: vygeneruje soubory, vytvoří stack, připraví SSH
+rosticli stacks push    # sestaví image a nasadí
 ```
 
 `rosticli login` otevře přihlašovací stránku v prohlížeči. Po potvrzení se token uloží a příkaz není třeba opakovat. Pokud preferujete ruční zadání tokenu, použijte `rosticli login --no-browser`.
 
-Při prvním spuštění se automaticky vytvoří nový stack (pokud ještě neexistuje) a uloží se jeho identifikátor do souboru `.rostistate`. **Nemusíte stack předem vytvářet v administraci** — příkaz se vás zeptá na název a profil (velikost VM) a stack vytvoří sám. Při každém dalším volání příkazu se stack **aktualizuje** — nahraje se nový image a stack se restartuje. Aktualizace aplikace je tedy vždy jen jeden příkaz.
+Při každém dalším volání `push` se stack **aktualizuje** — nahraje se nový image a stack se restartuje. Aktualizace aplikace je tedy vždy jen jeden příkaz.
 
-Pokud chcete příkaz spustit pro konkrétní existující stack, předejte jeho ID příznakem `--stack-id`:
+### Rozdělení odpovědností
+
+| Příkaz | Kdy spustit | Co dělá |
+|---|---|---|
+| `stacks init` | Jednou při zahájení projektu | Vygeneruje `Dockerfile` a `docker-compose.yml` (přes AI nebo ručně), vytvoří stack na Roští, nainstaluje SSH klíč, počká na dostupnost VM a vše uloží do `.rostistate` |
+| `stacks push` | Při každém nasazení | Sestaví Docker image lokálně, přenese ho na stack přes SSH, nahraje `docker-compose.yml` a spustí `docker compose up` |
+| `stacks setup-cicd` | Jednou pro CI/CD | Nakonfiguruje GitHub Actions + GHCR, nastaví GitHub secrets — `push` pak probíhá automaticky po každém commitu (vyžaduje předchozí `init`) |
+
+`push` a `setup-cicd` zkontrolují při spuštění, zda byl `init` spuštěn. Pokud `.rostistate` chybí nebo je neúplný, příkaz skončí s chybou a vyzve ke spuštění `stacks init`.
+
+## Příprava projektu (`rosticli stacks init`)
+
+`stacks init` je vstupní bod pro každý nový projekt nebo nové nasazení. Příkaz provede dvě fáze:
+
+**Fáze 1 — Generování souborů:**
+
+Pokud `Dockerfile` nebo `docker-compose.yml` chybí, nabídne jejich vygenerování pomocí AI nástroje. Pokud soubory existují, zeptá se, zda je ponechat nebo přegenerovat. Pokud AI nástroj není k dispozici, vypíše ruční návod.
+
+**Fáze 2 — Příprava stacku:**
+
+1. **Výběr společnosti** — použije uloženou hodnotu z `.rostistate`, nebo se zeptá interaktivně.
+2. **Vytvoření nebo výběr stacku** — pokud stack ještě neexistuje, vytvoří ho (název se odvozuje od aktuálního adresáře, lze přepsat příznakem `--name`). Lze také vybrat existující stack.
+3. **SSH klíč** — vygeneruje sdílený ed25519 klíč a nainstaluje ho na stack (jednorázově).
+4. **Čekání na SSH endpoint** — počká, než je stack dostupný přes SSH (až 3 minuty), a uloží endpoint do `.rostistate`.
+
+Po dokončení je projekt plně připraven — spusťte `rosticli stacks push` pro nasazení.
+
+### Přepnutí na jiný stack
+
+Pomocí příznaku `--stack-id` na příkazu `init` lze projekt přepnout na jiný stack. Příkaz varuje a resetuje uloženou konfiguraci:
 
 ```
-rosticli stacks push --stack-id 42
+rosticli stacks init --stack-id 42
 ```
 
-ID stacku najdete v administraci nebo ve výpisu `rosticli stacks list`. Pokud je adresář už spárovaný s jiným stackem (soubor `.rostistate`), příkaz upozorní na konflikt a odmítne pokračovat.
-
-## Co push dělá
-
-Push prochází těmito kroky v pořadí:
-
-1. **Kontrola prerekvizit** — ověří, zda jsou přítomny `Dockerfile`, `docker-compose.yml` a příkaz `docker`. Pokud chybí a máte k dispozici podporovaný AI nástroj, nabídne jejich vygenerování.
-2. **Výběr společnosti** — použije uloženou hodnotu z `.rostistate`, nebo se zeptá interaktivně.
-3. **Vytvoření stacku** — pokud stack ještě neexistuje, vytvoří ho (název se odvozuje od aktuálního adresáře, lze přepsat příznakem `--name`).
-4. **SSH klíč** — vygeneruje sdílený ed25519 klíč a nainstaluje ho na stack (jednorázově).
-5. **Čekání na SSH endpoint** — počká, než je stack dostupný přes SSH (až 3 minuty).
-6. **Build image** — `docker build -t app:latest .`
-7. **Export image na server** — `docker save | ssh ... docker load`
-8. **Nahrání docker-compose.yml** — obsah souboru se nahraje na stack tak, jak je.
-9. **Spuštění** — `docker compose up -d`
-
-Po dokončení příkaz vypíše URL nasazené aplikace a připomene příkaz pro další nasazení.
-
-## Příprava Dockerfile a docker-compose.yml
-
-### Pomocí AI nástroje
-
-Pokud `Dockerfile` nebo `docker-compose.yml` chybí, `push` to automaticky detekuje. Pokud máte na počítači nainstalovaný a nakonfigurovaný některý z podporovaných AI nástrojů, nabídne ho k vygenerování obou souborů:
-
-```
-$ rosticli stacks push
-
-==> Checking prerequisites
-! Dockerfile and docker-compose.yml are not found in the current directory.
-An AI coding assistant can generate them for this project.
-
-Available AI tools:
-  [1] Claude Code (claude)
-  [2] OpenCode (opencode)
-  [3] Gemini CLI (gemini)
-  [4] Cursor Agent (cursor-agent)
-  [5] Codex (codex)
-  [6] Aider (aider)
-  [7] Skip / create files manually
-Select [1-7]:
-```
+### Generování souborů pomocí AI
 
 Podporované nástroje (hledají se v `PATH`):
 
@@ -70,11 +60,11 @@ Podporované nástroje (hledají se v `PATH`):
 | Codex | `codex` |
 | Aider | `aider` |
 
-Pokud je dostupný jen jeden nástroj, `push` se rovnou zeptá na potvrzení. Vybraný nástroj se spustí s předem připraveným promptem, který obsahuje pravidla pro Roští (správný název image, port 80, `restart: unless-stopped` atd.) a zároveň mu říká, aby po vytvoření nebo úpravě `Dockerfile` zkusil lokální `docker build` a případné chyby opravil. Po jeho dokončení `push` zkontroluje, zda soubory vznikly, a pokračuje.
+Pokud je dostupný jen jeden nástroj, `init` se rovnou zeptá na potvrzení. Vybraný nástroj se spustí s předem připraveným promptem, který obsahuje pravidla pro Roští (správný název image, port 80, `restart: unless-stopped` atd.) a zároveň mu říká, aby po vytvoření nebo úpravě `Dockerfile` zkusil lokální `docker build` a případné chyby opravil. Po jeho dokončení `init` zkontroluje, zda soubory vznikly, a pokračuje do fáze 2.
 
-Některé AI nástroje je potřeba po skončení jejich práce ukončit ručně. Push pak bude pokračovat.
+Některé AI nástroje je potřeba po skončení jejich práce ukončit ručně. Init pak bude pokračovat.
 
-### Ručně
+### Ruční vytvoření souborů
 
 `docker-compose.yml` musí splňovat tato pravidla:
 
@@ -121,9 +111,22 @@ services:
       - ./data/postgres:/var/lib/postgresql/data
 ```
 
+## Co push dělá
+
+Po úspěšném `init` příkaz `push` provede tyto kroky:
+
+1. **Kontrola stavu** — ověří, zda je projekt inicializován (`.rostistate` obsahuje company_id, stack_id a SSH endpoint). Pokud ne, vypíše chybu s výzvou ke spuštění `init`.
+2. **Kontrola prerekvizit** — ověří přítomnost `Dockerfile`, `docker-compose.yml` a příkazu `docker`.
+3. **Build image** — `docker build -t app:latest .`
+4. **Export image na server** — `docker save | ssh ... docker load`
+5. **Nahrání docker-compose.yml** — obsah souboru se nahraje na stack tak, jak je.
+6. **Spuštění** — `docker compose up -d`
+
+Po dokončení příkaz vypíše URL nasazené aplikace a připomene příkaz pro další nasazení.
+
 ## Základní příkazy pro práci se stackem
 
-Po úspěšném `push` jsou stack ID a SSH endpoint uloženy v `.rostistate`. Všechny příkazy níže je načtou automaticky, pokud je voláte ze stejného adresáře.
+Po úspěšném `init` jsou stack ID a SSH endpoint uloženy v `.rostistate`. Všechny příkazy níže je načtou automaticky, pokud je voláte ze stejného adresáře.
 
 **Zobrazení informací o stacku:**
 
@@ -161,9 +164,10 @@ Push je idempotentní — pokud se nic nezměnilo, projde beze škody. Pokud se 
 
 ## Přechod na automatizované CI/CD
 
-Jakmile ruční `push` nestačí a chcete, aby se každý commit nebo release automaticky nasadil bez ručního spuštění, použijte příkaz `setup-cicd`:
+Jakmile ruční `push` nestačí a chcete, aby se každý commit nebo release automaticky nasadil bez ručního spuštění, použijte příkaz `setup-cicd` (vyžaduje předchozí `init`):
 
 ```
+rosticli stacks init
 rosticli stacks setup-cicd
 ```
 
@@ -171,17 +175,21 @@ Příkaz vytvoří GitHub Actions workflow, nakonfiguruje GitHub secrets a nasta
 
 ## Použití v automatizaci a AI nástrojích
 
-Příkazy `push` a `setup-cicd` lze spustit bez interaktivních dotazů pomocí příznaku `--no-input` doplněného o potřebné identifikátory:
+Příkazy `init`, `push` a `setup-cicd` lze spustit bez interaktivních dotazů pomocí příznaku `--no-input`. Identifikátory potřebné pro `init` zadejte příznaky:
 
 ```
-rosticli stacks push --no-input --company-id 123 --profile-id 2 --name moje-app
+rosticli stacks init --no-input --company-id 123 --profile-id 2 --name moje-app
+rosticli stacks push --no-input
 ```
 
 ```
-rosticli stacks setup-cicd --no-input --company-id 123 --profile-id 2 --name moje-app
+rosticli stacks init --no-input --company-id 123 --profile-id 2 --name moje-app
+rosticli stacks setup-cicd --no-input
 ```
 
-Pokud `--no-input` použijete bez potřebných příznaků (např. máte více společností a neuvedete `--company-id`), příkaz skončí s chybou, která popisuje, co chybí.
+Pokud `--no-input` použijete u `init` bez potřebných příznaků (např. máte více společností a neuvedete `--company-id`), příkaz skončí s chybou, která popisuje, co chybí.
+
+ID společnosti zjistíte příkazem `rosticli companies`. ID profilu pak zjistíte příkazem `rosticli stacks profiles`.
 
 Pro AI asistenty můžete nainstalovat vestavěný skill příkazem `rosticli install-ai-skills`.
 
@@ -207,13 +215,12 @@ rosticli completion fish > ~/.config/fish/completions/rosticli.fish
 
 | Příznak | Příkaz | Popis |
 |---|---|---|
-| `--company-id` | `push`, `setup-cicd` | ID společnosti (organization). Povinné pokud máte více společností a používáte `--no-input`. |
-| `--profile-id` | `push`, `setup-cicd` | ID profilu (velikost VM). Povinné při vytváření nového stacku s `--no-input`. |
-| `--name` | `push`, `setup-cicd` | Název stacku. Výchozí hodnota je název aktuálního adresáře. |
-| `--stack-id` | `push`, `setup-cicd` | Použije existující stack místo vytváření nového. |
-| `--no-input` | `push`, `setup-cicd` | Zakáže interaktivní dotazy — příkaz skončí chybou místo čekání na vstup. |
-| `--disable-ai` | `push`, `setup-cicd` | Zakáže nabídku AI generování Dockerfile/docker-compose.yml — příkaz skončí chybou, pokud soubory chybí. |
+| `--company-id` | `init` | ID společnosti (organization). Povinné pokud máte více společností a používáte `--no-input`. |
+| `--profile-id` | `init` | ID profilu (velikost VM). Povinné při vytváření nového stacku s `--no-input`. |
+| `--name` | `init` | Název stacku. Výchozí hodnota je název aktuálního adresáře. |
+| `--stack-id` | `init` | Použije nebo přepne na existující stack. Resetuje uloženou konfiguraci pokud se liší od `.rostistate`. |
+| `--disable-ai` | `init` | Zakáže nabídku AI generování Dockerfile/docker-compose.yml — vypíše ruční návod. |
+| `--no-input` | `init`, `push`, `setup-cicd` | Zakáže interaktivní dotazy — příkaz skončí chybou místo čekání na vstup. |
 | `--no-build` | `push` | Přeskočí `docker build` a `docker save` — nahraje jen compose a spustí stack. |
 | `--no-up` | `push` | Přeskočí finální `docker compose up`. |
-
-ID společnosti zjistíte příkazem `rosticli companies`. ID profilu pak zjistíte příkazem `rosticli stacks profiles`.
+| `--force-registry-setup` | `setup-cicd` | Odstraní a znovu přidá přihlašovací údaje ghcr.io na stack. |
