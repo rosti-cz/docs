@@ -60,6 +60,7 @@ nav:
 #theme: readthedocs
 theme: 
   name: material
+  custom_dir: docs/overrides
   features:
   - navigation.instant
   - navigation.instant.prefetch

@@ -16,8 +16,8 @@ Při každém dalším volání `push` se stack **aktualizuje** — nahraje se n
 
 | Příkaz | Kdy spustit | Co dělá |
 |---|---|---|
-| `stacks init` | Jednou při zahájení projektu | Vygeneruje `Dockerfile` a `docker-compose.yml` (přes AI nebo ručně), vytvoří stack na Roští, nainstaluje SSH klíč, počká na dostupnost VM a vše uloží do `.rostistate` |
-| `stacks push` | Při každém nasazení | Sestaví Docker image lokálně, přenese ho na stack přes SSH, nahraje `docker-compose.yml` a spustí `docker compose up` |
+| `stacks init` | Jednou při zahájení projektu | Vygeneruje `Dockerfile` a `docker-compose.rosti.yml` (přes AI nebo ručně), vytvoří stack na Roští, nainstaluje SSH klíč, počká na dostupnost VM a vše uloží do `.rostistate` |
+| `stacks push` | Při každém nasazení | Sestaví Docker image lokálně, přenese ho na stack přes SSH, nahraje `docker-compose.rosti.yml` a spustí `docker compose up` |
 | `stacks setup-cicd` | Jednou pro CI/CD | Nakonfiguruje GitHub Actions + GHCR, nastaví GitHub secrets — `push` pak probíhá automaticky po každém commitu (vyžaduje předchozí `init`) |
 
 `push` a `setup-cicd` zkontrolují při spuštění, zda byl `init` spuštěn. Pokud `.rostistate` chybí nebo je neúplný, příkaz skončí s chybou a vyzve ke spuštění `stacks init`.
@@ -28,7 +28,7 @@ Při každém dalším volání `push` se stack **aktualizuje** — nahraje se n
 
 **Fáze 1 — Generování souborů:**
 
-Pokud `Dockerfile` nebo `docker-compose.yml` chybí, nabídne jejich vygenerování pomocí AI nástroje. Pokud soubory existují, zeptá se, zda je ponechat nebo přegenerovat. Pokud AI nástroj není k dispozici, vypíše ruční návod.
+Pokud `Dockerfile` nebo `docker-compose.rosti.yml` chybí, nabídne jejich vygenerování pomocí AI nástroje. Pokud soubory existují, zeptá se, zda je ponechat nebo přegenerovat. Pokud AI nástroj není k dispozici, vypíše ruční návod.
 
 **Fáze 2 — Příprava stacku:**
 
@@ -66,13 +66,13 @@ Některé AI nástroje je potřeba po skončení jejich práce ukončit ručně.
 
 ### Ruční vytvoření souborů
 
-`docker-compose.yml` musí splňovat tato pravidla:
+`docker-compose.rosti.yml` musí splňovat tato pravidla:
 
 - Hlavní služba musí používat image `localhost/app:latest` — to je přesný název, pod kterým Roští image na server nahraje.
 - Port 80 musí být namapován na port, na kterém aplikace naslouchá (naše reverzní proxy očekává port 80).
 - Každá služba musí mít `restart: unless-stopped`, jinak se po restartu serveru nespustí.
 
-Příklad minimálního `docker-compose.yml`:
+Příklad minimálního `docker-compose.rosti.yml`:
 
 ```yaml
 services:
@@ -116,10 +116,10 @@ services:
 Po úspěšném `init` příkaz `push` provede tyto kroky:
 
 1. **Kontrola stavu** — ověří, zda je projekt inicializován (`.rostistate` obsahuje company_id, stack_id a SSH endpoint). Pokud ne, vypíše chybu s výzvou ke spuštění `init`.
-2. **Kontrola prerekvizit** — ověří přítomnost `Dockerfile`, `docker-compose.yml` a příkazu `docker`.
+2. **Kontrola prerekvizit** — ověří přítomnost `Dockerfile`, `docker-compose.rosti.yml` a příkazu `docker`.
 3. **Build image** — `docker build -t app:latest .`
 4. **Export image na server** — `docker save | ssh ... docker load`
-5. **Nahrání docker-compose.yml** — obsah souboru se nahraje na stack tak, jak je.
+5. **Nahrání docker-compose.rosti.yml** — obsah souboru se nahraje na stack tak, jak je.
 6. **Spuštění** — `docker compose up -d`
 
 Po dokončení příkaz vypíše URL nasazené aplikace a připomene příkaz pro další nasazení.
@@ -219,7 +219,7 @@ rosticli completion fish > ~/.config/fish/completions/rosticli.fish
 | `--profile-id` | `init` | ID profilu (velikost VM). Povinné při vytváření nového stacku s `--no-input`. |
 | `--name` | `init` | Název stacku. Výchozí hodnota je název aktuálního adresáře. |
 | `--stack-id` | `init` | Použije nebo přepne na existující stack. Resetuje uloženou konfiguraci pokud se liší od `.rostistate`. |
-| `--disable-ai` | `init` | Zakáže nabídku AI generování Dockerfile/docker-compose.yml — vypíše ruční návod. |
+| `--disable-ai` | `init` | Zakáže nabídku AI generování Dockerfile/docker-compose.rosti.yml — vypíše ruční návod. |
 | `--no-input` | `init`, `push`, `setup-cicd` | Zakáže interaktivní dotazy — příkaz skončí chybou místo čekání na vstup. |
 | `--no-build` | `push` | Přeskočí `docker build` a `docker save` — nahraje jen compose a spustí stack. |
 | `--no-up` | `push` | Přeskočí finální `docker compose up`. |
