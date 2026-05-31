@@ -46,6 +46,8 @@ Aby bylo možné doménový kontakt použít při registraci domény, musí být
 - **Úprava**: Na stránce seznamu kontaktů klikněte na název kontaktu nebo na tlačítko **Upravit**. Po změně telefonního čísla nebo e-mailu bude nutné provést ověření znovu.
 - **Smazání**: Na stránce detailu kontaktu klikněte na **Smazat** a potvrďte. Kontakty přiřazené k aktivním doménám nelze smazat.
 
+Při registraci nebo transferu domény se používá uložený doménový kontakt. Kontakt musí mít ověřené telefonní číslo i e-mailovou adresu.
+
 ## API
 
 Doménové kontakty lze spravovat také přes REST API. Dokumentace je dostupná na adrese [https://admin.rosti.cz/api-n/docs](https://admin.rosti.cz/api-n/docs) v sekci **domain-addresses**.
