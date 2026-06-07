@@ -93,7 +93,7 @@ Příkaz `push` sestaví Docker image lokálně na vašem počítači a přenese
 
 **Vhodné pro:** jednotlivce nebo malé týmy, kteří nasazují ze svého počítače a zatím nepotřebují plně automatizovaný pipeline.
 
-Před prvním spuštěním `push` je třeba projekt inicializovat příkazem `stacks init`. Ten vygeneruje potřebné soubory (nebo nabídne jejich vytvoření přes AI) a připraví stack na Roští. Pokud máte na počítači nainstalovaný a nakonfigurovaný některý z podporovaných AI nástrojů (Claude, OpenCode, Gemini CLI, Cursor Agent, Codex nebo Aider), nabídne ho k vygenerování `Dockerfile` a `docker-compose.rosti.yml` a prompt zároveň AI řekne, aby `Dockerfile` ověřil lokálním `docker build` a případné chyby opravil.
+Před prvním spuštěním `push` je třeba projekt inicializovat příkazem `stacks init`. Ten vygeneruje potřebné soubory (nebo nabídne jejich vytvoření přes AI) a připraví stack na Roští. Pokud máte na počítači nainstalovaný a nakonfigurovaný některý z podporovaných AI nástrojů (Claude, OpenCode, Gemini CLI, Google Antigravity, Cursor Agent, Codex nebo Aider), nabídne ho k vygenerování `Dockerfile` a `docker-compose.rosti.yml` a prompt zároveň AI řekne, aby `Dockerfile` ověřil lokálním `docker build` a případné chyby opravil.
 
 **Instalace rosticli** — [rosti.cz/cli](https://rosti.cz/cli)
 
