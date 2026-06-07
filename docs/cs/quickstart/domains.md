@@ -1,6 +1,6 @@
 # 4. Domény
 
-Roští není registrátorem domén a tak není možné u nás domény registrovat. Na druhou stranu vám to dává svobodu si vybrat vlastního registrátora, třeba takového, který má domény, které jinde dostupné nejsou. Nicméně Roští umí hostovat DNS zóny pro vaše domény, což je také preferovaný způsob, jak k nám domény nasměrovat.
+Roští umí hostovat DNS zóny pro vaše domény, což je preferovaný způsob, jak k nám domény nasměrovat. Registraci domén pro vybrané koncovky řešíme přes podporu, takže pokud chcete doménu registrovat přímo přes Roští, napište nám. Stále si ale můžete vybrat i vlastního registrátora, třeba takového, který má domény nebo služby, které jinde dostupné nejsou.
 
 ## Nasměrování NS záznamů domény na naše DNS servery
 

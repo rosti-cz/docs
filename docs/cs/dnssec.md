@@ -22,7 +22,7 @@ flowchart LR
 1. Přejděte do administrace Roští → **DNS** → vyberte doménu.
 2. V sekci **DNSSEC** klikněte na tlačítko **Zapnout DNSSEC**.
 3. Chvíli počkejte — BIND vygeneruje kryptografické klíče (obvykle do minuty).
-4. Po načtení stránky se v sekci DNSSEC zobrazí **DS záznamy**, které je potřeba zadat u registrátora.
+4. Po načtení stránky se v sekci DNSSEC zobrazí hodnoty pro registrátora. Většina registrátorů používá **DS záznam**, někteří ale požadují hodnoty ze sekce **DNSKEY**.
 
 !!! warning "Důležité pořadí kroků"
     Nejprve aktivujte DNSSEC u nás a počkejte na vygenerování DS záznamů. Teprve pak DS záznamy zadejte u registrátora. Nikdy neodstraňujte DNSSEC v Roští, pokud máte DS záznamy stále aktivní u registrátora — způsobilo by to nedostupnost domény.
@@ -50,6 +50,19 @@ Budete potřebovat tyto hodnoty, které najdete v administraci Roští:
 
 !!! tip
     Pokud registrátor nabízí možnost zadat celý DS záznam jako jeden řetězec, použijte hodnotu ze sloupce *Raw DS record* v administraci Roști — je ve standardním formátu RFC 4034.
+
+## Zadání DNSKEY u registrátora
+
+Pokud rozhraní registrátora nepožaduje DS záznam, ale DNSKEY, použijte hodnoty ze sekce **DNSKEY** v administraci Roští:
+
+| Pole | Popis | Příklad |
+|------|-------|---------|
+| **Key** (klíč) | Veřejný klíč DNSKEY bez názvu domény a bez textu `DNSKEY` | `AwEAA...` |
+| **Algorithm** (algoritmus) | Číslo algoritmu DNSKEY | `13` (ECDSA P-256 / SHA-256) |
+| **Flags** (příznaky) | Příznaky klíče | `257` |
+| **Protocol** (protokol) | Protokol DNSKEY | `3` |
+
+Použijte přesně ten formát, který registrátor požaduje. Pokud chce **Key tag**, **Digest type** nebo **Digest**, vyplňte DS záznam. Pokud chce **Key**, **Algorithm**, **Flags** a **Protocol**, vyplňte DNSKEY.
 
 ## Ověření funkčnosti
 
