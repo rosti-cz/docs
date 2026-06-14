@@ -4,7 +4,7 @@ Doménové kontakty (Domain contacts) jsou sady kontaktních údajů, které se 
 
 ## Vytvoření doménového kontaktu
 
-1. Přejděte do administrace Roști → **DNS** → **Doménové kontakty**.
+1. Přejděte do administrace Roští → **DNS** → **Kontakty**.
 2. Klikněte na tlačítko **Přidat kontakt**.
 3. Vyplňte všechna povinná pole:
    - Jméno a příjmení
@@ -47,6 +47,8 @@ Aby bylo možné doménový kontakt použít při registraci domény, musí být
 - **Smazání**: Na stránce detailu kontaktu klikněte na **Smazat** a potvrďte. Kontakty přiřazené k aktivním doménám nelze smazat.
 
 Při registraci nebo transferu domény se používá uložený doménový kontakt. Kontakt musí mít ověřené telefonní číslo i e-mailovou adresu.
+
+Při registraci nové domény můžete kontakt založit také přímo z formuláře **DNS → Nová doména** pomocí tlačítka **Přidat kontakt**. Po založení je potřeba kontakt ověřit stejně jako při vytvoření ze stránky **Kontakty**.
 
 ## API
 

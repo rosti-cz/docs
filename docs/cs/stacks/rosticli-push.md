@@ -20,7 +20,7 @@ Při každém dalším volání `push` se stack **aktualizuje** — nahraje se n
 | `stacks push` | Při každém nasazení | Sestaví Docker image lokálně, přenese ho na stack přes SSH, nahraje `docker-compose.rosti.yml` a spustí `docker compose up` |
 | `stacks setup-cicd` | Jednou pro CI/CD | Nakonfiguruje GitHub Actions + GHCR, nastaví GitHub secrets — `push` pak probíhá automaticky po každém commitu (vyžaduje předchozí `init`) |
 
-`push` a `setup-cicd` zkontrolují při spuštění, zda byl `init` spuštěn. Pokud `.rostistate` chybí nebo je neúplný, příkaz skončí s chybou a vyzve ke spuštění `stacks init`.
+`push` a `setup-cicd` zkontrolují při spuštění, zda byl `init` spuštěn pro vybraný target. Pokud `.rostistate` chybí nebo je neúplný, příkaz skončí s chybou a vyzve ke spuštění `stacks init`.
 
 ## Příprava projektu (`rosticli stacks init`)
 
@@ -32,12 +32,12 @@ Pokud `Dockerfile` nebo `docker-compose.rosti.yml` chybí, nabídne jejich vygen
 
 **Fáze 2 — Příprava stacku:**
 
-1. **Výběr společnosti** — použije uloženou hodnotu z `.rostistate`, nebo se zeptá interaktivně.
+1. **Výběr společnosti** — použije uloženou hodnotu z aktivního targetu v `.rostistate`, nebo se zeptá interaktivně.
 2. **Vytvoření nebo výběr stacku** — pokud stack ještě neexistuje, vytvoří ho (název se odvozuje od aktuálního adresáře, lze přepsat příznakem `--name`). Lze také vybrat existující stack.
 3. **SSH klíč** — vygeneruje sdílený ed25519 klíč a nainstaluje ho na stack (jednorázově).
 4. **Čekání na SSH endpoint** — počká, než je stack dostupný přes SSH (až 3 minuty), a uloží endpoint do `.rostistate`.
 
-Po dokončení je projekt plně připraven — spusťte `rosticli stacks push` pro nasazení.
+Po dokončení je projekt plně připraven — spusťte `rosticli stacks push` pro nasazení aktivního targetu.
 
 ### Přepnutí na jiný stack
 
@@ -46,6 +46,27 @@ Pomocí příznaku `--stack-id` na příkazu `init` lze projekt přepnout na jin
 ```
 rosticli stacks init --stack-id 42
 ```
+
+### Více prostředí pomocí targetů
+
+Jeden adresář projektu může být propojený s více stacky, například `production`, `staging` nebo `sandbox`. Stav se ukládá do `.rostistate` pod jednotlivé targety. Starší `.rostistate` se při prvním načtení automaticky převede do targetu `default`.
+
+Příkazy bez `--target` používají aktivní target nastavený v `.rostistate` v poli `active-target`. Pokud aktivní target není nastavený, použije se `default`. Target `default` je vždy přítomný.
+
+```
+rosticli stacks init --target production --name moje-app
+rosticli stacks init --target staging --name moje-app-staging
+rosticli stacks targets
+rosticli stacks set-target production
+rosticli stacks push
+rosticli stacks push --target staging
+```
+
+`rosticli stacks targets` vypíše dostupné targety a označí aktivní target hvězdičkou. `rosticli stacks set-target production` změní aktivní target pro další příkazy. `--target` slouží jako jednorázové přepsání aktivního targetu pro konkrétní příkaz.
+
+Pokud při `init` nezadáte `--name`, název stacku se odvodí z názvu adresáře. U targetu jiného než `default` se automaticky přidá suffix s názvem targetu, například adresář `tavern` a target `staging` vytvoří stack `tavern-staging`. Vlastní název můžete vždy zadat pomocí `--name`; musí mít 1-30 znaků a smí obsahovat jen písmena, číslice, mezery, tečku, podtržítko nebo pomlčku.
+
+Pokud chcete target odpojit od lokálního adresáře, použijte `rosticli stacks unlink --target staging`. Target `default` se při unlinku pouze vyprázdní. Celý stavový soubor odstraníte pomocí `rosticli stacks unlink --all`.
 
 ### Generování souborů pomocí AI
 
@@ -114,9 +135,9 @@ services:
 
 ## Co push dělá
 
-Po úspěšném `init` příkaz `push` provede tyto kroky:
+Po úspěšném `init` příkaz `push` pro vybraný target provede tyto kroky:
 
-1. **Kontrola stavu** — ověří, zda je projekt inicializován (`.rostistate` obsahuje company_id, stack_id a SSH endpoint). Pokud ne, vypíše chybu s výzvou ke spuštění `init`.
+1. **Kontrola stavu** — ověří, zda je vybraný target inicializován (`.rostistate` obsahuje company_id, stack_id a SSH endpoint). Pokud ne, vypíše chybu s výzvou ke spuštění `init`.
 2. **Kontrola prerekvizit** — ověří přítomnost `Dockerfile`, `docker-compose.rosti.yml` a dostupnost Dockeru nebo Podmanu.
 3. **Build image** — `docker build -t app:latest .` (nebo ekvivalent přes Podman)
 4. **Export image na server** — `docker save | ssh ... docker load`, poté obraz na serveru přetaguje na `app:latest`
@@ -127,7 +148,14 @@ Po dokončení příkaz vypíše URL nasazené aplikace a připomene příkaz pr
 
 ## Základní příkazy pro práci se stackem
 
-Po úspěšném `init` jsou stack ID a SSH endpoint uloženy v `.rostistate`. Všechny příkazy níže je načtou automaticky, pokud je voláte ze stejného adresáře.
+Po úspěšném `init` jsou stack ID a SSH endpoint uloženy v `.rostistate` pod vybraný target. Všechny příkazy níže je načtou automaticky, pokud je voláte ze stejného adresáře.
+
+**Targety a aktivní prostředí:**
+
+```
+rosticli stacks targets
+rosticli stacks set-target production
+```
 
 **Zobrazení informací o stacku:**
 
@@ -218,10 +246,12 @@ rosticli completion fish > ~/.config/fish/completions/rosticli.fish
 |---|---|---|
 | `--company-id` | `init` | ID společnosti (organization). Povinné pokud máte více společností a používáte `--no-input`. |
 | `--profile-id` | `init` | ID profilu (velikost VM). Povinné při vytváření nového stacku s `--no-input`. |
-| `--name` | `init` | Název stacku. Výchozí hodnota je název aktuálního adresáře. |
+| `--name` | `init` | Název stacku. Výchozí hodnota je název aktuálního adresáře. Vlastní název musí mít 1-30 znaků a smí obsahovat jen písmena, číslice, mezery, tečku, podtržítko nebo pomlčku. |
 | `--stack-id` | `init` | Použije nebo přepne na existující stack. Resetuje uloženou konfiguraci pokud se liší od `.rostistate`. |
+| `--target` | `init`, `push`, `setup-cicd`, `info`, `ssh`, `logs`, `start`, `stop`, `restart`, `up`, `down`, `unlink` | Použije konkrétní target v `.rostistate`. Bez příznaku se použije aktivní target, případně `default`. |
 | `--disable-ai` | `init` | Zakáže nabídku AI generování Dockerfile/docker-compose.rosti.yml — vypíše ruční návod. |
 | `--no-input` | `init`, `push`, `setup-cicd` | Zakáže interaktivní dotazy — příkaz skončí chybou místo čekání na vstup. |
 | `--no-build` | `push` | Přeskočí `docker build` a `docker save` — nahraje jen compose a spustí stack. |
 | `--no-up` | `push` | Přeskočí finální `docker compose up`. |
 | `--force-registry-setup` | `setup-cicd` | Odstraní a znovu přidá přihlašovací údaje ghcr.io na stack. |
+| `--all` | `unlink` | Odstraní celý `.rostistate` a odpojí všechny targety. |

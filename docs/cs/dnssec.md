@@ -19,6 +19,8 @@ flowchart LR
 
 ## Aktivace v administraci
 
+Pokud registrujete doménu přímo přes Roští, administrace se pokusí DNSSEC zapnout automaticky: vytvoří nebo použije DNS zónu, zapne DNSSEC v DNSAPI a předá DNSKEY údaje registrátorovi. Když ještě nejsou klíče připravené, registrace pokračuje a synchronizaci DNSSEC můžete zopakovat v detailu domény tlačítkem **Zapnout nebo synchronizovat DNSSEC**.
+
 1. Přejděte do administrace Roští → **DNS** → vyberte doménu.
 2. V sekci **DNSSEC** klikněte na tlačítko **Zapnout DNSSEC**.
 3. Chvíli počkejte — BIND vygeneruje kryptografické klíče (obvykle do minuty).

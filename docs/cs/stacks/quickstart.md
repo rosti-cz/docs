@@ -112,6 +112,8 @@ rosticli stacks push    # sestaví image a nasadí
 
 Při každém dalším nasazení stačí spustit `rosticli stacks push`.
 
+Pokud chcete ze stejného adresáře spravovat více prostředí, použijte targety. Příkaz `rosticli stacks set-target production` nastaví aktivní target pro další příkazy, `rosticli stacks targets` je vypíše a jednorázově lze target přepsat pomocí `--target staging`. Když při `init` nezadáte `--name`, target jiný než `default` se přidá jako suffix k názvu stacku, například `moje-app-staging`. Vlastní `--name` musí mít 1-30 znaků a smí obsahovat jen písmena, číslice, mezery, tečku, podtržítko nebo pomlčku.
+
 Pokud budete chtít nasazovat neinteraktivně s `--company-id` a `--profile-id`, použijte nejdřív `rosticli companies` a potom `rosticli stacks profiles --company-id <ID_SPOLECNOSTI>`. Tyto příznaky patří k příkazu `init`:
 
 ```
@@ -134,6 +136,8 @@ Příkaz `setup-cicd` vytvoří GitHub Actions workflow, který při každém pu
 Vyžaduje, aby měl váš projekt GitHub repozitář nastavený jako git remote `origin`.
 
 Stejně jako u `push`, i `setup-cicd` vyžaduje předchozí spuštění `stacks init`. Ten vygeneruje potřebné soubory (nebo nabídne jejich vytvoření přes AI) a připraví stack na Roští.
+
+Pro více prostředí použijte stejný target u `init` i `setup-cicd`, například `rosticli stacks init --target production` a potom `rosticli stacks setup-cicd --target production`. Pokud target nastavíte jako aktivní pomocí `rosticli stacks set-target production`, příznak `--target` už u dalších příkazů není potřeba.
 
 **Instalace rosticli** — [rosti.cz/cli](https://rosti.cz/cli)
 
