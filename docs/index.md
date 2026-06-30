@@ -27,6 +27,12 @@ Stacky jsou hosting založený na *docker-compose.yml*. Jde o univerzálnější
 * [MGM kontejner](cs/stacks/mgm.md)
 * [Routování s Traefik](cs/stacks/traefik.md)
 
+## Pages
+
+Pages je služba pro hostování statických webů bez vlastního runtime. Správa domén je v administraci, soubory se nahrávají primárně přes `rosticli`, případně přes REST API.
+
+* [Pages](cs/pages.md)
+
 ## Specifika jednotlivých technologií
 
 * [Python](cs/apps/python.md)

@@ -15,6 +15,7 @@ nav:
       - MGM kontejner: cs/stacks/mgm.md
       - Routování s Traefik: cs/stacks/traefik.md
       - Marketplace a psaní receptů: cs/stacks/marketplace.md
+    - "Pages": cs/pages.md
     - Technologie:
         - Python: cs/apps/python.md
         - PHP: cs/apps/php.md
