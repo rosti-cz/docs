@@ -1,6 +1,6 @@
 # 4. Domény
 
-Roští umí hostovat DNS zóny pro vaše domény, což je preferovaný způsob, jak k nám domény nasměrovat. Novou doménu můžete zkusit registrovat přímo v administraci v sekci **DNS → Nová doména**. Administrace při registraci vytvoří DNS zónu, zapne DNSSEC, pokud jsou klíče dostupné, a doménu zaplatí z kreditu firmy. Stále si ale můžete vybrat i vlastního registrátora, třeba takového, který má domény nebo služby, které jinde dostupné nejsou.
+Roští umí hostovat DNS zóny pro vaše domény, což je preferovaný způsob, jak k nám domény nasměrovat. Novou doménu můžete zkusit registrovat přímo v administraci v sekci **DNS → Nová doména**. Administrace při registraci vytvoří DNS zónu, zapne DNSSEC, předá klíče registrátorovi a doménu zaplatí z kreditu firmy. Pokud DNSSEC klíče ještě nejsou připravené, registrace se neodešle a platba se nestrhne. Stále si ale můžete vybrat i vlastního registrátora, třeba takového, který má domény nebo služby, které jinde dostupné nejsou.
 
 ## Nasměrování NS záznamů domény na naše DNS servery
 

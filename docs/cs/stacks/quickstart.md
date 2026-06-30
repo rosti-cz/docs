@@ -129,7 +129,7 @@ Podrobný popis příkazů a jejich možností najdete na stránce [Jednoduchý 
 
 ### Možnost 3: Automatizované CI/CD přes GitHub Actions
 
-Příkaz `setup-cicd` vytvoří GitHub Actions workflow, který při každém pushnutí sestaví Docker image, uloží ho do GitHub Container Registry a přikáže stacku, aby si ho stáhl a restartoval. Zároveň nakonfiguruje potřebné GitHub secrets a udělí stacku přístup k vašemu container registry.
+Příkaz `setup-cicd` vytvoří GitHub Actions workflow, který při každém pushnutí sestaví Docker image, uloží ho do GitHub Container Registry a přikáže stacku, aby si ho stáhl a restartoval. U projektů s více Dockerfile v podadresářích, například `frontend/Dockerfile` a `backend/Dockerfile`, sestaví samostatný image pro každou část projektu. Zároveň nakonfiguruje potřebné GitHub secrets a udělí stacku přístup k vašemu container registry.
 
 **Vhodné pro:** týmy nebo projekty, kde má každý commit nebo release automaticky nasadit novou verzi bez ručních kroků.
 

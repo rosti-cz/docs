@@ -200,7 +200,7 @@ rosticli stacks init
 rosticli stacks setup-cicd
 ```
 
-Příkaz vytvoří GitHub Actions workflow, nakonfiguruje GitHub secrets a nastaví stack tak, aby si image po každém buildu sám stáhl a restartoval. Více o tomto způsobu nasazení najdete v sekci [Možnost 3: GitHub Actions](quickstart.md#moznost-3-automatizovane-cicd-pres-github-actions) v průvodci quickstartem.
+Příkaz vytvoří GitHub Actions workflow, nakonfiguruje GitHub secrets a nastaví stack tak, aby si image po každém buildu sám stáhl a restartoval. U projektů s více Dockerfile v podadresářích používá stejný build plán jako `push` a workflow sestaví samostatný GHCR image pro každou část projektu, například `frontend/Dockerfile` a `backend/Dockerfile`. Více o tomto způsobu nasazení najdete v sekci [Možnost 3: GitHub Actions](quickstart.md#moznost-3-automatizovane-cicd-pres-github-actions) v průvodci quickstartem.
 
 ## Použití v automatizaci a AI nástrojích
 
