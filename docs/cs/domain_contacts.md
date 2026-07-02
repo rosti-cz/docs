@@ -48,7 +48,7 @@ Aby bylo možné doménový kontakt použít při registraci domény, musí být
 
 Při registraci nebo transferu domény se používá uložený doménový kontakt. Kontakt musí mít ověřené telefonní číslo i e-mailovou adresu.
 
-Při registraci nové domény můžete kontakt založit také přímo z formuláře **DNS → Nová doména** pomocí tlačítka **Přidat kontakt**. Po založení je potřeba kontakt ověřit stejně jako při vytvoření ze stránky **Kontakty**.
+Při registraci nové domény můžete kontakt založit také přímo z formuláře **DNS → Registrovat doménu** pomocí tlačítka **Přidat kontakt**. Po založení je potřeba kontakt ověřit stejně jako při vytvoření ze stránky **Kontakty**.
 
 ## API
 

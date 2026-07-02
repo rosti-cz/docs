@@ -1,14 +1,14 @@
 # 4. Domény
 
-Roští umí hostovat DNS zóny pro vaše domény, což je preferovaný způsob, jak k nám domény nasměrovat. Novou doménu můžete zkusit registrovat přímo v administraci v sekci **DNS → Nová doména**. Administrace při registraci vytvoří DNS zónu, zapne DNSSEC, předá klíče registrátorovi a doménu zaplatí z kreditu firmy. Pokud DNSSEC klíče ještě nejsou připravené, registrace se neodešle a platba se nestrhne. Stále si ale můžete vybrat i vlastního registrátora, třeba takového, který má domény nebo služby, které jinde dostupné nejsou.
+Roští umí hostovat DNS zóny pro vaše domény, což je preferovaný způsob, jak k nám domény nasměrovat. Novou doménu můžete zkusit registrovat přímo v administraci v sekci **DNS → Registrovat doménu**. Formulář ukazuje aktuálně podporované doménové koncovky, například `.cz`. Administrace při registraci vytvoří DNS zónu, zapne DNSSEC, předá klíče registrátorovi a doménu zaplatí z kreditu firmy. Pokud DNSSEC klíče ještě nejsou připravené, registrace se neodešle a platba se nestrhne. Stále si ale můžete vybrat i vlastního registrátora, třeba takového, který má domény nebo služby, které jinde dostupné nejsou.
 
 ## Nasměrování NS záznamů domény na naše DNS servery
 
-Než začneme, tak přejdeme do administrace, do sekce **DNS → Nová zóna** a vytvoříme novou zónu. Tím řekneme NS serverům na Roští, že mají odpovídat na požadavky na záznamy k této doméně.
+Než začneme, tak přejdeme do administrace, do sekce **DNS** a klikneme na **Přidat zónu bez registrace domény**. Tím řekneme NS serverům na Roští, že mají odpovídat na požadavky na záznamy k této doméně.
 
 ![Rozhraní pro DNS zóny](../../imgs/domains_1.png)
 
-Klikneme na tlačítko *Přidat zónu*.
+Klikneme na tlačítko *Přidat zónu bez registrace domény*.
 
 ![Nová zóna](../../imgs/domains_2.png)
 
