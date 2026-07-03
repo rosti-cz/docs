@@ -220,7 +220,7 @@ V případě subdomén je možné použít *CNAME* záznam na *lb.rosti.cz*.
 
 Změny v DNS záznamech mohou nějaký čas trvat v závislosti na nastavení TTL jednotlivých domén a záznamů. Většinou je ale vše připraveno během jedné hodiny, ale záleží na nastavení TTL u jednotlivých záznamů. Před změnou záznamů doporučujeme TTL snížit.
 
-Když máte DNS vaší domény či domén správně nasměrovány, tak můžete přejít do karty Proxy u stacku a uvést domény a subdomény, které mají být namířené na tento konkrétní stack. **Domény se oddělují mezerami nebo novými řádky.**
+Když máte DNS vaší domény či domén správně nasměrovány, tak můžete přejít do karty Proxy u stacku a uvést domény a subdomény, které mají být namířené na tento konkrétní stack. Pole domén zobrazuje jednotlivé domény jako štítky; doménu potvrdíte mezerou nebo Enterem. Administrace při psaní nabízí volné domény a subdomény z vašich DNS zón. U domén ve zónách spravovaných v Roští umí po potvrzení automaticky vytvořit A a AAAA záznamy na náš load balancer a doménu přiřadit ke stacku. Domény mimo vaše zóny se přidají jako externě spravované a DNS musíte nastavit u svého poskytovatele. Zelené štítky označují domény v našich DNS zónách, oranžové externě spravované domény.
 
 ![Nastavení proxy](../../imgs/stacks/proxy.png)
 

@@ -8,7 +8,7 @@ Nový web vytvoříte v administraci v sekci **Pages**. Po vytvoření dostane a
 
 ## Domény
 
-Domény se spravují v detailu webu v záložce **Proxy**. Do pole domén zadejte vlastní domény oddělené mezerou nebo novým řádkem. Pokud vypnete výchozí doménu, musí zůstat aktivní alespoň jedna vlastní doména.
+Domény se spravují v detailu webu v záložce **Proxy**. Pole domén zobrazuje jednotlivé domény jako štítky; doménu potvrdíte mezerou nebo Enterem. Při psaní administrace nabízí volné domény a subdomény z vašich DNS zón. U domén ve zónách spravovaných v Roští umí po potvrzení automaticky vytvořit A a AAAA záznamy na náš load balancer a doménu přiřadit k Pages webu. Domény mimo vaše zóny se přidají jako externě spravované a DNS musíte nastavit u svého poskytovatele. Zelené štítky označují domény v našich DNS zónách, oranžové externě spravované domény. Pokud vypnete výchozí doménu, musí zůstat aktivní alespoň jedna vlastní doména.
 
 ## Nahrávání souborů přes `rosticli`
 
