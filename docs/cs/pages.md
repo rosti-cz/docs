@@ -4,11 +4,11 @@ Pages je služba pro hostování statických webů. Hodí se pro HTML, CSS, Java
 
 ## Vytvoření
 
-Nový web vytvoříte v administraci v sekci **Pages**. Po vytvoření dostane automatickou doménu ve tvaru `nazev-1.rostiapp.cz`. Tuto doménu můžete ponechat zapnutou, nebo ji vypnout a používat pouze vlastní domény.
+Nový web vytvoříte v administraci v sekci **Pages**. Po vytvoření dostane automatickou doménu ve tvaru `nazev-1.rostiapp.cz`. Tato doména je ve stejném seznamu jako ostatní domény a můžete ji později odstranit, pokud v seznamu zůstane alespoň jedna jiná doména.
 
 ## Domény
 
-Domény se spravují v detailu webu v záložce **Proxy**. Pole domén zobrazuje jednotlivé domény jako štítky; doménu potvrdíte mezerou nebo Enterem. Při psaní administrace nabízí volné domény a subdomény z vašich DNS zón. U domén ve zónách spravovaných v Roští umí po potvrzení automaticky vytvořit A a AAAA záznamy na náš load balancer a doménu přiřadit k Pages webu. Domény mimo vaše zóny se přidají jako externě spravované a DNS musíte nastavit u svého poskytovatele. Zelené štítky označují domény v našich DNS zónách, oranžové externě spravované domény. Pokud vypnete výchozí doménu, musí zůstat aktivní alespoň jedna vlastní doména.
+Domény se spravují v detailu webu v záložce **Proxy**. Pole domén zobrazuje jednotlivé domény jako štítky; doménu potvrdíte mezerou nebo Enterem. Při psaní administrace nabízí volné domény, subdomény z vašich DNS zón a subdomény na naší testovací doméně `rostiapp.cz`. U domén ve zónách spravovaných v Roští umí po potvrzení automaticky vytvořit A a AAAA záznamy na náš load balancer a doménu přiřadit k Pages webu. Subdomény na `rostiapp.cz` se přiřadí bez vytváření DNS záznamů, ale konkrétní celá doména může být použitá jen u jedné aplikace, stacku nebo Pages webu. Domény mimo vaše zóny se přidají jako externě spravované a DNS musíte nastavit u svého poskytovatele. Zelené štítky označují domény v našich DNS zónách, modré subdomény na testovací doméně a oranžové externě spravované domény. Seznam domén nesmí zůstat prázdný.
 
 ## Nahrávání souborů přes `rosticli`
 

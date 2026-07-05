@@ -1,6 +1,8 @@
 # 4. Domény
 
-Roští umí hostovat DNS zóny pro vaše domény, což je preferovaný způsob, jak k nám domény nasměrovat. Novou doménu můžete zkusit registrovat přímo v administraci v sekci **DNS → Registrovat doménu**. Formulář ukazuje aktuálně podporované doménové koncovky, například `.cz`. Administrace při registraci vytvoří DNS zónu, zapne DNSSEC, předá klíče registrátorovi a doménu zaplatí z kreditu firmy. Pokud DNSSEC klíče ještě nejsou připravené, registrace se neodešle a platba se nestrhne. Stále si ale můžete vybrat i vlastního registrátora, třeba takového, který má domény nebo služby, které jinde dostupné nejsou.
+Roští umí hostovat DNS zóny pro vaše domény, což je preferovaný způsob, jak k nám domény nasměrovat. Novou doménu můžete zkusit registrovat přímo v administraci v sekci **DNS → Registrovat**. Formulář ukazuje aktuálně podporované doménové koncovky, například `.cz`. Administrace při registraci vytvoří DNS zónu, zapne DNSSEC, předá klíče registrátorovi a doménu zaplatí z kreditu firmy. Pokud DNSSEC klíče ještě nejsou připravené, registrace se neodešle a platba se nestrhne. Stále si ale můžete vybrat i vlastního registrátora, třeba takového, který má domény nebo služby, které jinde dostupné nejsou.
+
+Registrace domén je zatím v beta verzi: registrace fungují, ale transfery ještě nejsou implementované, podporujeme omezenou sadu TLD a některé části stále doplňujeme. Pro registrace spolupracujeme s [RealtimeRegister](https://www.realtimeregister.com/) a [OpenProvider](https://www.openprovider.com/), což jsou společnosti sídlící v EU.
 
 ## Nasměrování NS záznamů domény na naše DNS servery
 
@@ -46,7 +48,7 @@ Aby byla doména nasměrovaná do konkretní aplikace, musíme ji u aplikace nas
 
 ![Parametry aplikace](../../imgs/domains_4.png)
 
-Tady doménu a případně její www variantu nebo další subdomény dopíšeme do pole *Domény*. Pole zobrazuje jednotlivé domény jako štítky; doménu potvrdíte mezerou nebo Enterem. Administrace při psaní nabízí volné domény a subdomény z vašich DNS zón. U domén ve zónách spravovaných v Roští umí po potvrzení automaticky vytvořit A a AAAA záznamy na náš load balancer a doménu přiřadit k aplikaci. Domény mimo vaše zóny se přidají jako externě spravované a DNS musíte nastavit u svého poskytovatele. Zelené štítky označují domény v našich DNS zónách, oranžové externě spravované domény. Než změnu potvrdíme, můžeme ještě aktivovat HTTPS, nastavit HSTS nebo změnit balíček.
+Tady doménu a případně její www variantu nebo další subdomény dopíšeme do pole *Domény*. Pole zobrazuje jednotlivé domény jako štítky; doménu potvrdíte mezerou nebo Enterem. Administrace při psaní nabízí volné domény, subdomény z vašich DNS zón a subdomény na naší testovací doméně `rostiapp.cz`. U domén ve zónách spravovaných v Roští umí po potvrzení automaticky vytvořit A a AAAA záznamy na náš load balancer a doménu přiřadit k aplikaci. Subdomény na `rostiapp.cz` se přiřadí bez vytváření DNS záznamů, ale konkrétní celá doména může být použitá jen u jedné aplikace, stacku nebo Pages webu. Domény mimo vaše zóny se přidají jako externě spravované a DNS musíte nastavit u svého poskytovatele. Zelené štítky označují domény v našich DNS zónách, modré subdomény na testovací doméně a oranžové externě spravované domény. Než změnu potvrdíme, můžeme ještě aktivovat HTTPS, nastavit HSTS nebo změnit balíček.
 
 Je možné, že změny v DNS chvíli potrvají, ale během hodiny by mělo vše fungovat. Doménu, kterou jsme vám dali na testování, můžete používat dál nebo ji smazat.
 
