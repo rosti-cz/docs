@@ -24,6 +24,8 @@ Doménové kontakty (Domain contacts) jsou sady kontaktních údajů, které se 
 
 Aby bylo možné doménový kontakt použít při registraci domény, musí být ověřeno telefonní číslo a e-mailová adresa.
 
+Po registraci domény může registrátor vyžadovat další ověření kontaktu e-mailem. Jeho aktuálně známý stav najdete v administraci v seznamu **DNS → Kontakty**. Pokud registrátor stav neposkytuje, administrace zobrazí, že stav není dostupný.
+
 ### Ověření telefonního čísla
 
 1. Na stránce detailu kontaktu klikněte na **Změnit telefonní číslo** nebo **Ověřit telefonní číslo**.
@@ -49,6 +51,14 @@ Aby bylo možné doménový kontakt použít při registraci domény, musí být
 Při registraci nebo transferu domény se používá uložený doménový kontakt. Kontakt musí mít ověřené telefonní číslo i e-mailovou adresu.
 
 Při registraci nové domény můžete kontakt založit také přímo z formuláře **DNS → Registrovat** volbou **Nová adresa** v seznamu kontaktů. Administrace otevře modální okno, provede vás zadáním údajů, ověřením telefonního čísla a odesláním ověřovacího e-mailu. Po potvrzení e-mailu se formulář registrace domény znovu načte s nově ověřeným kontaktem.
+
+## Registrace, transfer a samostatná DNS zóna
+
+Po kontrole dostupnosti domény nabídne administrace vždy odpovídající možnosti. Volnou doménu lze zaregistrovat, obsazenou doménu převést od současného registrátora a pro libovolnou platnou doménu lze vytvořit pouze DNS zónu. U rezervované nebo nepodporované domény je dostupná jen DNS zóna.
+
+Registrace i transfer vyžadují ověřený doménový kontakt a platí se z kreditu firmy. Transfer může vyžadovat autorizační kód od současného registrátora; kód je nepovinný a administrace ho neukládá. Při opakování již zaplacené operace se kredit nestrhne podruhé, ale autorizační kód může být nutné zadat znovu.
+
+Volba **Vytvořit pouze DNS zónu** založí zónu s výchozími záznamy a otevře její detail. Pokud zóna firmy již existuje, použije se beze změny. Transfer zónu připraví automaticky, ale DNSSEC se při transferu zatím automaticky nezapíná ani nesynchronizuje.
 
 ## API
 
