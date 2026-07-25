@@ -1,6 +1,6 @@
 ## E-mailové služby
 
-Roští.cz nenabízí emailové schránky, ale je zde možnost odesílat poštu přes náš SMTP server.
+Roští.cz nabízí spravované [e-mailové schránky](mailboxes.md). Tato stránka popisuje samostatné SMTP přihlašovací údaje aplikace pro odesílání pošty; nejde o přístupové údaje k e-mailové schránce.
 
 |Parametr|Hodnota|Poznámka|
 |-|-|-|
