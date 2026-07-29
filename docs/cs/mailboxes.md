@@ -6,7 +6,7 @@ V administraci v sekci **Emails** můžete spravovat e-mailové domény, schrán
 
 E-mailovou doménu můžete přidat, i když její DNS spravuje jiný poskytovatel. Detail domény zobrazí potřebné záznamy MX, SPF, DKIM a případně DMARC i jejich aktuální stav.
 
-Pokud má stejná firma DNS zónu domény spravovanou v Roští, zobrazí se možnost synchronizace DNS. Nejdříve uvidíte náhled změn. Chybějící záznamy se přidají a při konfliktu administrace přesně ukáže, které záznamy přepíše nebo odstraní; takovou změnu musíte výslovně potvrdit. Synchronizace také nastaví záznamy `autoconfig` a `autodiscover`, aby podporované e-mailové klienty získaly nastavení schránky automaticky.
+Pokud má stejná firma DNS zónu domény spravovanou v Roští, zobrazí se možnost synchronizace DNS. Nejdříve uvidíte náhled změn. Chybějící záznamy se přidají a při konfliktu administrace přesně ukáže, které záznamy přepíše nebo odstraní; takovou změnu musíte výslovně potvrdit. Synchronizace také nastaví záznamy `autoconfig` a `autodiscover`, aby podporované e-mailové klienty získaly nastavení schránky automaticky. Cílové názvy MX a CNAME jsou uvedeny s koncovou tečkou, aby DNS neposuzovalo jejich hodnotu relativně k doméně zákazníka.
 
 SPF záznam synchronizace slučuje s existujícím záznamem, aby zachovala další odesílací služby, například Microsoft 365 nebo jiný SMTP server. Pokud nelze SPF záznam bezpečně sloučit, zobrazí se návrh jeho nahrazení k potvrzení.
 
