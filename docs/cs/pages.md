@@ -10,6 +10,8 @@ Nový web vytvoříte v administraci v sekci **Pages**. Po vytvoření dostane a
 
 Domény se spravují v detailu webu v záložce **Proxy**. Pole domén zobrazuje jednotlivé domény jako štítky; doménu potvrdíte mezerou nebo Enterem. Při psaní administrace nabízí volné domény, subdomény z vašich DNS zón a subdomény na naší testovací doméně `rostiapp.cz`. U domén ve zónách spravovaných v Roští umí po potvrzení automaticky vytvořit A a AAAA záznamy na náš load balancer a doménu přiřadit k Pages webu. Subdomény na `rostiapp.cz` se přiřadí bez vytváření DNS záznamů, ale konkrétní celá doména může být použitá jen u jedné aplikace, stacku nebo Pages webu. Domény mimo vaše zóny se přidají jako externě spravované a DNS musíte nastavit u svého poskytovatele. Zelené štítky označují domény v našich DNS zónách, modré subdomény na testovací doméně a oranžové externě spravované domény. Seznam domén nesmí zůstat prázdný.
 
+Pokud je v seznamu alespoň dvojice domén, můžete v nastavení **Proxy** zapnout **Přesměrování na první doménu**. Všechny ostatní domény pak přesměrují návštěvníky na první doménu uvedenou v seznamu.
+
 ## Nahrávání souborů přes `rosticli`
 
 Primární způsob nahrávání souborů je přes `rosticli`. Webové rozhraní slouží k vytvoření webu, zobrazení informací včetně využitého prostoru a aktuální ceny za 30 dní a správě domén; samotný obsah webu nahrajete z terminálu.
