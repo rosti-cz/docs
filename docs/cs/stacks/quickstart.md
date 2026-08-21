@@ -171,6 +171,12 @@ V info kartě stacku je možné dělat základní operace na běžícími služb
 
 Tlačítko *Up* spustí všechny služby, které neběží. *Down* dělá pravý opak a všechny služby vypne a odstraní je z Dockeru. *Restart* restartuje kontejnery s běžícími službami a nakonec *Pull* stáhne nové verze obrazů. Aktualizace celého stacku tak jde provést pomocí kombinace *Pull* a *Up*, kdy se aktualizují obrazy a pomocí *Up* se nové obrazy aplikují.
 
+### Logy
+
+V kartě *Logs* jsou živé logy služeb ve stacku. V nabídce *Show logs from* lze zvolit poslední hodinu, 6 hodin, 24 hodin nebo 7 dní; poté se dále zobrazují nové řádky. Lze také vybrat jednotlivé služby, pozastavit výpis nebo filtrovat již načtené řádky.
+
+Historie logů závisí na tom, jak dlouho ji Docker na daném serveru uchovává, a není proto garantována po celou vybranou dobu. Prohlížeč zobrazuje nejvýše 5 000 posledních řádků.
+
 ### SSH a SFTP přístup
 
 V kartě *Přístup* se dá nastavit SSH heslo a SSH klíče pro přístup pomocí SSH a SFTP protokolů pro uživatele *root*.
