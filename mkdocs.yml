@@ -1,5 +1,6 @@
 site_name: Dokumentace Roští.cz
 site_description: Dokumentace k hostingovým službám Roští.cz.
+site_url: https://docs.rosti.cz
 nav:
     - Domů: index.md
     - "Aplikace":
