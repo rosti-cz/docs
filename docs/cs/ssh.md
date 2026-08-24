@@ -81,3 +81,17 @@ Do souboru *~/.ssh/config* vložte následující text.
       Port <PORT>
 
 Díky tomuto nastavení už nebudete muset nikde kopírovat hostname, port a uživatele. Vše proběhne automaticky při použití příkazu `ssh muj-web.cz`.
+
+## Přerušené neaktivní SSH spojení
+
+Mezi SSH klientem a serverem může být proxy, která po určité době ukončí neaktivní spojení. V klientovi OpenSSH proto nastavte odesílání keep-alive paketů každých 30 sekund:
+
+```bash
+ssh -o ServerAliveInterval=30 app@ssh.rosti.cz -p <PORT>
+```
+
+Pro trvalé nastavení přidejte do příslušné sekce v souboru `~/.ssh/config`:
+
+```
+ServerAliveInterval 30
+```
