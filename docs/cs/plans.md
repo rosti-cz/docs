@@ -17,9 +17,9 @@ Připravili jsme pro vás tabulku, podle které si můžete vybrat balíček pod
 | Pro+      | 4096 | 2    | 50   | Pro aplikace s většími požadavky na paměť a diskový prostor.                                                                       |
 | Business+ | 8192 | 4    | 100  | Nejvyšší balíček, vhodný pro aplikace s velkou návštěvností jako jsou třeba eshopy.                                                |
 
-Výběrem poddimenzovaného balíčku se vystavujete riziku, že bude aplikace nestabilní a nebo nepůjde vůbec nainstalovat.
+Výběrem poddimenzovaného balíčku se vystavujete riziku, že bude aplikace nestabilní a nebo nepůjde vůbec nainstalovat. Balíček platí pro jednu konkrétní aplikaci; nepředstavuje společnou kvótu pro více aplikací ve firmě. Pokud potřebujete provozovat více projektů v rámci jednoho balíčku, můžete je spojit do jedné aplikace a nakonfigurovat v ní [více služeb nebo domén](multidomains.md).
 
-Balíčky je možné měnit kdykoli a účtovány jsou od okamžiku, kdy změnu provedete. Můžete si tedy
+Balíčky je možné měnit kdykoli a od okamžiku změny se z kreditu účtuje nová hodinová sazba. Můžete si tedy
 vyzkoušet, kolik přesně vaše aplikace potřebuje procesorového času a paměti a poté vybrat třeba cenově výhodnější balíček.
 Více informací k rozhodnutí najdete v administraci v sekci grafy.
 
