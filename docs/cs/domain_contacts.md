@@ -54,9 +54,9 @@ Při registraci nové domény můžete kontakt založit také přímo z formulá
 
 ## Registrace, transfer a samostatná DNS zóna
 
-Po kontrole dostupnosti domény nabídne administrace vždy odpovídající možnosti. Volnou doménu lze zaregistrovat, obsazenou doménu převést od současného registrátora a pro libovolnou platnou doménu lze vytvořit pouze DNS zónu. U rezervované nebo nepodporované domény je dostupná jen DNS zóna.
+Po kontrole dostupnosti domény nabídne administrace vždy odpovídající možnosti. Volnou doménu lze zaregistrovat, obsazenou doménu převést od současného registrátora a pro libovolnou platnou doménu lze vytvořit pouze DNS zónu. U transferu administrace před potvrzením zobrazí odhadovanou cenu. U rezervované nebo nepodporované domény je dostupná jen DNS zóna.
 
-Registrace i transfer vyžadují ověřený doménový kontakt a platí se z kreditu firmy. Transfer může vyžadovat autorizační kód od současného registrátora; kód je nepovinný a administrace ho neukládá. Při opakování již zaplacené operace se kredit nestrhne podruhé, ale autorizační kód může být nutné zadat znovu.
+Registrace i transfer vyžadují ověřený doménový kontakt a platí se z kreditu firmy. Transfer vyžaduje autorizační kód od současného registrátora; administrace ho neukládá. Při opakování již zaplacené operace se kredit nestrhne podruhé, ale autorizační kód je nutné zadat znovu.
 
 Volba **Vytvořit pouze DNS zónu** založí zónu s výchozími záznamy a otevře její detail. Pokud zóna firmy již existuje, použije se beze změny. Transfer zónu připraví automaticky, ale DNSSEC se při transferu zatím automaticky nezapíná ani nesynchronizuje.
 
