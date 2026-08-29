@@ -58,7 +58,6 @@ nav:
         - "API": cs/api.md
         - "Přístupové klíče (Passkeys)": cs/passkeys.md
         - "FAQ": cs/faq.md
-    - "Stará dokumentace": old/index.md
 #theme: readthedocs
 theme: 
   name: material

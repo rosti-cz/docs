@@ -76,5 +76,3 @@ Pages je služba pro hostování statických webů bez vlastního runtime. Sprá
 <!-- * [HTTPS](https.md) -->
 <!-- * [Nginx (přesměrování, více domén s jiným obsahem)](nginx.md) -->
 <!-- * [Tipy pro deployment nového kódu](deployment.md) -->
-
-Stará dokumentace [je dostupná zde](old/index.md).
