@@ -165,11 +165,11 @@ rosticli stacks setup-cicd --no-input
 
 ### Správa služeb
 
-V info kartě stacku je možné dělat základní operace na běžícími službami. Kromě toho, že můžete všechno smazat jsou zde tlačítka pro *Up*, *Down*, *Restart* a *Pull*.
+V info kartě stacku je možné dělat základní operace nad běžícími službami. Kromě toho, že můžete všechno smazat, jsou zde tlačítka pro *Up*, *Down*, *Restart*, *Pull+Up+Prune* a *Prune*.
 
 ![Info karta](../../imgs/stacks/info.png)
 
-Tlačítko *Up* spustí všechny služby, které neběží. *Down* dělá pravý opak a všechny služby vypne a odstraní je z Dockeru. *Restart* restartuje kontejnery s běžícími službami a nakonec *Pull* stáhne nové verze obrazů. Aktualizace celého stacku tak jde provést pomocí kombinace *Pull* a *Up*, kdy se aktualizují obrazy a pomocí *Up* se nové obrazy aplikují.
+Tlačítko *Up* spustí všechny služby, které neběží. *Down* dělá pravý opak a všechny služby vypne a odstraní je z Dockeru. *Restart* restartuje kontejnery s běžícími službami. *Pull+Up+Prune* stáhne nové verze obrazů, nasadí je a odstraní všechny nepoužívané obrazy. Samostatné tlačítko *Prune* pouze odstraní nepoužívané obrazy. Používané obrazy zůstávají zachovány.
 
 ### Logy
 

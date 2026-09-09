@@ -43,7 +43,7 @@ services:
 
 ![MongoDB compose](../imgs/mongodb/mongodb-compose.png)
 
-Pokud má být MongoDB přístupné z vnitřní sítě Roští, tak je potřeba uvést port 27017 v *ports*. Pokud budete MongoDB používat jen v rámci stacku, tak *ports* můžete vynechat. Zvolte si také správnou verzi MongoDB. Pokud vyberete například *8.0*, *8* nebo třeba *latest*, tak kombinace tlačítek *Pull* a *Up* v administraci databázi aktualizuje.
+Pokud má být MongoDB přístupné z vnitřní sítě Roští, tak je potřeba uvést port 27017 v *ports*. Pokud budete MongoDB používat jen v rámci stacku, tak *ports* můžete vynechat. Zvolte si také správnou verzi MongoDB. Pokud vyberete například *8.0*, *8* nebo třeba *latest*, tlačítko *Pull+Up+Prune* v administraci databázi aktualizuje.
 
 V *docker-compose.yml* máme nějaké proměnné, jejichž hodnoty nastavíme v *.env*. Hesla a uživatelská jména si zvolte podle sebe.
 
