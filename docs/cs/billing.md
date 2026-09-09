@@ -2,7 +2,7 @@
 
 ## Zkušební období a čerpání kreditu
 
-Po registraci máte 30 dní na vyzkoušení. Během této doby můžete aplikace i jejich balíčky nastavit a používat stejně jako později. Po jejím skončení není nutné přecházet na jiný tarif: u aktivních aplikací se začne podle jejich nastaveného balíčku čerpat kredit.
+Po registraci máte 30 dní na vyzkoušení. Během této doby můžete aplikace a dostupné balíčky nastavit a používat stejně jako později. Větší balíčky jsou k dispozici až po připsání první platby. Po skončení zkušebního období není nutné přecházet na jiný tarif: u aktivních aplikací se začne podle jejich nastaveného balíčku čerpat kredit.
 
 Roští používá předplacený kreditový systém, proto kredit dobijte před koncem zkušebního období. Systém vás na potřebu dobití upozorní.
 

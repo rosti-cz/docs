@@ -9,6 +9,8 @@ hodnota, na kterou nemohou některé oblíbené nástroje, jako *npm* nebo *pip*
 
 Připravili jsme pro vás tabulku, podle které si můžete vybrat balíček podle požadavku vaší aplikace.
 
+Větší balíčky jsou dostupné až po připsání první platby.
+
 | Balíček   | RAM  | CPU  | Disk | Použití                                                                                                                            |
 | --------- | ---- | ---- | ---- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | Mini      | 128  | 0.25 | 1    | Statické stránky nebo velmi jednoduché dynamické aplikace. Next.js, React, Django ani další velké frameworky zde nebudou fungovat. |
