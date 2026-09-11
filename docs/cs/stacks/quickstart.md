@@ -89,7 +89,7 @@ Pokud v této fázi potřebujete nahrát ke službám nějaká data, tak můžet
 
 ### Možnost 2: Nasazení přes CLI (`rosticli stacks push`)
 
-Příkaz `push` sestaví Docker image lokálně na vašem počítači a přenese ho přímo do stacku přes SSH. Příkaz je idempotentní — spusťte ho znovu kdykoli se změní kód.
+Příkaz `push` sestaví Docker image lokálně na vašem počítači a přenese ho přímo do stacku přes SSH. V interaktivním terminálu při přenosu ukazuje přesná procenta, objem přenesených dat a rychlost. Příkaz je idempotentní — spusťte ho znovu kdykoli se změní kód.
 
 **Vhodné pro:** jednotlivce nebo malé týmy, kteří nasazují ze svého počítače a zatím nepotřebují plně automatizovaný pipeline.
 
@@ -121,7 +121,7 @@ rosticli stacks init --no-input --company-id <ID> --profile-id <ID> --name moje-
 rosticli stacks push --no-input
 ```
 
-Pro AI asistenty můžete nainstalovat vestavěný skill příkazem `rosticli install-ai-skills`.
+Instalační skript i `rosticli update` automaticky nainstalují vestavěný skill do dostupných podporovaných AI nástrojů. Pokud jej chcete nainstalovat znovu ručně, použijte `rosticli install-ai-skills`.
 
 Příkaz `login` otevře prohlížeč s přihlašovací stránkou. Po potvrzení se token automaticky uloží. Pokud chcete token zadat ručně, použijte `rosticli login --no-browser`.
 

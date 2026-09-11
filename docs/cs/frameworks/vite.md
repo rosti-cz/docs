@@ -1,5 +1,8 @@
 # Vite.js
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](../stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 Framework Vite.js běží na straně prohlížeče, takže na straně serveru stačí pouze statický hosting.
 V administraci tedy vytvoříme novou aplikaci a vybereme technologii "default".
 Na lokálním počítači zavoláme `npm run build` a obsah adresář `dist` zkopírujemne na server

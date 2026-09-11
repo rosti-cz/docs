@@ -1,5 +1,8 @@
 # Aktivace alternativních technologií
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 Když se připojíte do SSH v aplikaci, můžete aktivovat další podporované technologie k té hlavní, kterou jste vybrali během vytváření aplikace. Slouží k tomu příkaz `activate_tech`.
 
 To se hodí například když máte aplikaci napsanou třeba v Pythonu, ale potřebujete volat build frontend knihoven přes Node.js. Aktivaci provedete takto:

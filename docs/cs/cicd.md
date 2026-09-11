@@ -1,5 +1,8 @@
 # CI/CD integrace
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 Administrace umí pro vaše aplikace vygenerovat tzv. GitHub Workflow, které nasadí kód pokud:
 
 * Je do vybrané větve poslán nový commit,

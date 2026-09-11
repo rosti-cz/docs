@@ -1,5 +1,8 @@
 # Průvodce Roští.cz
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Pro nové projekty doporučujeme [Hosting - Stacky](cs/stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 Roští je proti ostatním poskytovatelům hostingu trochu jiné. Při přidání aplikace na Roští dostanete kontejner na jednom z našich serverů, který bude obsahovat pevně dané prostředí, ve kterém mohou běžet vaše aplikace téměř bez ohledu na použitou technologii. Jednotlivé kontejnery jsou na sobě nezávislé a kompletně oddělené. Spojujeme tak výhodu hostingu, kde se nemusíte o moc starat a flexibilitu virtuálních serverů, kde máte k dispozici celou řadu nástrojů, které dělají vývoj, provoz a řešení problémů o dost jednodušší.
 
 Snažili jsme se vytvořit jednotný systém, použitelný pro celou řadu technologií, jako je Python, PHP, Node.js, Golang a další. Pokud k nám nasadíte jednu aplikaci, napsanou například v Pythonu, a připravíte si pro ní skripty pro nasazování nové verze, tak s malými úpravami budete moci se stejnými skripty nasadit jinou aplikaci napsanou třeba v PHP nebo Node.js.
@@ -8,18 +11,9 @@ Z principu je Roští.cz vhodné pro menší a střední stateful aplikace, kde 
 
 Níže najdete jednotlivé kapitoly tohoto průvodce, ale pro rychlý start vám postačí ta první. Později se můžete vracet k těm dalším a rozšířit si znalosti o našem systému.
 
-## Aplikace
+## Hosting - Stacky
 
-Snažili jsme se přímočaře popsat, jak Roští funguje a jak tam nasadit vaši aplikaci. Když si tyhle čtyři části projdete, budete vědět o Roští téměř všechno a pokud už máte zkušenosti s Linuxem, zorientujete se velmi rychle. I tak, pokud narazíte na nesrovnalost, nebo nebude něco jasné, použijte prosím náš online chat, [kontaktní formulář](https://rosti.cz/kontakt/) a nebo [email](mailto:podpora@rosti.cz) a nebojte se zeptat.
-
-* [1. První aplikace](cs/quickstart/first_app.md)
-* [2. Jednoduchý deployment](cs/quickstart/first_deployment.md)
-* [3. Databáze](cs/quickstart/databases.md)
-* [4. Nastavení domény](cs/quickstart/domains.md)
-
-## Stacky
-
-Stacky jsou hosting založený na *docker-compose.yml*. Jde o univerzálnější službu než jsou Aplikace, ale zároveň vyžaduje více zkušeností s docker obrazy a kontejnery.
+Stacky jsou moderní hosting založený na *docker-compose.yml* s AI-kompatibilním toolingem. Jde o univerzálnější službu než Aplikace, ale zároveň vyžaduje více zkušeností s Docker obrazy a kontejnery.
 
 * [Quickstart průvodce](cs/stacks/quickstart.md)
 * [Rozdíl mezi aplikacemi a stacky](cs/stacks/apps-vs-stacks.md)
@@ -31,6 +25,14 @@ Stacky jsou hosting založený na *docker-compose.yml*. Jde o univerzálnější
 Pages je služba pro hostování statických webů bez vlastního runtime. Správa domén je v administraci, soubory se nahrávají primárně přes `rosticli`, případně přes REST API.
 
 * [Pages](cs/pages.md)
+
+## Aplikace (Zastaralé)
+
+* [Proč jsou Aplikace zastaralé](cs/aplikace-zastarale.md)
+* [1. První aplikace](cs/quickstart/first_app.md)
+* [2. Jednoduchý deployment](cs/quickstart/first_deployment.md)
+* [3. Databáze](cs/quickstart/databases.md)
+* [4. Nastavení domény](cs/quickstart/domains.md)
 
 ## Specifika jednotlivých technologií
 

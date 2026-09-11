@@ -1,5 +1,8 @@
 # Node.js
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](../stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 Spuštění Node.js aplikace na Roští je velmi podobné postupu, který používáte na svém počítači. Node.js aplikace musí po zapnutí spustit HTTP server na portu 8080. Nasazení první aplikace je popsáno [v našem quickstart průvodci](../quickstart/first_deployment.md) a tak doporučujeme začít tam.
 
 ## Aktualizace Runtime a Node.js

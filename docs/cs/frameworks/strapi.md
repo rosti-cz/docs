@@ -1,5 +1,8 @@
 # Instalace Strapi
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](../stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 Co budeme potřebovat:
 
 * Účet v Roští administraci

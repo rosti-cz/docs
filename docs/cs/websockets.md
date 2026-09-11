@@ -1,5 +1,8 @@
 # Websockets
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 Na Roští sice websockety fungují, ale je potřeba upravit konfiguraci Nginxu v kontejneru, jinak se klient nepřipojí k serveru.
 
 Přejdeme tedy do souboru */srv/conf/nginx.d/app.conf*, který většinou vypadá podobně tomuto:
@@ -46,4 +49,3 @@ Po restartu Nginxu začnou websockety fungovat.
 ```
 supervisorctl restart nginx
 ```
-

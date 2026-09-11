@@ -1,5 +1,8 @@
 # Adresářová struktura /srv
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 Každá aplikace má pevnou adresářovou strukturu, která vypadá takto:
 
 * /srv/app - toto je místo pro váš zdrojový kód
@@ -16,5 +19,3 @@ Pokud si chcete aplikaci zazálohovat, stačí vám zkopírovat adresář */srv*
     ssh app@ssh.rosti.cz -p 24509 tar cjf -C / - srv > backup.tar.bz2
 
 Nezapomeňte změnit SSH port.
-
-

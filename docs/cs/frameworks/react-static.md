@@ -1,5 +1,8 @@
 # Statický web s React
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](../stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 Pokud váš web nevyžaduje žádný Server-Side Rendering (SSR), umí z něj React vygenerovat statickou stránku, kterou stačí nakopírovat na server. Podle tohoto návodu připravíte aplikaci pro takový web během 10 minut.
 
 ## Co budeme potřebovat

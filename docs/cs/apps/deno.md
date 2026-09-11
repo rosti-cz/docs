@@ -1,5 +1,8 @@
 # Deno
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](../stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 Provoz Deno aplikací na Roští je velmi podobný Golang aplikacím. Deno má vlastní tooling pro závislosti, takže o ty prakticky není potřeba se starat. Stáhnou se při prvním spuštění aplikace.
 
 ## Aktualizace Deno a Runtime

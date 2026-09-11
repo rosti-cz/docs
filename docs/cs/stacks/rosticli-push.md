@@ -140,7 +140,7 @@ Po úspěšném `init` příkaz `push` pro vybraný target provede tyto kroky:
 1. **Kontrola stavu** — ověří, zda je vybraný target inicializován (`.rostistate` obsahuje company_id, stack_id a SSH endpoint). Pokud ne, vypíše chybu s výzvou ke spuštění `init`.
 2. **Kontrola prerekvizit** — ověří přítomnost `Dockerfile`, `docker-compose.rosti.yml` a dostupnost Dockeru nebo Podmanu.
 3. **Build image** — `docker build -t app:latest .` (nebo ekvivalent přes Podman)
-4. **Export image na server** — `docker save | ssh ... docker load`, poté obraz na serveru přetaguje na `app:latest`
+4. **Export image na server** — CLI nejdřív změří velikost archivu pomocí `docker save`, potom ho podruhé streamuje přes `ssh ... docker load` a obraz na serveru přetaguje na `app:latest`. V interaktivním terminálu zobrazuje přesný průběh přenosu včetně procent, přenesených dat a rychlosti; archiv se neukládá na disk.
 5. **Nahrání docker-compose.rosti.yml** — obsah souboru se nahraje na stack tak, jak je.
 6. **Spuštění** — `docker compose up -d`
 
@@ -220,7 +220,7 @@ Pokud `--no-input` použijete u `init` bez potřebných příznaků (např. mát
 
 ID společnosti zjistíte příkazem `rosticli companies`. ID profilu pak zjistíte příkazem `rosticli stacks profiles`.
 
-Pro AI asistenty můžete nainstalovat vestavěný skill příkazem `rosticli install-ai-skills`.
+Instalační skript i `rosticli update` automaticky nainstalují vestavěný skill do dostupných podporovaných AI nástrojů. Příkaz `rosticli install-ai-skills` můžete použít pro ruční opakování instalace.
 
 Příkaz projde podporované nástroje (OpenCode, Cursor, Claude Code, Codex, Gemini CLI, Google Antigravity, Aider, VS Code a GitHub Copilot), zjistí které jsou dostupné v `PATH` nebo podle lokální konfigurace a nainstaluje `rosti-deploy` do správného umístění pro každý z nich.
 

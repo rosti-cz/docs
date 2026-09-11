@@ -1,5 +1,8 @@
 # Instalace Next.js aplikace
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](../stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 ## Co budeme potřebovat
 
 Než začneme, musíme si připravit několik věcí:

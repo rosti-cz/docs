@@ -1,5 +1,8 @@
 # PHP
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](../stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 V každém Runtime je dostupných několik verzí PHP, mezi kterými je možné přepínat. Při přepnutí verze není potřeba dělat nic speciálního, pouze restartovat *php-fpm* v supervisoru. Na co si ale musíte dát pozor je konec podpory používané verze PHP v novějších Runtime obrazech. Pokud je vaše verze PHP odstraněna z Runtime obrazu, na který jste přepnuli, je potřeba se přihlásit přes SSH do kontejneru a zavolat nástroj *rosti*, kde vyberete verzi novou. Po restartu aplikace v supervisoru by mělo všechno znovu najet:
 
     supervisorctl restart app

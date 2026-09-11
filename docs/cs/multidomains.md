@@ -1,5 +1,8 @@
 # Více domén v jedné aplikaci
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 V jedné aplikaci může současně běžet jak více než jedna doména tak i více jak jedna služba. Díky tomu můžete zkombinovat třeba větší balíček s několika různými weby a nebo provozovat komplexnější aplikaci, která má oddělený backend a frontend, případně využívá další služby.
 
 Uvnitř každé aplikace běží Nginx, který se dá nakonfigurovat tak, že například *example.com* a *api.example.com* posílá na dvě různá místa. Můžeme tak mít statický frontend servírovaný rychle přímo z Nginxu a backend napsaný v Node.js, který se stará o požadavky z frontendu. Příklad takové konfigurace vypadá takto:

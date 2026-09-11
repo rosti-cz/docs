@@ -1,5 +1,8 @@
 # Výběr balíčku
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 Na Roští nabízíme celou škálu balíčků s různě alokovanými prostředky. Aby vaše aplikace běžela
 stabilně, musíte věnovat výběru balíčku pozornost.
 

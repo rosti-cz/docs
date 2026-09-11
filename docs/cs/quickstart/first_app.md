@@ -1,5 +1,8 @@
 # 1. První aplikace
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](../stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 Po registraci máte 30 dní na to, abyste si naši službu vyzkoušeli. Po prvním přihlášení vypadá administrace podobně jako na obrázku níže.
 
 ![Zatím žádná aplikace](../../imgs/first_app_1.png)

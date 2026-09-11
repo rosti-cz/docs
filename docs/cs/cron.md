@@ -1,5 +1,8 @@
 # Cron
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 Cron slouží pro automatické spouštění úloh a každá aplikace má vlastního cron daemona přímo v kontejneru. Úlohy se spouští pod stejným uživatelem jako běží aplikace. Bohužel nemůžeme úplně zachovat standardní postupy práce s cronem jako v normálním unixovém systému, ale museli jsme je ohnout pro kontejnery.
 
 Seznam úkolů se drží v tzv. crontabu a ten najdete v */srv/conf/crontab*. Změny provádějte v tomto souboru. Po jeho uložení se ještě neprojeví ale reload pravidel můžete provést buď restartem kontejneru a nebo přes SSH zavoláním:

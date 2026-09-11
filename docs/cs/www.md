@@ -1,5 +1,8 @@
 # Přesměrování www subdomény
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 U aplikací se občas hodí přesměrování subdomény *www* na hlavní doménu. Pokud to nelze řešit v kódu samotném, tak je možné upravit konfiguraci Nginxu, který běží v každém kontejneru s aplikací a je uživatelsky dostupný. Konfigurační soubor se nachází v `/srv/conf/nginx.d/app.conf`.
 
 ## Postup

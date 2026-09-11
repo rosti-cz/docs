@@ -1,5 +1,8 @@
 # Platby
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 ## Zkušební období a čerpání kreditu
 
 Po registraci máte 30 dní na vyzkoušení. Během této doby můžete aplikace a dostupné balíčky nastavit a používat stejně jako později. Větší balíčky jsou k dispozici až po připsání první platby. Po skončení zkušebního období není nutné přecházet na jiný tarif: u aktivních aplikací se začne podle jejich nastaveného balíčku čerpat kredit.

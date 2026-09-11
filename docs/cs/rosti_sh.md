@@ -1,5 +1,8 @@
 # Nástroj Rosti.sh
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 Každý kontejner postavený na našem Runtime obraze má v sobě nástroj nazvaný *rosti.sh*, který můžete vyvolat spuštěním příkazu *rosti* přes SSH v kontejneru. Přes tento nástroj můžete aktivovat jednotlivé technologie.
 
 Aktivní může být vždy jen jedna, ale ostatní jsou vám také k dispozici v adresáři */opt/techs*. Pokud například potřebujete k Node.js aplikaci přidat do shellu i Python, přidejte toto do souboru *.bashrc*:
