@@ -1,5 +1,8 @@
 # Aplikace napsaná v Bun
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](../stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 Tento návod vás provede jednotlivými kroky, jak nahrát kód vaší aplikace napsané v Bun do kontejneru na Roští.cz, jak zajistit, aby Nginx správně přesměrovával požadavky, a jak aplikaci spustit.
 
 ## 1. Přihlášení do kontejneru s aplikací

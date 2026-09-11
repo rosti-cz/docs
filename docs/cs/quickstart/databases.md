@@ -1,5 +1,8 @@
 # 3. Databáze
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](../stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 Roští podporuje dvě databáze, které jsou sdílené všemi uživateli. Jde o MariaDB 10.4 a PostgreSQL 12. Databáze průběžně aktualizujeme, ale staré aplikace necháváme běžet na tom, na čem je jejich uživatelé vytvořili. Pokud oznámíme dostupnost nové verze jedné či druhé databáze, můžete aktualizovat tak, že si vytvoříte v administraci databázi novou a zkopírujete tam data z té staré.
 
 Vraťme se teď do rozhraní administrace, konkrétně do sekce *Úložiště*.

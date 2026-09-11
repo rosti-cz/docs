@@ -1,5 +1,8 @@
 # Instalace NewRelic APM agenta pro PHP
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](../stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 NewRelic je služba, která do detailu monitoruje výkon vaší aplikace a pokud pozorujete nějaký problém, velmi pravděpodobně vám ukáže, kde se přesně nachází. Instalace na Roští není úplně přímočará, protože instalační skript chce root přístup, ale s tím si dokážeme poradit.
 
 Začneme tím, že si stáhnete instalační balíček [ze stránek NewRelicu](https://docs.newrelic.com/docs/apm/agents/php-agent/installation/php-agent-installation-tar-file/#download). V tom návodu použijeme balíček ve verzi **10.12.0.1**, tak se určitě přesvědčte, že je to ta aktuální, případně ta která podporuje vaši verzi PHP. Nenechte se zmást názvem *PHP5*. Jedná se o verzi kompatibilní i s *PHP 7* a *PHP 8*.
@@ -40,4 +43,3 @@ Další možnosti konfigurace `php.ini` najdete v souboru `scripts/newrelic.ini.
 ## Update
 
 V případě aktualizace stáhněte archiv znovu do `/srv/src` a změňte cesty v souboru `/srv/conf/php-fpm/php.ini`. Poté restartujte *php-fpm*.
-

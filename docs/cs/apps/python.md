@@ -1,5 +1,8 @@
 # Python
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](../stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 Na Roští podporujeme několik verzí Pythonu. Nové verze Runtime postupně přidávají další a staré jsou odstraňovány.
 
 Než začnete, projděte si prosím náš [quickstart průvodce](../quickstart/first_deployment.md), kde vysvětlujeme, jak nasadit novou Pythoní aplikaci. Není tam ale všechno a tak se na to ostatní podíváme tady.
@@ -59,4 +62,3 @@ Zakomentovanou sekci můžete odkomentovat a pak cesta (path) */static/* bude se
     supervisorctl restart nginx
 
 Oba řádky s *location* a *alias* musí končit stejně (nepočítáme středník a závorku), v tomto případě oba řetězce končí lomítkem. Pokud použijete lomítko jen u jednoho z řádků, dostanete špatně debugovatelný a hlavně chybný výsledek.
-

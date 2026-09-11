@@ -1,5 +1,8 @@
 # Nejčastější otázky
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 Na některé otázky na podpoře odpovídáme často a tak jsme vytvořili seznam těch nejčastějších včetně odpovědí.
 
 ## Co je zahrnuto v ceně hostingu?
@@ -43,6 +46,4 @@ Cron není nějak omezený. Běží ve vašem kontejneru a konzumuje jeho prost�
 ## Jaké používáte verze MariaDB a PostgreSQL?
 
 V současné době používáme MariaDB 10.4 a PostgreSQL 12.1.
-
-
 

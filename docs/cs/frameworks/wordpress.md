@@ -1,5 +1,8 @@
 # Instalace WordPressu
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](../stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 WordPress na Roští funguje bez problémů, ale je potřeba mu na začátku během instalace trochu pomoci.
 Ve výchozím stavu totiž ignoruje hlavičku *X-Forwarded-Proto*, kde aplikacím říkáme, že běží na
 HTTPS. WordPress pak dává do stránek linky na statická data s *http://* místo *https://* a prohlížeče

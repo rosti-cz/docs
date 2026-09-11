@@ -1,5 +1,8 @@
 ## E-mailové služby
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 Roští.cz nabízí spravované [e-mailové schránky](mailboxes.md). Tato stránka popisuje samostatné SMTP přihlašovací údaje aplikace pro odesílání pošty; nejde o přístupové údaje k e-mailové schránce.
 
 |Parametr|Hodnota|Poznámka|

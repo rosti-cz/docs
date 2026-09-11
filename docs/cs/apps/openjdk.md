@@ -1,5 +1,8 @@
 # Aplikace napsaná v Javě/OpenJDK
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](../stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 Tento návod vás provede jednotlivými kroky, jak nahrát kód vaší aplikace napsané v Javě do kontejneru s aplikací, jak zajistit, aby Nginx správně přesměrovával požadavky, a jak aplikaci spustit.
 
 ## 1. Přihlášení do kontejneru s aplikací

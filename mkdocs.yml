@@ -3,12 +3,7 @@ site_description: Dokumentace k hostingovým službám Roští.cz.
 site_url: https://docs.rosti.cz
 nav:
     - Domů: index.md
-    - "Aplikace":
-      - "1. První aplikace": "cs/quickstart/first_app.md"
-      - "2. Jednoduchý deployment": cs/quickstart/first_deployment.md
-      - "3. Databáze": cs/quickstart/databases.md
-      - "4. Nastavení domény": cs/quickstart/domains.md
-    - "Stacky":
+    - "Hosting - Stacky":
       - Quickstack průvodce: cs/stacks/quickstart.md
       - Nasazení přes CLI (push): cs/stacks/rosticli-push.md
       - Rozdíl mezi aplikacemi a stacky: cs/stacks/apps-vs-stacks.md
@@ -16,6 +11,12 @@ nav:
       - Routování s Traefik: cs/stacks/traefik.md
       - Marketplace a psaní receptů: cs/stacks/marketplace.md
     - "Pages": cs/pages.md
+    - "Aplikace (Zastaralé)":
+      - Proč jsou Aplikace zastaralé: cs/aplikace-zastarale.md
+      - "1. První aplikace": "cs/quickstart/first_app.md"
+      - "2. Jednoduchý deployment": cs/quickstart/first_deployment.md
+      - "3. Databáze": cs/quickstart/databases.md
+      - "4. Nastavení domény": cs/quickstart/domains.md
     - Technologie:
         - Python: cs/apps/python.md
         - PHP: cs/apps/php.md

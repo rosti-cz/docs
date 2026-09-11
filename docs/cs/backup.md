@@ -1,5 +1,8 @@
 # Backup dat
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 Na Roští provádíme zálohování všech dat alespoň jednou denně a držíme historii alespoň
 několika dnů. I když máme zálohování otestované a pravidelně provádíme testovací obnovu,
 doporučujeme každému uživateli provést i vlastní zálohu, protože vy víte nejlépe jakým

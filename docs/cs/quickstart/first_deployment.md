@@ -1,5 +1,8 @@
 # 2. První deployment
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](../stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 Deployment doslova znamená rozmístění a je to běžně používané slovo pro nasazování kódu do produkčního či testovacího prostředí. V této části vám chceme ukázat, jak váš existující kód nasadit do kontejneru aplikace, který jsme vytvořili v před chvílí. Vzhledem k tomu, že podporujeme celou řadu technologií a každá se nasazuje trochu jinak, je vysvětlení trochu rozvětvené.
 
 Základ je nicméně stejný pro všechny hostované technologie. Začněme obrázkem níže:
@@ -167,7 +170,5 @@ Než přejdeme dál, podíváme se, jak putuje požadavek, který přijde do na�
 Komunikace mezi naším load balancerem a vaší aplikace je šifrována na úrovni síťové vrstvy a HTTPS řeší až load balancer. Veškerá komunikace v naší infrastruktuře, která jde skrze internet, je tedy šifrována.
 
 To bude z této části všechno a můžeme se [přesunout k databázím](databases.md).
-
-
 
 

@@ -1,5 +1,8 @@
 # Supervisor
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 Supervisor je klíčovou součástí všech obrazů na Roští a pokud chcete Roští využívat naplno, musíte vědět, jak se ovládá. Supervisor je hlavní proces všech našich Docker obrazů a hlídá, že vaše aplikace běží. Pokud by náhodou spadla, pokusí se ji znovu nahodit. Pokud vás zajímají detaily, tak oficiální dokumentaci k němu naleznete [naleznete na supervisord.org](http://supervisord.org/).
 
 V nově vytvořených aplikacích běží pod supervisorem jeden až dva procesy, což je ukázková aplikace, která vám má dát funkční příklad toho, jak Roští vypadá a k ní tam najdete ještě Nginx. Konfigurace supervisoru se nachází v adresáři */srv/conf/supervisor.d/*. Když si ho otevřete například u Node.js aplikace, uvidíte soubor *node* s podobným obsahem:

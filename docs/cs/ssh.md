@@ -1,5 +1,8 @@
 ## SSH přístup
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 Přístup k aplikaci přes SSH je alfou a omegou Roští. Málo kde ho dostanete a přitom je při vývoji i nasazování tak nenahraditelné. Podívejte se, co všechno můžete s SSH u své aplikace dělat:
 
 - Přístup k plnohodnotnému shellu (BASH)

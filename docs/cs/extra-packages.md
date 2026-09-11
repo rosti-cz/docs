@@ -1,5 +1,8 @@
 # Extra balíčky
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 Do aplikací je možné instalovat extra balíčky z Debianu. Jejich seznam stačí uvést do souboru **/srv/.extra_packages**. Každý balíček by měl být oddělen mezerou. Nemáme žádné omezení na jejich počet, ale každý uvedený balíček prodlouží start kontejneru. Někdy výrazně.
 
 Průběh instalace bohužel nelze sledovat. Pokud narazíte na problémy, kontaktujte prosím naši podporu.

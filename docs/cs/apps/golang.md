@@ -1,5 +1,8 @@
 # Golang
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](../stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 Naše Runtime prostředí obsahuje různé verze Golang kompilátoru. Používáme kompilátory vydané na [golang.org](https://golang.org/).
 
 ## Deployment

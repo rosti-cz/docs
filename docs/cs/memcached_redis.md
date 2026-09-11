@@ -1,5 +1,8 @@
 # Memcached a Redis
 
+!!! warning "Proč jsou Aplikace zastaralé"
+    Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
+
 V kontejnerech s každou aplikací je nainstalován Redis a Memcached, ale ve výchozím stavu nejsou zapnuty. Pokud jedno, druhé nebo obojí potřebujete, nejjednodušší cesta jak je zapnout je přes administraci.
 
 ![Služby v aplikaci](../imgs/app-services.png)
