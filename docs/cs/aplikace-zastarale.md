@@ -1,7 +1,12 @@
 # Proč jsou Aplikace zastaralé
 
+!!! info "Existující Aplikace nevypínáme a nové jdou stále vytvořit"
+    Nemusíte se bát, že bychom vaše existující Aplikace vypnuli. Budeme je dále podporovat a případné budoucí změny zajistíme bez výpadku vašich projektů.
+
 !!! warning "Proč jsou Aplikace zastaralé"
     Pro nové projekty doporučujeme [Hosting - Stacky](stacks/quickstart.md). Stacky jsou modernější služba a mají AI-kompatibilní tooling. Existující Aplikace zůstávají podporované.
+
+Naší motivací je zjednodušit administraci. Aplikace a Stacky byly vedle sebe prakticky dvě služby se stejným účelem, ale každá fungovala po svém. Ze zkušeností na podpoře víme, že to nové uživatele mátlo a bylo obtížné srozumitelně vysvětlit rozdíl mezi oběma službami.
 
 Aplikace byly první službou Roští. Vznikly v roce 2014 a dodnes na nich Roští stojí a padá. Postavili jsme je na Dockeru v době, kdy měl tento projekt ještě daleko do stabilního vydání.
 
