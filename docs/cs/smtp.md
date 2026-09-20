@@ -15,6 +15,9 @@ Roští.cz nabízí spravované [e-mailové schránky](mailboxes.md). Tato strá
 
 SMTP server má aktuálně nastavený limit na maximálně **30 emailů za minutu**.
 
+!!! warning "Doporučený SMTP server"
+    SMTP server Roští může e-maily chybně podepisovat DKIM klíčem, což může negativně ovlivnit doručitelnost. Doporučujeme proto použít SMTP server poskytovatele e-mailové schránky nebo specializovanou službu, například [Mailgun](https://www.mailgun.com/).
+
 ## SPF a DKIM
 
 SPF je záznam v DNS zóně vaší domény, který říká ostatním mail serverům, z jakých serverů bude chodit vaše pošta. Když pak někdo bude posílat emaily ze serverů mimo tento seznam, příchozí server bude vědět, že jde o spam a takové zprávy odmítne nebo s nimi bude zacházet opatrněji. SPF nastavujeme pro domény se zónou u nás automaticky. U starších domén ale může záznam chybět a nemůžeme ho doplnit automaticky, protože nevíme, odkud poštu ve skutečnosti odesíláte.

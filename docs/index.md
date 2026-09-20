@@ -31,8 +31,22 @@ Pages je služba pro hostování statických webů bez vlastního runtime. Sprá
 ## Ostatní
 * [Platby za služby](cs/billing.md)
 * [Upozornění na docházející kredit](cs/credit-notifications.md)
+* [API](cs/api.md)
+* [Špatné NS záznamy](cs/wrong_ns.md)
+* [FAQ](cs/faq.md)
+<!-- * [HTTPS](https.md) -->
+<!-- * [Nginx (přesměrování, více domén s jiným obsahem)](nginx.md) -->
+<!-- * [Tipy pro deployment nového kódu](deployment.md) -->
+
+## Hosting Aplikace (zastaralé)
+
+* [Proč jsou Aplikace zastaralé](cs/aplikace-zastarale.md)
 * [Zálohování](cs/backup.md)
 * [Výběr balíčku](cs/plans.md)
+* [1. První aplikace](cs/quickstart/first_app.md)
+* [2. Jednoduchý deployment](cs/quickstart/first_deployment.md)
+* [3. Databáze](cs/quickstart/databases.md)
+* [4. Nastavení domény](cs/quickstart/domains.md)
 * [Runtime prostředí](cs/runtime.md)
 * [CI/CD](cs/cicd.md)
 * [Nástroj rosti.sh](cs/rosti_sh.md)
@@ -48,20 +62,6 @@ Pages je služba pro hostování statických webů bez vlastního runtime. Sprá
 * [MongoDB](cs/mongo.md)
 * [Websockety](cs/websockets.md)
 * [SMTP server pro odchozí emaily](cs/smtp.md)
-* [API](cs/api.md)
-* [Špatné NS záznamy](cs/wrong_ns.md)
-* [FAQ](cs/faq.md)
-<!-- * [HTTPS](https.md) -->
-<!-- * [Nginx (přesměrování, více domén s jiným obsahem)](nginx.md) -->
-<!-- * [Tipy pro deployment nového kódu](deployment.md) -->
-
-## Hosting Aplikace (zastaralé)
-
-* [Proč jsou Aplikace zastaralé](cs/aplikace-zastarale.md)
-* [1. První aplikace](cs/quickstart/first_app.md)
-* [2. Jednoduchý deployment](cs/quickstart/first_deployment.md)
-* [3. Databáze](cs/quickstart/databases.md)
-* [4. Nastavení domény](cs/quickstart/domains.md)
 
 ### Specifika jednotlivých technologií
 
