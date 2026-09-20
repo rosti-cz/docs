@@ -11,14 +11,16 @@ Z principu je Roští.cz vhodné pro menší a střední stateful aplikace, kde 
 
 Níže najdete jednotlivé kapitoly tohoto průvodce, ale pro rychlý start vám postačí ta první. Později se můžete vracet k těm dalším a rozšířit si znalosti o našem systému.
 
-## Hosting - Stacky
+## Hosting Stacky
 
 Stacky jsou moderní hosting založený na *docker-compose.yml* s AI-kompatibilním toolingem. Jde o univerzálnější službu než Aplikace, ale zároveň vyžaduje více zkušeností s Docker obrazy a kontejnery.
 
 * [Quickstart průvodce](cs/stacks/quickstart.md)
+* [Nasazení přes CLI (push)](cs/stacks/rosticli-push.md)
 * [Rozdíl mezi aplikacemi a stacky](cs/stacks/apps-vs-stacks.md)
 * [MGM kontejner](cs/stacks/mgm.md)
 * [Routování s Traefik](cs/stacks/traefik.md)
+* [Marketplace a psaní receptů](cs/stacks/marketplace.md)
 
 ## Pages
 
@@ -26,35 +28,9 @@ Pages je služba pro hostování statických webů bez vlastního runtime. Sprá
 
 * [Pages](cs/pages.md)
 
-## Aplikace (Zastaralé)
-
-* [Proč jsou Aplikace zastaralé](cs/aplikace-zastarale.md)
-* [1. První aplikace](cs/quickstart/first_app.md)
-* [2. Jednoduchý deployment](cs/quickstart/first_deployment.md)
-* [3. Databáze](cs/quickstart/databases.md)
-* [4. Nastavení domény](cs/quickstart/domains.md)
-
-## Specifika jednotlivých technologií
-
-* [Python](cs/apps/python.md)
-* [PHP](cs/apps/php.md)
-* [Node.js](cs/apps/nodejs.md)
-* [Deno](cs/apps/deno.md)
-* [Golang](cs/apps/golang.md)
-* [Bun](cs/apps/bun.md)
-* [OpenJDK](cs/apps/openjdk.md)
-<!-- * [Ruby](apps/ruby.md) -->
-
-## Frameworky a další nástroje
-
-* [Laravel](cs/frameworks/laravel.md)
-* [Next.js](cs/frameworks/nextjs.md)
-* [React static site](cs/frameworks/react-static.md)
-* [Strapi](cs/frameworks/strapi.md)
-* [NewRelic APM PHP agent](cs/frameworks/newrelic-php.md)
-
 ## Ostatní
 * [Platby za služby](cs/billing.md)
+* [Upozornění na docházející kredit](cs/credit-notifications.md)
 * [Zálohování](cs/backup.md)
 * [Výběr balíčku](cs/plans.md)
 * [Runtime prostředí](cs/runtime.md)
@@ -78,3 +54,30 @@ Pages je služba pro hostování statických webů bez vlastního runtime. Sprá
 <!-- * [HTTPS](https.md) -->
 <!-- * [Nginx (přesměrování, více domén s jiným obsahem)](nginx.md) -->
 <!-- * [Tipy pro deployment nového kódu](deployment.md) -->
+
+## Hosting Aplikace (zastaralé)
+
+* [Proč jsou Aplikace zastaralé](cs/aplikace-zastarale.md)
+* [1. První aplikace](cs/quickstart/first_app.md)
+* [2. Jednoduchý deployment](cs/quickstart/first_deployment.md)
+* [3. Databáze](cs/quickstart/databases.md)
+* [4. Nastavení domény](cs/quickstart/domains.md)
+
+### Specifika jednotlivých technologií
+
+* [Python](cs/apps/python.md)
+* [PHP](cs/apps/php.md)
+* [Node.js](cs/apps/nodejs.md)
+* [Deno](cs/apps/deno.md)
+* [Golang](cs/apps/golang.md)
+* [Bun](cs/apps/bun.md)
+* [OpenJDK](cs/apps/openjdk.md)
+<!-- * [Ruby](apps/ruby.md) -->
+
+### Frameworky a další nástroje
+
+* [Laravel](cs/frameworks/laravel.md)
+* [Next.js](cs/frameworks/nextjs.md)
+* [React static site](cs/frameworks/react-static.md)
+* [Strapi](cs/frameworks/strapi.md)
+* [NewRelic APM PHP agent](cs/frameworks/newrelic-php.md)

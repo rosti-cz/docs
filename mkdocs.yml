@@ -3,38 +3,17 @@ site_description: Dokumentace k hostingovým službám Roští.cz.
 site_url: https://docs.rosti.cz
 nav:
     - Domů: index.md
-    - "Hosting - Stacky":
+    - "Hosting Stacky":
       - Quickstack průvodce: cs/stacks/quickstart.md
       - Nasazení přes CLI (push): cs/stacks/rosticli-push.md
       - Rozdíl mezi aplikacemi a stacky: cs/stacks/apps-vs-stacks.md
       - MGM kontejner: cs/stacks/mgm.md
       - Routování s Traefik: cs/stacks/traefik.md
       - Marketplace a psaní receptů: cs/stacks/marketplace.md
-    - "Pages": cs/pages.md
-    - "Aplikace (Zastaralé)":
-      - Proč jsou Aplikace zastaralé: cs/aplikace-zastarale.md
-      - "1. První aplikace": "cs/quickstart/first_app.md"
-      - "2. Jednoduchý deployment": cs/quickstart/first_deployment.md
-      - "3. Databáze": cs/quickstart/databases.md
-      - "4. Nastavení domény": cs/quickstart/domains.md
-    - Technologie:
-        - Python: cs/apps/python.md
-        - PHP: cs/apps/php.md
-        - Node.js: cs/apps/nodejs.md
-        - Deno: cs/apps/deno.md
-        - Golang: cs/apps/golang.md
-        - Bun: cs/apps/bun.md
-        - Java/OpenJDK: cs/apps/openjdk.md
-    - "Frameworky a nástroje":
-        - "Laravel": cs/frameworks/laravel.md
-        - "WordPress": cs/frameworks/wordpress.md
-        - "Next.js": cs/frameworks/nextjs.md
-        #- "React static site": cs/frameworks/react-static.md
-        - "Strapi": cs/frameworks/strapi.md
-        - "Vite.js": cs/frameworks/vite.md
-        - "NewRelic APM PHP agent": cs/frameworks/newrelic-php.md
-    - "Další informace":
+    - Pages: cs/pages.md
+    - Ostatní:
         - "Platby za služby": cs/billing.md
+        - "Upozornění na docházející kredit": cs/credit-notifications.md
         - "Zálohování": cs/backup.md
         - "Výběr balíčku": cs/plans.md
         - "Runtime prostředí": cs/runtime.md
@@ -59,6 +38,28 @@ nav:
         - "API": cs/api.md
         - "Přístupové klíče (Passkeys)": cs/passkeys.md
         - "FAQ": cs/faq.md
+    - "Hosting Aplikace (zastaralé)":
+      - Proč jsou Aplikace zastaralé: cs/aplikace-zastarale.md
+      - "1. První aplikace": "cs/quickstart/first_app.md"
+      - "2. Jednoduchý deployment": cs/quickstart/first_deployment.md
+      - "3. Databáze": cs/quickstart/databases.md
+      - "4. Nastavení domény": cs/quickstart/domains.md
+      - Technologie:
+          - Python: cs/apps/python.md
+          - PHP: cs/apps/php.md
+          - Node.js: cs/apps/nodejs.md
+          - Deno: cs/apps/deno.md
+          - Golang: cs/apps/golang.md
+          - Bun: cs/apps/bun.md
+          - Java/OpenJDK: cs/apps/openjdk.md
+      - "Frameworky a nástroje":
+          - "Laravel": cs/frameworks/laravel.md
+          - "WordPress": cs/frameworks/wordpress.md
+          - "Next.js": cs/frameworks/nextjs.md
+          #- "React static site": cs/frameworks/react-static.md
+          - "Strapi": cs/frameworks/strapi.md
+          - "Vite.js": cs/frameworks/vite.md
+          - "NewRelic APM PHP agent": cs/frameworks/newrelic-php.md
 #theme: readthedocs
 theme: 
   name: material
@@ -67,7 +68,6 @@ theme:
   - navigation.instant
   - navigation.instant.prefetch
   - navigation.tracking
-  - navigation.expand
   - navigation.top
   palette:
     - scheme: default
