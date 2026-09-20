@@ -14,8 +14,21 @@ nav:
     - Ostatní:
         - "Platby za služby": cs/billing.md
         - "Upozornění na docházející kredit": cs/credit-notifications.md
+        - "E-mailové schránky": cs/mailboxes.md
+        - "Špatné NS záznamy": cs/wrong_ns.md
+        - "DNSSEC": cs/dnssec.md
+        - "Doménové kontakty": cs/domain_contacts.md
+        - "API": cs/api.md
+        - "Přístupové klíče (Passkeys)": cs/passkeys.md
+        - "FAQ": cs/faq.md
+    - "Hosting Aplikace (zastaralé)":
+        - Proč jsou Aplikace zastaralé: cs/aplikace-zastarale.md
         - "Zálohování": cs/backup.md
         - "Výběr balíčku": cs/plans.md
+        - "1. První aplikace": "cs/quickstart/first_app.md"
+        - "2. Jednoduchý deployment": cs/quickstart/first_deployment.md
+        - "3. Databáze": cs/quickstart/databases.md
+        - "4. Nastavení domény": cs/quickstart/domains.md
         - "Runtime prostředí": cs/runtime.md
         - "CI/CD": cs/cicd.md
         - "Nástroj rosti.sh": cs/rosti_sh.md
@@ -31,20 +44,7 @@ nav:
         - "MongoDB": cs/mongo.md
         - "Websockety": cs/websockets.md
         - "SMTP server pro odchozí emaily": cs/smtp.md
-        - "E-mailové schránky": cs/mailboxes.md
-        - "Špatné NS záznamy": cs/wrong_ns.md
-        - "DNSSEC": cs/dnssec.md
-        - "Doménové kontakty": cs/domain_contacts.md
-        - "API": cs/api.md
-        - "Přístupové klíče (Passkeys)": cs/passkeys.md
-        - "FAQ": cs/faq.md
-    - "Hosting Aplikace (zastaralé)":
-      - Proč jsou Aplikace zastaralé: cs/aplikace-zastarale.md
-      - "1. První aplikace": "cs/quickstart/first_app.md"
-      - "2. Jednoduchý deployment": cs/quickstart/first_deployment.md
-      - "3. Databáze": cs/quickstart/databases.md
-      - "4. Nastavení domény": cs/quickstart/domains.md
-      - Technologie:
+        - Technologie:
           - Python: cs/apps/python.md
           - PHP: cs/apps/php.md
           - Node.js: cs/apps/nodejs.md
@@ -52,7 +52,7 @@ nav:
           - Golang: cs/apps/golang.md
           - Bun: cs/apps/bun.md
           - Java/OpenJDK: cs/apps/openjdk.md
-      - "Frameworky a nástroje":
+        - "Frameworky a nástroje":
           - "Laravel": cs/frameworks/laravel.md
           - "WordPress": cs/frameworks/wordpress.md
           - "Next.js": cs/frameworks/nextjs.md
