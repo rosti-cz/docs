@@ -8,7 +8,7 @@ rosticli stacks init    # první spuštění: vygeneruje soubory, vytvoří stac
 rosticli stacks push    # sestaví image a nasadí
 ```
 
-`rosticli login` otevře přihlašovací stránku v prohlížeči. Po potvrzení se token uloží a příkaz není třeba opakovat. Pokud preferujete ruční zadání tokenu, použijte `rosticli login --no-browser`.
+`rosticli login` otevře přihlašovací stránku v prohlížeči. Po potvrzení vytvoří samostatný, odvolatelný API klíč pro CLI a bezpečně jej uloží. Pokud preferujete ruční zadání klíče, vytvořte jej v administraci v sekci **Nastavení → API klíče** a použijte `rosticli login --no-browser`. Příkaz `rosticli logout` klíč zneplatní a odstraní místní přihlášení.
 
 Při každém dalším volání `push` se stack **aktualizuje** — nahraje se nový image a stack se restartuje. Aktualizace aplikace je tedy vždy jen jeden příkaz.
 
