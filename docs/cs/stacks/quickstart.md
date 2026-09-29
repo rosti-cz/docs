@@ -123,7 +123,7 @@ rosticli stacks push --no-input
 
 Instalační skript i `rosticli update` automaticky nainstalují vestavěný skill do dostupných podporovaných AI nástrojů. Pokud jej chcete nainstalovat znovu ručně, použijte `rosticli install-ai-skills`.
 
-Příkaz `login` otevře prohlížeč s přihlašovací stránkou. Po potvrzení se token automaticky uloží. Pokud chcete token zadat ručně, použijte `rosticli login --no-browser`.
+Příkaz `login` otevře prohlížeč s přihlašovací stránkou. Po potvrzení se vytvoří samostatný, odvolatelný API klíč pro CLI a automaticky se uloží. Pokud chcete klíč zadat ručně, vytvořte jej v administraci v sekci **Nastavení → API klíče** a použijte `rosticli login --no-browser`. Příkazem `rosticli logout` klíč zneplatníte a odstraníte místní přihlášení.
 
 Podrobný popis příkazů a jejich možností najdete na stránce [Jednoduchý a rychlý deployment přes CLI](rosticli-push.md).
 
