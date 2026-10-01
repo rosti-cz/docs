@@ -17,6 +17,14 @@ Balíček aplikace můžete v jejích parametrech změnit kdykoli. Od okamžiku 
 
 Pokud aplikaci nepotřebujete, je možné ji vypnout. Přestanete platit za běh aplikace, ale nadále se účtuje obsazený diskový prostor.
 
+## Pravidelné platby
+
+V sekci **Platby → Pravidelné platby** najdete odhad nákladů na Aplikace, Stacky a Pages za 30 dní v měně firmy. U Stacků je rozepsaná cena profilu, disku navíc a snapshotů; u Aplikací je uveden i disk navíc. Pages používají měsíční sazbu poskytovanou službou.
+
+Částky vycházejí z aktuálně dostupných sazeb a využití, jsou bez DPH a nezohledňují zkušební období ani bezplatný provoz na úrovni celé firmy. Skutečné odpočty se mohou při změně služeb nebo využití lišit. Pokud nelze načíst náklady některé služby, přehled zobrazí upozornění a dostupné položky; celkový odhad se v takovém případě nezobrazí.
+
+Stejný přehled je dostupný přes REST API (`GET /api-n/{company_id}/payments/regular-payments`) a MCP nástroj `get_regular_payments`. Pole `unavailable_services` označuje nedostupné části; při neúplných datech je `total_amount` rovno `null`.
+
 ## Dobití kreditu
 
 Pro dobití kreditu přejděte do sekce *Platby* v administraci a vyberte časový interval spočítaný podle aktuální spotřeby kreditů nebo zadejte přímo částku, kterou chcete dobít. Minimální dobití je 100 Kč, což odpovídá 200 kreditům.
