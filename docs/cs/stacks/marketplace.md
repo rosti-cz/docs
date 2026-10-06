@@ -9,9 +9,9 @@ Recepty najdete v sekci **Marketplace** v levém menu administrace. Po kliknutí
 Při nasazení zadáváte:
 
 - **Název stacku** — krátký název (písmena, číslice, mezery, pomlčky, podtržítka a tečky, max. 30 znaků),
-- **Profil** — velikost VM, která bude stack provozovat.
+- **Profil** — velikost stacku (paměť a výkon).
 
-Po potvrzení formuláře se stack vytvoří a příprava probíhá na pozadí. Nasazení VM a spuštění kontejnerů trvá obvykle 2–5 minut. Průběh můžete sledovat v detailu stacku.
+Po potvrzení formuláře se stack vytvoří a příprava probíhá na pozadí. Příprava stacku a spuštění kontejnerů trvá obvykle 2–5 minut. Průběh můžete sledovat v detailu stacku.
 
 ## Struktura receptu
 
