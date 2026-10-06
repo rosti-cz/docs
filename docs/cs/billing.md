@@ -37,4 +37,4 @@ Pokud kredit nedobijete, dostanete celkem 4 e-maily. První dva vás budou infor
 
 V administraci je možné nastavit i automatické generování plateb pod záložkou *Automatická faktura*. Pokud ji zapnete, bude se dobíjet kredit na další nastavitelné období a to v případě, že klesne pod nastavenou hranici. Ta je ve výchozím stavu 50 Kč. Při využití této funkce musí být celkový kredit nad úrovní nastavené hranice. V opačném případě další automatická faktura nebude odeslána.
 
-Dále v sekci platby najdete informace o tom, kolik jsme vám za jednotlivé měsíce odečetli kreditu. Po rozkliknutí měsíce uvidíte detail, za které aplikace, virtuální servery, domény nebo další služby byl kredit odečten.
+Dále v sekci platby najdete informace o tom, kolik jsme vám za jednotlivé měsíce odečetli kreditu. Po rozkliknutí měsíce uvidíte detail, za které aplikace, stacky, domény nebo další služby byl kredit odečten.

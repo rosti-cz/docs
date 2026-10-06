@@ -16,7 +16,7 @@ Při každém dalším volání `push` se stack **aktualizuje** — nahraje se n
 
 | Příkaz | Kdy spustit | Co dělá |
 |---|---|---|
-| `stacks init` | Jednou při zahájení projektu | Vygeneruje `Dockerfile` a `docker-compose.rosti.yml` (přes AI nebo ručně), vytvoří stack na Roští, nainstaluje SSH klíč, počká na dostupnost VM a vše uloží do `.rostistate` |
+| `stacks init` | Jednou při zahájení projektu | Vygeneruje `Dockerfile` a `docker-compose.rosti.yml` (přes AI nebo ručně), vytvoří stack na Roští, nainstaluje SSH klíč, počká na dostupnost stacku a vše uloží do `.rostistate` |
 | `stacks push` | Při každém nasazení | Sestaví Docker image lokálně, přenese ho na stack přes SSH, nahraje `docker-compose.rosti.yml` a spustí `docker compose up` |
 | `stacks setup-cicd` | Jednou pro CI/CD | Nakonfiguruje GitHub Actions + GHCR, nastaví GitHub secrets — `push` pak probíhá automaticky po každém commitu (vyžaduje předchozí `init`) |
 
@@ -54,8 +54,8 @@ Jeden adresář projektu může být propojený s více stacky, například `pro
 Příkazy bez `--target` používají aktivní target nastavený v `.rostistate` v poli `active-target`. Pokud aktivní target není nastavený, použije se `default`. Target `default` je vždy přítomný.
 
 ```
-rosticli stacks init --target production --name moje-app
-rosticli stacks init --target staging --name moje-app-staging
+rosticli stacks init --target production --name mojeapp
+rosticli stacks init --target staging --name mojeappstaging
 rosticli stacks targets
 rosticli stacks set-target production
 rosticli stacks push
@@ -64,7 +64,7 @@ rosticli stacks push --target staging
 
 `rosticli stacks targets` vypíše dostupné targety a označí aktivní target hvězdičkou. `rosticli stacks set-target production` změní aktivní target pro další příkazy. `--target` slouží jako jednorázové přepsání aktivního targetu pro konkrétní příkaz.
 
-Pokud při `init` nezadáte `--name`, název stacku se odvodí z názvu adresáře. U targetu jiného než `default` se automaticky přidá suffix s názvem targetu, například adresář `tavern` a target `staging` vytvoří stack `tavern-staging`. Vlastní název můžete vždy zadat pomocí `--name`; musí mít 1-30 znaků a smí obsahovat jen písmena, číslice, mezery, tečku, podtržítko nebo pomlčku.
+Pokud při `init` nezadáte `--name`, název nového stacku se odvodí z názvu adresáře a upraví na ASCII písmena a číslice. U targetu jiného než `default` se připojí název targetu bez oddělovače, například adresář `tavern` a target `staging` vytvoří stack `tavernstaging`. Vygenerovaný název se vejde do limitu 30 znaků. Vlastní název můžete zadat pomocí `--name`; nový název musí mít 1–30 znaků a smí obsahovat jen ASCII písmena `A–Z`, `a–z` a číslice `0–9`. Výběr existujícího stacku pomocí `--stack-id` zachovává jeho název.
 
 Pokud chcete target odpojit od lokálního adresáře, použijte `rosticli stacks unlink --target staging`. Target `default` se při unlinku pouze vyprázdní. Celý stavový soubor odstraníte pomocí `rosticli stacks unlink --all`.
 
@@ -207,12 +207,12 @@ Příkaz vytvoří GitHub Actions workflow, nakonfiguruje GitHub secrets a nasta
 Příkazy `init`, `push` a `setup-cicd` lze spustit bez interaktivních dotazů pomocí příznaku `--no-input`. Identifikátory potřebné pro `init` zadejte příznaky:
 
 ```
-rosticli stacks init --no-input --company-id 123 --profile-id 2 --name moje-app
+rosticli stacks init --no-input --company-id 123 --profile-id 2 --name mojeapp
 rosticli stacks push --no-input
 ```
 
 ```
-rosticli stacks init --no-input --company-id 123 --profile-id 2 --name moje-app
+rosticli stacks init --no-input --company-id 123 --profile-id 2 --name mojeapp
 rosticli stacks setup-cicd --no-input
 ```
 
@@ -245,8 +245,8 @@ rosticli completion fish > ~/.config/fish/completions/rosticli.fish
 | Příznak | Příkaz | Popis |
 |---|---|---|
 | `--company-id` | `init` | ID společnosti (organization). Povinné pokud máte více společností a používáte `--no-input`. |
-| `--profile-id` | `init` | ID profilu (velikost VM). Povinné při vytváření nového stacku s `--no-input`. |
-| `--name` | `init` | Název stacku. Výchozí hodnota je název aktuálního adresáře. Vlastní název musí mít 1-30 znaků a smí obsahovat jen písmena, číslice, mezery, tečku, podtržítko nebo pomlčku. |
+| `--profile-id` | `init` | ID profilu (velikost stacku). Povinné při vytváření nového stacku s `--no-input`. |
+| `--name` | `init` | Název nového stacku. Výchozí hodnota se odvodí z názvu adresáře a případně targetu. Musí mít 1–30 znaků: pouze ASCII písmena `A–Z`, `a–z` a číslice `0–9`. |
 | `--stack-id` | `init` | Použije nebo přepne na existující stack. Resetuje uloženou konfiguraci pokud se liší od `.rostistate`. |
 | `--target` | `init`, `push`, `setup-cicd`, `info`, `ssh`, `logs`, `start`, `stop`, `restart`, `up`, `down`, `unlink` | Použije konkrétní target v `.rostistate`. Bez příznaku se použije aktivní target, případně `default`. |
 | `--disable-ai` | `init` | Zakáže nabídku AI generování Dockerfile/docker-compose.rosti.yml — vypíše ruční návod. |
