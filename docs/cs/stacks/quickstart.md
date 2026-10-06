@@ -238,6 +238,10 @@ Poslední důležitá karta jsou Docker registries, v administrace jako *Registr
 
 ![Docker registry](../../imgs/stacks/registry.png)
 
+### Metriky
+
+Časová osa a popisky v grafech metrik stacku používají časové pásmo vašeho prohlížeče včetně přechodů mezi letním a zimním časem. Pokud časové pásmo nelze zjistit, použije se `Europe/Prague`.
+
 ### Běžící stack
 
 Prošli jsme si základní kroky k vytvoření stacku, tak nezbývá než kliknout v info kartě na přidělenou nebo nastavenou doménu a mrknout, zda všechno běží.
