@@ -133,6 +133,10 @@ services:
       - ./data/postgres:/var/lib/postgresql/data
 ```
 
+## Více kontejnerů a vlastních image
+
+Compose může obsahovat několik služeb, které používají jednu společnou image, hotové image z registru nebo více vlastních image. Pro projekt s několika Dockerfiles v podadresářích použijte `rosticli stacks init --multi`; `push` pak sestaví a přenese každou plánovanou image samostatně. Příklad Compose, výběr veřejné služby a omezení detekce najdete na stránce [Nasazení více kontejnerů přes CLI](rosticli-multicontainer.md).
+
 ## Co push dělá
 
 Po úspěšném `init` příkaz `push` pro vybraný target provede tyto kroky:
@@ -249,6 +253,10 @@ rosticli completion fish > ~/.config/fish/completions/rosticli.fish
 | `--name` | `init` | Název nového stacku. Výchozí hodnota se odvodí z názvu adresáře a případně targetu. Musí mít 1–30 znaků: pouze ASCII písmena `A–Z`, `a–z` a číslice `0–9`. |
 | `--stack-id` | `init` | Použije nebo přepne na existující stack. Resetuje uloženou konfiguraci pokud se liší od `.rostistate`. |
 | `--target` | `init`, `push`, `setup-cicd`, `info`, `ssh`, `logs`, `start`, `stop`, `restart`, `up`, `down`, `unlink` | Použije konkrétní target v `.rostistate`. Bez příznaku se použije aktivní target, případně `default`. |
+| `--multi` | `init` | Vynutí nové hledání alespoň dvou Dockerfiles v podadresářích pro sestavení více image. |
+| `--single` | `init` | Vynutí režim jedné vlastní image. Nelze kombinovat s `--multi`. |
+| `--frontend` | `init` | Název plánované image pro veřejnou službu publikující port 80. Při zachování existujícího Compose se příznak aktuálně nepoužije; veřejnou službu vybere až `push` detekcí nebo dotazem; viz [omezení výběru frontendu](rosticli-multicontainer.md#inicializace-a-nasazeni). |
+| `--dockerfile` | `init` | Vybere cestu k Dockerfile pro jednu image, relativně ke kořeni projektu. Má přednost před detekcí více image. |
 | `--disable-ai` | `init` | Zakáže nabídku AI generování Dockerfile/docker-compose.rosti.yml — vypíše ruční návod. |
 | `--no-input` | `init`, `push`, `setup-cicd` | Zakáže interaktivní dotazy — příkaz skončí chybou místo čekání na vstup. |
 | `--no-build` | `push` | Přeskočí `docker build` a `docker save` — nahraje jen compose a spustí stack. |
