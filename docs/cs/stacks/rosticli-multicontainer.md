@@ -112,6 +112,12 @@ Pokud jsou potřebné image už na stacku a měníte pouze Compose, můžete ses
 rosticli stacks push --no-build
 ```
 
+## Cílová platforma image
+
+CLI sestavuje každou vlastní image s explicitním `--platform linux/amd64`, při použití Dockeru i Podmanu. Stejné nastavení používají generované CI/CD workflow. Na Apple Silicon proto použijte běžné `rosticli stacks push`; nastavení `DOCKER_DEFAULT_PLATFORM` není potřeba. Finální fáze jednotlivých Dockerfiles musí být kompatibilní s AMD64 a nesmí být pevně nastavené na ARM.
+
+Pokud je na stacku stará ARM image, spusťte nové nasazení včetně sestavení a přenosu; `--no-build` tyto kroky přeskočí.
+
 ## Detekce Dockerfiles a uložený plán
 
 Bez vynucení režimu CLI nejprve použije platný plán uložený v `.rostistate`. U nového projektu má Dockerfile v kořeni přednost a znamená jednu image. Pokud kořenový Dockerfile chybí, CLI hledá Dockerfiles v podadresářích:

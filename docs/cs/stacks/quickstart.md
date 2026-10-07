@@ -93,7 +93,7 @@ Příkaz `push` sestaví Docker image lokálně na vašem počítači a přenese
 
 **Vhodné pro:** jednotlivce nebo malé týmy, kteří nasazují ze svého počítače a zatím nepotřebují plně automatizovaný pipeline.
 
-Před prvním spuštěním `push` je třeba projekt inicializovat příkazem `stacks init`. Ten vygeneruje potřebné soubory (nebo nabídne jejich vytvoření přes AI) a připraví stack na Roští. Pokud máte na počítači nainstalovaný a nakonfigurovaný některý z podporovaných AI nástrojů (Claude, OpenCode, Gemini CLI, Google Antigravity, Cursor Agent, Codex nebo Aider), nabídne ho k vygenerování `Dockerfile` a `docker-compose.rosti.yml` a prompt zároveň AI řekne, aby `Dockerfile` ověřil lokálním `docker build` a případné chyby opravil.
+Před prvním spuštěním `push` je třeba projekt inicializovat příkazem `stacks init`. Ten vygeneruje potřebné soubory (nebo nabídne jejich vytvoření přes AI) a připraví stack na Roští. Pokud máte na počítači nainstalovaný a nakonfigurovaný některý z podporovaných AI nástrojů (Claude, OpenCode, Gemini CLI, Google Antigravity, Cursor Agent, Codex nebo Aider), nabídne ho k vygenerování `Dockerfile` a `docker-compose.rosti.yml` a prompt zároveň AI řekne, aby `Dockerfile` ověřil lokálním `docker build --platform linux/amd64` a případné chyby opravil.
 
 **Instalace rosticli** — [rosti.cz/cli](https://rosti.cz/cli)
 
@@ -110,7 +110,7 @@ rosticli stacks init    # první spuštění: vygeneruje soubory, vytvoří stac
 rosticli stacks push    # sestaví image a nasadí
 ```
 
-Při každém dalším nasazení stačí spustit `rosticli stacks push`.
+Při každém dalším nasazení stačí spustit `rosticli stacks push`. CLI při sestavení Dockerem nebo Podmanem explicitně volí `linux/amd64` pro každou vlastní image, včetně nasazování z Apple Silicon. Sestavení na ARM může kvůli emulaci trvat déle; v Dockerfile nefixujte finální fázi na ARM.
 
 CLI podporuje i více kontejnerů v jednom Compose a sestavení několika vlastních image z Dockerfiles v podadresářích. Postup pro frontend, backend a další služby najdete na stránce [Nasazení více kontejnerů přes CLI](rosticli-multicontainer.md).
 
@@ -130,6 +130,8 @@ Příkaz `login` otevře prohlížeč s přihlašovací stránkou. Po potvrzení
 Podrobný popis příkazů a jejich možností najdete na stránce [Jednoduchý a rychlý deployment přes CLI](rosticli-push.md).
 
 ### Možnost 3: Automatizované CI/CD přes GitHub Actions
+
+Generované workflow explicitně sestavuje každou vlastní image s `--platform linux/amd64`. U dříve vytvořeného workflow příznak doplňte do build příkazů, nebo workflow znovu vygenerujte pomocí `rosticli stacks setup-cicd`.
 
 Příkaz `setup-cicd` vytvoří GitHub Actions workflow, který při každém pushnutí sestaví Docker image, uloží ho do GitHub Container Registry a přikáže stacku, aby si ho stáhl a restartoval. U projektů s více Dockerfile v podadresářích, například `frontend/Dockerfile` a `backend/Dockerfile`, sestaví samostatný image pro každou část projektu. Zároveň nakonfiguruje potřebné GitHub secrets a udělí stacku přístup k vašemu container registry.
 
