@@ -112,6 +112,8 @@ rosticli stacks push    # sestaví image a nasadí
 
 Při každém dalším nasazení stačí spustit `rosticli stacks push`.
 
+CLI podporuje i více kontejnerů v jednom Compose a sestavení několika vlastních image z Dockerfiles v podadresářích. Postup pro frontend, backend a další služby najdete na stránce [Nasazení více kontejnerů přes CLI](rosticli-multicontainer.md).
+
 Pokud chcete ze stejného adresáře spravovat více prostředí, použijte targety. Příkaz `rosticli stacks set-target production` nastaví aktivní target pro další příkazy, `rosticli stacks targets` je vypíše a jednorázově lze target přepsat pomocí `--target staging`. Když při `init` nezadáte `--name`, target jiný než `default` se přidá jako suffix k názvu stacku, například `moje-app-staging`. Vlastní `--name` musí mít 1-30 znaků a smí obsahovat jen písmena, číslice, mezery, tečku, podtržítko nebo pomlčku.
 
 Pokud budete chtít nasazovat neinteraktivně s `--company-id` a `--profile-id`, použijte nejdřív `rosticli companies` a potom `rosticli stacks profiles --company-id <ID_SPOLECNOSTI>`. Tyto příznaky patří k příkazu `init`:
