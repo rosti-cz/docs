@@ -82,7 +82,7 @@ Podporované nástroje (hledají se v `PATH`):
 | Codex | `codex` |
 | Aider | `aider` |
 
-Pokud je dostupný jen jeden nástroj, `init` se rovnou zeptá na potvrzení. Vybraný nástroj se spustí s předem připraveným promptem, který obsahuje pravidla pro Roští (správný název image, port 80, `restart: unless-stopped` atd.) a zároveň mu říká, aby po vytvoření nebo úpravě `Dockerfile` zkusil lokální `docker build` a případné chyby opravil. Po jeho dokončení `init` zkontroluje, zda soubory vznikly, a pokračuje do fáze 2.
+Pokud je dostupný jen jeden nástroj, `init` se rovnou zeptá na potvrzení. Vybraný nástroj se spustí s předem připraveným promptem, který obsahuje pravidla pro Roští (správný název image, port 80, `restart: unless-stopped` atd.) a zároveň mu říká, aby po vytvoření nebo úpravě `Dockerfile` zkusil lokální `docker build --platform linux/amd64` a případné chyby opravil. Po jeho dokončení `init` zkontroluje, zda soubory vznikly, a pokračuje do fáze 2.
 
 Některé AI nástroje je potřeba po skončení jejich práce ukončit ručně. Init pak bude pokračovat.
 
@@ -143,12 +143,18 @@ Po úspěšném `init` příkaz `push` pro vybraný target provede tyto kroky:
 
 1. **Kontrola stavu** — ověří, zda je vybraný target inicializován (`.rostistate` obsahuje company_id, stack_id a SSH endpoint). Pokud ne, vypíše chybu s výzvou ke spuštění `init`.
 2. **Kontrola prerekvizit** — ověří přítomnost `Dockerfile`, `docker-compose.rosti.yml` a dostupnost Dockeru nebo Podmanu.
-3. **Build image** — `docker build -t app:latest .` (nebo ekvivalent přes Podman)
+3. **Build image** — `docker build --platform linux/amd64 -t app:latest .` (nebo ekvivalent přes Podman). CLI cílovou platformu předává explicitně, také na Apple Silicon a dalších ARM počítačích. V režimu s více image se toto nastavení použije pro každý build.
 4. **Export image na server** — CLI nejdřív změří velikost archivu pomocí `docker save`, potom ho podruhé streamuje přes `ssh ... docker load` a obraz na serveru přetaguje na `app:latest`. V interaktivním terminálu zobrazuje přesný průběh přenosu včetně procent, přenesených dat a rychlosti; archiv se neukládá na disk.
 5. **Nahrání docker-compose.rosti.yml** — obsah souboru se nahraje na stack tak, jak je.
 6. **Spuštění** — `docker compose up -d`
 
 Po dokončení příkaz vypíše URL nasazené aplikace a připomene příkaz pro další nasazení.
+
+### Nasazování z Apple Silicon
+
+CLI při sestavení vždy předává `--platform linux/amd64`, takže pro nasazení z Macu s ARM procesorem stačí běžné `rosticli stacks push`. Není potřeba nastavovat `DOCKER_DEFAULT_PLATFORM`; explicitní příznak má před touto proměnnou přednost. Finální fázi Dockerfile nefixujte na jinou platformu, například `linux/arm64`. Sestavení pro AMD64 na ARM může běžet v emulaci a trvat déle.
+
+Pokud už stack obsahuje ARM image a aplikace hlásí `exec format error`, nasazení zopakujte s CLI obsahujícím tuto podporu. `push --no-build` starou image neopraví, protože přeskočí sestavení i přenos. U starších verzí CLI lze pro Docker použít `DOCKER_DEFAULT_PLATFORM=linux/amd64 rosticli stacks push`.
 
 ## Základní příkazy pro práci se stackem
 
@@ -205,6 +211,8 @@ rosticli stacks setup-cicd
 ```
 
 Příkaz vytvoří GitHub Actions workflow, nakonfiguruje GitHub secrets a nastaví stack tak, aby si image po každém buildu sám stáhl a restartoval. U projektů s více Dockerfile v podadresářích používá stejný build plán jako `push` a workflow sestaví samostatný GHCR image pro každou část projektu, například `frontend/Dockerfile` a `backend/Dockerfile`. Více o tomto způsobu nasazení najdete v sekci [Možnost 3: GitHub Actions](quickstart.md#moznost-3-automatizovane-cicd-pres-github-actions) v průvodci quickstartem.
+
+Generované CI/CD workflow také explicitně sestavuje všechny image pro `linux/amd64`, nezávisle na architektuře runneru. Již existující workflow se aktualizací CLI nezmění; znovu spusťte `rosticli stacks setup-cicd` a potvrďte nahrazení workflow, nebo do jeho build příkazů doplňte `--platform linux/amd64`.
 
 ## Použití v automatizaci a AI nástrojích
 
