@@ -9,6 +9,8 @@ Klíče pro přístup do API najdete v administraci v sekci **Nastavení → API
 
 Každé integraci vytvořte vlastní klíč. Jeho zneplatnění potom neovlivní ostatní integrace. `rosticli login` si při autorizaci vytváří vlastní klíč automaticky a lze jej zneplatnit ve stejné sekci.
 
+API klíč má oprávnění uživatele, kterému patří. Běžný uživatel, včetně uživatele s příznakem staff, má přístup pouze k firmám, jejichž je členem. Superuživatel vidí všechny firmy a může spravovat jejich prostředky bez členství; může také převést vlastníka firmy na jejího stávajícího člena. Seznam dostupných firem vrací `GET /api-n/companies` (v MCP nástroj `list_companies`). Pro další operace použijte skutečné ID vybrané firmy v cestě URL. ID prostředku samo o sobě přístup neuděluje a musí odpovídat vybrané firmě. Hodnota `company_id=0` je starší režim pro vybrané globální přehledy superuživatele, nikoli náhrada skutečného ID firmy pro všechny operace.
+
 Dokumentace k API je oddělená od této dokumentace, protože je generovaná společně se změnami v kódu a najdete ji na adrese [https://admin.rosti.cz/api-n/docs](https://admin.rosti.cz/api-n/docs).
 
 Staré API už není ve vývoji a nové služby do něj nebudeme přidávat.
