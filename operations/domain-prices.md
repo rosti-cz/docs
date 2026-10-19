@@ -53,3 +53,19 @@ curl --fail https://admin-x.rosti.cz/api-n/openapi.json
 
 A 503 means the upstream catalog or currency conversion is unavailable. Inspect
 registrator readiness and authenticated `/domains/prices` before changing prices.
+
+## Rollout prerequisites
+
+Images are published to `git.ceperka.net/rosti/registrator`; the obsolete
+`gitea.ceperka.net` registry rejects pushes. The existing OIDC-only Registrator
+startup requires its own `PUBLIC_URL`, `OIDC_CLIENT_ID`, and `OIDC_CLIENT_SECRET`.
+Other services' client credentials must not be reused. Configure the dedicated
+client before deploying a main revision containing that authentication change.
+A missing key stops startup, so verify Kubernetes readiness as well as CI success.
+
+On 2026-10-19, the dev deployment could not start because its dedicated OIDC
+configuration was absent (`required key PUBLIC_URL missing value`). The prior
+healthy Registrator image was restored without changing authentication settings.
+Public prices return a sanitized HTTP 503 until the pricing-capable Registrator
+image can be deployed with that configuration. Its provider catalog has been
+verified separately against the real dev RTR pricelist, including USD `.com`.
