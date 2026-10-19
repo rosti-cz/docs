@@ -32,8 +32,9 @@ publishing `.com` prices does not enable `.com` registrations.
 Admin reads authenticated registrator `GET /domains/prices`, converts provider
 prices through the existing CreditConverter (including CNB exchange-rate markup)
 and `credits_to_currency`, and rounds CZK/EUR amounts to two decimal places.
-Successful public responses are cached for 900 seconds; incomplete provider
-catalogs, invalid prices, and unavailable currency conversion return HTTP 503.
+Successful public responses are cached for three hours (10,800 seconds);
+incomplete provider catalogs, invalid prices, and unavailable currency conversion
+return HTTP 503.
 Failures are not cached and never appear as zero prices. The existing exchange
 rate cache may be used by CreditConverter when CNB is unavailable.
 
@@ -63,9 +64,21 @@ Other services' client credentials must not be reused. Configure the dedicated
 client before deploying a main revision containing that authentication change.
 A missing key stops startup, so verify Kubernetes readiness as well as CI success.
 
-On 2026-10-19, the dev deployment could not start because its dedicated OIDC
-configuration was absent (`required key PUBLIC_URL missing value`). The prior
-healthy Registrator image was restored without changing authentication settings.
-Public prices return a sanitized HTTP 503 until the pricing-capable Registrator
-image can be deployed with that configuration. Its provider catalog has been
-verified separately against the real dev RTR pricelist, including USD `.com`.
+On 2026-10-19, the initial dev rollout was recovered to its previous image while
+OIDC settings were missing. After configuring the dedicated client and adding the
+Secret reference to the deployment, the pricing-capable image deployed
+successfully: readiness and the public pricing API both returned HTTP 200.
+
+## Homepage integration
+
+The Astro homepage fetches the public Admin endpoint in the browser, sharing one
+request across price widgets. Home, pricing, and domain pages use the same
+catalog in all five languages. It displays CZK registration and renewal amounts
+separately, adds 21% VAT for the advertised gross price, and shows net prices and
+registration restrictions. Invalid or unavailable data displays a localized link
+to Admin instead of fixed fallback prices.
+
+The production endpoint is the default. Override the build-time
+`PUBLIC_DOMAIN_PRICES_API_URL` to target development. Production Admin must expose
+the API before the production homepage can display prices. This requires no
+homepage API credentials and no direct browser access to Registrator.
