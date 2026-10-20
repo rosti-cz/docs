@@ -27,6 +27,8 @@ Vyplníme název naší domény bez www.
 
 Zóna je připravená pro hosting na Roští, takže pokud u nás budete mít na této doméně jen webovou aplikaci, nemusíte nic dalšího řešit a můžete přejít k samotné registraci domény. Případně můžete DNS záznamy upravit jak potřebujete. Například přidat MX a TXT záznamy pro email nebo další A, AAAA či CNAME záznamy webové aplikace.
 
+Po přidání, úpravě nebo smazání DNS záznamu přes administraci, REST API nebo MCP se změna automaticky odešle ke zveřejnění na našich DNS serverech. Samostatné potvrzení celé zóny není potřeba. Projevení změny u ostatních poskytovatelů pak závisí na DNS cache a nastaveném TTL.
+
 Pokud doménu registrujete u jiného registrátora, při registraci nastavte jeho NS servery na NS servery Roští.cz, konkrétně na:
 
 * ns1.rosti.cz
