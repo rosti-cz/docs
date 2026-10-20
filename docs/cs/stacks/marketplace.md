@@ -106,7 +106,7 @@ Konfigurační soubory (`config_files`) jsou soubory, které se zapíší do `/s
 
 ## Psaní vlastního receptu
 
-Vlastní recepty může psát každý přihlášený uživatel. Recept je ve výchozím stavu soukromý a vidí ho jen jeho autor. Po schválení administrátorem Roští se recept zobrazí všem uživatelům.
+Vlastní recepty může psát každý přihlášený uživatel. Recept je ve výchozím stavu soukromý a vidí ho jen jeho autor. Po schválení administrátorem Roští se veřejný recept zobrazí všem uživatelům. Vlastník firmy, které recept patří, dostane po schválení e-mail s názvem receptu a odkazem na jeho detail, a to v jazyce svého účtu. Opakované schválení již schváleného receptu další e-mail neposílá.
 
 Recept vytvoříte v sekci **Marketplace** → **Přidat recept**.
 
