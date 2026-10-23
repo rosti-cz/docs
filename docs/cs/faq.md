@@ -47,3 +47,9 @@ Cron není nějak omezený. Běží ve vašem kontejneru a konzumuje jeho prost�
 
 V současné době používáme MariaDB 10.4 a PostgreSQL 12.1.
 
+
+## Jak zapnout vizualizaci v nové administraci?
+
+V nové administraci stiskněte **g** a potom znovu **g** během 1,5 sekundy. Zkratka postupně přepíná mezi vypnutou vizualizací, vesmírnou stanicí a středověkou vesnicí. Najdete ji také v přehledu klávesových zkratek pod otazníkem. Při psaní do formulářů se zkratka neuplatní.
+
+Každá aplikace, stack, web Pages, DNS zóna, registrovaná doména a e-mailová schránka otevřené firmy přidá vlastní modul nebo dům. Počet dronů nebo obyvatel odpovídá počtu členů této firmy. Volba vizualizace se ukládá na jeden rok do cookie prohlížeče a zůstává stejná po obnovení stránky i přepnutí firmy; obsah vizualizace se přepočítá pro novou firmu. Ve výchozím stavu je vizualizace vypnutá. Nastavení omezeného pohybu v prohlížeči zobrazí statický obrázek.
