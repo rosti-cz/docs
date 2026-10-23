@@ -19,6 +19,11 @@ Ve středu galaxie zůstává samotné logo Roští.cz. Ramena si od prvního sn
 zachovávají obrácený tvar oproti původnímu prototypu; hvězdy, prach a částice
 akrečního disku obíhají po směru hodinových ručiček.
 
+Černou díru obklopuje tenký akreční disk. Jeho vzdálenou stranu znázorňuje
+světlem ohnutý oblouk nad stínem a slabší obraz pod ním; oba plynule navazují
+na vodorovná křídla disku. Oblouk ponechává po stranách stínu tmavou mezeru.
+Disk i logo jsou natočené v rovině galaxie. Jde o stylizaci v pixelové grafice.
+
 Přepínačem hustoty hvězd v horní liště zvolíte **1×**, **10×** nebo **100×**.
 Výchozí **1×** zobrazuje plné počty. Dělení je volitelné a při zmenšení okna se
 nezapíná automaticky. Volby **10×** a **100×** vydělí zobrazené počty a sníží
