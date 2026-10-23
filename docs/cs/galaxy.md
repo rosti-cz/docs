@@ -15,8 +15,9 @@ uživatel ani uživatel s příznakem staff toto rozšíření nedostane.
 Tabulka podrobných počtů je zpočátku skrytá. Tlačítko **Zobrazit podrobnosti** ji
 otevře a tlačítko **Skrýt podrobnosti** opět zavře. Označení veřejného nebo
 správcovského zobrazení je pouze v informačním bloku pod sektorem a oběžnou dobou.
-Ve středu galaxie zůstává samotné logo Roští.cz. Ramena i oběžný pohyb galaxie
-mají od prvního snímku opačný směr oproti původnímu prototypu.
+Ve středu galaxie zůstává samotné logo Roští.cz. Ramena si od prvního snímku
+zachovávají obrácený tvar oproti původnímu prototypu; hvězdy, prach a částice
+akrečního disku obíhají po směru hodinových ručiček.
 
 Pokud by bylo hvězd na dostupné ploše příliš mnoho, zobrazené počty se vydělí
 10 nebo 100 a odpovídajícím způsobem se sníží počet kreslených hvězd. Aktivní
