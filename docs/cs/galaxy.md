@@ -19,13 +19,16 @@ Ve středu galaxie zůstává samotné logo Roští.cz. Ramena si od prvního sn
 zachovávají obrácený tvar oproti původnímu prototypu; hvězdy, prach a částice
 akrečního disku obíhají po směru hodinových ručiček.
 
-Pokud by bylo hvězd na dostupné ploše příliš mnoho, zobrazené počty se vydělí
-10 nebo 100 a odpovídajícím způsobem se sníží počet kreslených hvězd. Aktivní
+Přepínačem hustoty hvězd v horní liště zvolíte **1×**, **10×** nebo **100×**.
+Výchozí **1×** zobrazuje plné počty. Dělení je volitelné a při zmenšení okna se
+nezapíná automaticky. Volby **10×** a **100×** vydělí zobrazené počty a sníží
+počet kreslených hvězd. Aktivní
 poměr **Počty ÷ 10** nebo **Počty ÷ 100** je uveden u sektoru a oběžné doby,
 také na telefonu. Počty ve skryté i rozbalené tabulce a celkový počet jsou dělené
 stejným poměrem a zachovávají až dvě desetinná místa. Počet reprezentativních
 hvězd se zaokrouhluje nahoru, aby nezanikla žádná neprázdná třída. API vždy vrací
-původní přesné počty. Po změně velikosti okna se poměr přepočítá; přírůstek služby
+původní přesné počty. Zvolený poměr zůstává při změně velikosti okna i obnově dat;
+přírůstek služby
 vyvolá světelný efekt i uvnitř již zobrazené skupiny.
 
 Kliknutím na třídu hvězd ji zvýrazníte. Další kliknutí zobrazí opět celou galaxii.
