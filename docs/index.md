@@ -29,6 +29,7 @@ Pages je služba pro hostování statických webů bez vlastního runtime. Sprá
 * [Pages](cs/pages.md)
 
 ## Ostatní
+* [Galaxie Roští](cs/galaxy.md)
 * [Platby za služby](cs/billing.md)
 * [Upozornění na docházející kredit](cs/credit-notifications.md)
 * [API](cs/api.md)

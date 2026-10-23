@@ -13,6 +13,7 @@ nav:
       - Marketplace a psaní receptů: cs/stacks/marketplace.md
     - Pages: cs/pages.md
     - Ostatní:
+        - "Galaxie Roští": cs/galaxy.md
         - "Platby za služby": cs/billing.md
         - "Upozornění na docházející kredit": cs/credit-notifications.md
         - "E-mailové schránky": cs/mailboxes.md
