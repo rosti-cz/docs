@@ -12,6 +12,21 @@ uživatel ani uživatel s příznakem staff toto rozšíření nedostane.
 
 ## Ovládání a aktualizace
 
+Tabulka podrobných počtů je zpočátku skrytá. Tlačítko **Zobrazit podrobnosti** ji
+otevře a tlačítko **Skrýt podrobnosti** opět zavře. Označení veřejného nebo
+správcovského zobrazení je pouze v informačním bloku pod sektorem a oběžnou dobou.
+Ve středu galaxie zůstává samotné logo Roští.cz. Ramena i oběžný pohyb galaxie
+mají od prvního snímku opačný směr oproti původnímu prototypu.
+
+Pokud by bylo hvězd na dostupné ploše příliš mnoho, zobrazené počty se vydělí
+10 nebo 100 a odpovídajícím způsobem se sníží počet kreslených hvězd. Aktivní
+poměr **Počty ÷ 10** nebo **Počty ÷ 100** je uveden u sektoru a oběžné doby,
+také na telefonu. Počty ve skryté i rozbalené tabulce a celkový počet jsou dělené
+stejným poměrem a zachovávají až dvě desetinná místa. Počet reprezentativních
+hvězd se zaokrouhluje nahoru, aby nezanikla žádná neprázdná třída. API vždy vrací
+původní přesné počty. Po změně velikosti okna se poměr přepočítá; přírůstek služby
+vyvolá světelný efekt i uvnitř již zobrazené skupiny.
+
 Kliknutím na třídu hvězd ji zvýrazníte. Další kliknutí zobrazí opět celou galaxii.
 Po najetí nebo klepnutí na hvězdu se objeví její anonymní označení, které nesouvisí
 s interním identifikátorem služby. Tlačítko **Pozastavit** nebo mezerník zastaví
