@@ -22,7 +22,9 @@ akrečního disku obíhají po směru hodinových ručiček.
 Černou díru obklopuje tenký akreční disk. Jeho vzdálenou stranu znázorňuje
 světlem ohnutý oblouk nad stínem a slabší obraz pod ním; oba plynule navazují
 na vodorovná křídla disku. Oblouk ponechává po stranách stínu tmavou mezeru.
-Disk i logo jsou natočené v rovině galaxie. Jde o stylizaci v pixelové grafice.
+Disk i logo jsou natočené v rovině galaxie. Jejich velikost se přizpůsobuje
+nejvnitřnější oběžné dráze hvězd, takže se celý disk vejde dovnitř i na telefonu
+a při otočení displeje. Jde o stylizaci v pixelové grafice.
 
 Přepínačem hustoty hvězd v horní liště zvolíte **1×**, **10×** nebo **100×**.
 Výchozí **1×** zobrazuje plné počty. Dělení je volitelné a při zmenšení okna se
@@ -45,7 +47,13 @@ se galaxie spustí pozastavená. Ve skryté kartě se pozastaví pohyb i načít
 Stránka kontroluje počty každých 15 sekund. Server sdílí úplný souhrn po dobu
 30 sekund, takže nová služba se obvykle projeví do přibližně 45 sekund plus čas
 potřebný k načtení zdrojových služeb. Když počet v některé třídě vzroste, přibude
-hvězda se světelným efektem. Při poklesu počtu se odpovídající hvězdy odstraní.
+hvězda se světelným efektem. Při poklesu počtu odpovídající hvězdy opustí oběžnou dráhu a vyletí ven
+jako padající hvězdy s postupně mizející světelnou stopou. Počty se upraví ihned;
+světelný efekt doběhne samostatně. Při pozastavení nebo zapnutém omezení pohybu
+se odstranění projeví bez nové animace. Již probíhající let se při pozastavení
+zastaví. Dělení počtů při změně hustoty ani změna velikosti okna odlet nevyvolají.
+Při dělení 10× nebo 100× dostane pokles uvnitř jedné skupiny také odletový efekt,
+i když její reprezentativní hvězda zůstává na oběžné dráze.
 Jde o porovnávání souhrnů, nikoliv o úplný záznam událostí: vytvoření a smazání
 služby mezi dvěma souhrny se mohou navzájem vyrušit.
 
