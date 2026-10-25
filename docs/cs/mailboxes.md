@@ -16,7 +16,13 @@ Změny DNS se mohou projevit až po několika minutách podle DNS cache a nastav
 
 Schránku zakládáte pod e-mailovou doménou. Při vytvoření vyberete profil, který určuje velikost schránky a maximální počet odchozích e-mailů za hodinu. Detail domény ukazuje aktuální hodinové využití odesílacího limitu i případné blokování odchozí pošty.
 
-Alias přeposílá poštu z adresy na této doméně do jedné nebo více cílových e-mailových adres. Cílová adresa může být schránka na stejné doméně i externí adresa.
+Alias přeposílá poštu z adresy na této doméně do jedné nebo více cílových e-mailových adres. Cílová adresa může být schránka na libovolné doméně stejné firmy nebo schválená externí adresa.
+
+Externí adresu nejprve přidejte v přehledu e-mailů. Na tuto adresu odešleme ověřovací e-mail s názvem žádající firmy. Příjemce otevře odkaz a tlačítkem **Schválit přeposílání** povolí použití adresy jako cíle přeposílání pro danou firmu. Účet na Roští.cz není potřeba. Samotné otevření odkazu přeposílání neschválí.
+
+Odkaz platí 24 hodin a lze jej použít jednou. U čekající adresy můžete ověřovací e-mail odeslat znovu; předchozí odkaz tím přestane platit. Odeslání je omezeno na jeden pokus za minutu pro danou adresu a 20 pokusů za hodinu pro firmu. Pokud se e-mail nepodaří odeslat, adresa zůstane čekající a odeslání můžete zopakovat.
+
+Po schválení obnovte stav schválení nebo znovu otevřete formulář aliasu a vyberte externí adresu jako cíl. Bez schválení na ni přeposílat nelze. Pokud chcete externí adresu smazat, nejprve ji odeberte ze všech aliasů, které ji používají.
 
 ## Aplikační SMTP
 
