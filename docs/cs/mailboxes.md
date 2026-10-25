@@ -22,7 +22,7 @@ Externí adresu nejprve přidejte v detailu libovolné e-mailové domény v sekc
 
 Odkaz platí 24 hodin a lze jej použít jednou. U čekající adresy můžete ověřovací e-mail odeslat znovu; předchozí odkaz tím přestane platit. Odeslání je omezeno na jeden pokus za minutu pro danou adresu a 20 pokusů za hodinu pro firmu. Pokud se e-mail nepodaří odeslat, adresa zůstane čekající a odeslání můžete zopakovat.
 
-Po schválení obnovte stav schválení nebo znovu otevřete formulář aliasu a vyberte externí adresu jako cíl. Bez schválení na ni přeposílat nelze. Pokud chcete externí adresu smazat, nejprve ji odeberte ze všech aliasů, které ji používají.
+Po schválení vyberte externí adresu jako cíl aliasu. Stav schválení i seznam dostupných cílů aliasu se aktualizují automaticky každých 15 sekund, pokud je stránka viditelná, a také po návratu na kartu prohlížeče. Rozepsaný formulář přitom zůstane zachován. Bez schválení na ni přeposílat nelze. Pokud chcete externí adresu smazat, nejprve ji odeberte ze všech aliasů, které ji používají.
 
 ## Aplikační SMTP
 
