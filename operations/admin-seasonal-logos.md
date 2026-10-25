@@ -24,3 +24,7 @@ everyday logo first; the browser selects the current season on hydration and
 refreshes it automatically. With JavaScript disabled, the everyday logo remains.
 Both projects' `AGENTS.md` files require agents to ask the user whether future
 logo changes should also be synced to the other project.
+
+Navbar layout in both projects uses the original wordmark bounds. Decorations
+extend around it without shifting its alignment or adding spacing between
+navbar items. Enlarged admin gallery previews retain a frame for the decorations.
