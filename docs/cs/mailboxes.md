@@ -18,7 +18,7 @@ Schránku zakládáte pod e-mailovou doménou. Při vytvoření vyberete profil,
 
 Alias přeposílá poštu z adresy na této doméně do jedné nebo více cílových e-mailových adres. Cílová adresa může být schránka na libovolné doméně stejné firmy nebo schválená externí adresa.
 
-Externí adresu nejprve přidejte v přehledu e-mailů. Na tuto adresu odešleme ověřovací e-mail s názvem žádající firmy. Příjemce otevře odkaz a tlačítkem **Schválit přeposílání** povolí použití adresy jako cíle přeposílání pro danou firmu. Účet na Roští.cz není potřeba. Samotné otevření odkazu přeposílání neschválí.
+Externí adresu nejprve přidejte v detailu libovolné e-mailové domény v sekci **Adresy pro přeposílání** (anglicky **Forward addresses**). V levém menu je hned za položkou **Aliasy**; na menších obrazovkách ji najdete mezi záložkami domény. Seznam adres i formulář pro přidání jsou v této samostatné sekci. Adresy jsou společné pro všechny e-mailové domény stejné firmy. Na tuto adresu odešleme ověřovací e-mail s názvem žádající firmy. Příjemce otevře odkaz a tlačítkem **Schválit přeposílání** povolí použití adresy jako cíle přeposílání pro danou firmu. Účet na Roští.cz není potřeba. Samotné otevření odkazu přeposílání neschválí.
 
 Odkaz platí 24 hodin a lze jej použít jednou. U čekající adresy můžete ověřovací e-mail odeslat znovu; předchozí odkaz tím přestane platit. Odeslání je omezeno na jeden pokus za minutu pro danou adresu a 20 pokusů za hodinu pro firmu. Pokud se e-mail nepodaří odeslat, adresa zůstane čekající a odeslání můžete zopakovat.
 
