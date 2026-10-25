@@ -16,3 +16,11 @@ Visit `/logos` on the admin domain to review all variants without signing in.
 The gallery is public regardless of the admin preference cookie. It shows light and dark
 backgrounds and the actual sidebar size, marks the current variant, and includes
 a pause/resume button. The gallery contains no account data.
+
+The homepage at `rosti-homepage-astro` uses the same seasonal artwork and date
+windows in its navbar, including the Christmas hat centered above the R. All
+homepage languages and both responsive layouts share it. Static builds serve the
+everyday logo first; the browser selects the current season on hydration and
+refreshes it automatically. With JavaScript disabled, the everyday logo remains.
+Both projects' `AGENTS.md` files require agents to ask the user whether future
+logo changes should also be synced to the other project.
