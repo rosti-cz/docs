@@ -20,3 +20,23 @@ Staré API už není ve vývoji a nové služby do něj nebudeme přidávat.
 Stacky se spravují přes rozhraní Stacků v administraci, REST API a MCP. Nabídka profilů patří ke Stackům. Po nasazení nové verze administrace určené pro službu podporující pouze Stacky už tato rozhraní neposkytují dřívější samostatné VM, jejich seznam ani profily; původní URL vracejí chybu 404. ID samostatného VM nelze použít místo ID Stacku. Existující Aplikace zůstávají podporované.
 
 V této nové verzi přehled rušené společnosti zahrnuje také Stacky, které se teprve připravují. Společnost lze odstranit až po potvrzení, že už nemá žádné Stacky. Pokud se nepodaří ověřit seznam prostředků nebo dokončit jejich odstranění, společnost zůstane zachována.
+
+## Přihlašování a starší klíče
+
+Původní klíč uložený u účtu se automaticky přesune mezi API klíče s popisem
+**Legacy API key**. Jeho hodnota se nemění, takže existující integrace fungují
+dál. Ve stejné sekci jej můžete zneplatnit. Každé nové přihlášení heslem,
+e-mailovým odkazem nebo passkey vydává samostatný token prohlížeče s expirací,
+který spravujete v seznamu přihlášených zařízení.
+Zneplatnění tokenu používaného prohlížečem vás odhlásí; znovu se přihlaste.
+
+REST API i MCP přijímají tyto hlavičky:
+
+```http
+X-API-Key: TOKEN
+Authorization: Bearer TOKEN
+Authorization: Token TOKEN
+```
+
+Použijte jednu z uvedených variant. Pokud pošlete obě hlavičky, má přednost
+`X-API-Key`, i když obsahuje neplatný nebo prázdný klíč.
