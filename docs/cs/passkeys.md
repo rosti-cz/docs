@@ -33,3 +33,7 @@ Přístupové klíče vyžadují moderní prohlížeč s podporou WebAuthn/FIDO2
 ## API
 
 Přístupové klíče lze také spravovat přes REST API. Dokumentace je dostupná na [https://admin.rosti.cz/api-n/docs](https://admin.rosti.cz/api-n/docs) v sekci **passkeys**.
+
+## Passkeys a MFA
+
+Při přihlášení ověřeným passkey se další kód MFA nevyžaduje. Pro přihlášení heslem nebo odkazem z e-mailu můžete zapnout [vícefaktorové ověřování (MFA)](mfa.md).

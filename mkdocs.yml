@@ -22,6 +22,7 @@ nav:
         - "Doménové kontakty": cs/domain_contacts.md
         - "API": cs/api.md
         - "Přístupové klíče (Passkeys)": cs/passkeys.md
+        - "Vícefaktorové ověřování (MFA)": cs/mfa.md
         - "FAQ": cs/faq.md
     - "Hosting Aplikace (zastaralé)":
         - Proč jsou Aplikace zastaralé: cs/aplikace-zastarale.md
