@@ -4,6 +4,8 @@ The new admin navigation shows seasonal decorations on the Roští.cz wordmark:
 
 | Occasion | Inclusive dates (Prague time) | Animation |
 | --- | --- | --- |
+| November 17 | November 17 | Three keys on a ring, shaking briefly every seven seconds |
+| August 21 | August 21 | Small static tank |
 | Halloween | October 25–November 1 | Bat and pumpkin |
 | Christmas | December 20–30 | Santa hat, lights, and snow |
 | New Year | December 31–January 1 | Fireworks and confetti |
