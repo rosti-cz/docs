@@ -27,11 +27,15 @@ Při výpadku měření mohou být data neúplná. Chybějící měření neznam
 
 Účtování výpočetních prostředků podle sekund běhu bylo **schváleno** a je implementované se zapnutými přepínači pouze ve vývojovém prostředí. Produkční účtování se tím nemění. Ověření dat čtením samo neprokazuje provedení platby z peněženky.
 
-Cena výpočetních prostředků se odvozuje od stávající hodinové ceny podle naměřené doby běhu, včetně běhu během údržby. Nezavádí se nové sazby. Při změně profilu se jednotlivé úseky běhu přiřadí k příslušné sazbě. Trvalé měření a evidence již zaúčtované doby mají zabránit opakovanému účtování stejných intervalů; zbytky po zaokrouhlení se přenášejí do dalšího výpočtu.
+Hodinová cena výpočetních prostředků je cena celého profilu snížená o hodinovou cenu zahrnutého disku, nejméně však nula. Tato část se účtuje poměrně podle naměřených sekund běhu, včetně běhu během údržby. Odečtení zahrnutého disku zabrání jeho dvojímu účtování při běhu stacku. Nezavádí se nové sazby. Při změně profilu se jednotlivé úseky běhu přiřadí k příslušné sazbě. Trvalé měření a evidence již zaúčtované doby mají zabránit opakovanému účtování stejných intervalů; zbytky po zaokrouhlení se přenášejí do dalšího výpočtu.
 
 Běžné profily zachovávají stávající hodinové účtování. Sekundové účtování se týká sleepy úseků; jejich historický běh se vypořádá jednou i po změně profilu, smazání nebo převodu stacku, podle historického vlastníka a sazby.
 
-Dodatečné využití disku nad zahrnutý limit a snapshoty zachovávají stávající hodinové sazby podle uplynulého času i během uspání. Za disk zahrnutý v profilu nevzniká nová samostatná cena. Uspání proto neznamená nulovou cenu. Toto chování je dostupné pouze ve vývojovém prostředí; produkční účtování nemění.
+Disk zahrnutý v profilu představuje rezervovanou kapacitu a účtuje se každou hodinu uplynulého času, i během uspání a při menším skutečném využití. Platí stávající sazba **4 Kč nebo 0,16 EUR za GB za 720 hodin**, podle měny firmy; hodinová sazba je tedy tato částka dělená 720. Disk navíc se počítá jako `max(0, ceil(skutečné využití v GiB) − zahrnutá kapacita v GiB)` a účtuje se běžným způsobem průběžně, také během uspání. Účtování snapshotů včetně doby jejich uchování se nemění.
+
+Například profil s 20 GB zahrnutého disku při skutečném využití 100 GiB platí průběžně za 20 GB rezervovaného základu a 80 GB disku navíc. I bez jediného požadavku se úložiště nadále účtuje. Nejde o libovolný minimální poplatek z peněženky: základ odpovídá rezervovanému disku za stávající sazbu. Uspání zastaví účtování výpočetních prostředků, nikoli úložiště. Toto chování je dostupné pouze ve vývojovém prostředí; produkční účtování nemění.
+
+Čtení přes `GET` vrací kumulativní údaje a nespotřebovává je: opakované načtení nenuluje měření ani samo neodečítá peníze. Administrace ukládá účetní kurzory a již zaúčtované hodiny uchování atomicky spolu s odečtem z peněženky. Opakované zpracování tak nesmí stejnou dobu naúčtovat znovu; při selhání transakce se neposunou ani kurzory, ani evidence hodin.
 
 ## Uzavření firemního účtu
 
