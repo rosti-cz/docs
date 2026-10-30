@@ -1,7 +1,7 @@
 # Sleepy stacky
 
 !!! warning "Pouze vývojové prostředí"
-    Funkce je implementovaná, otestovaná a zapnutá pouze ve vývojovém prostředí. Proxy běží jen na `stack-node-dev-01`. Produkční funkce i sekundové účtování v produkci zůstávají vypnuté. Poslední úpravy ochrany počátečního nasazení a obnovování rozhraní ještě procházejí závěrečnou integrací.
+    Funkce je implementovaná, otestovaná a zapnutá pouze ve vývojovém prostředí. Proxy běží jen na `stack-node-dev-01`. Produkční funkce i sekundové účtování v produkci zůstávají vypnuté.
 
 ## Výběr profilu
 
@@ -41,4 +41,4 @@ Toto omezení se netýká smazání jednotlivého stacku, změny profilu ani př
 
 ## Ochrana při prvním nasazení
 
-Nový sleepy stack dostane před spuštěním dočasnou ochranu před uspáním na 15 minut. Během aktivní počáteční přípravy se ochrana obnovuje každých 5 minut, nejvýše po dobu 30 minut. Chrání přípravu aplikace včetně stahování a spuštění Compose a počátečního směrování. Před přechodem do stavu Ready se ukončí. Při selhání nebo pádu obnovování skončí a poslední ochrana sama vyprší; nejde o trvalé vypnutí uspávání. Během přípravy nelze ručně měnit údržbu. Poslední část této ochrany má otestovanou implementaci a čeká na dokončení integrace masteru.
+Nový sleepy stack dostane před spuštěním dočasnou ochranu před uspáním na 15 minut. Během aktivní počáteční přípravy se ochrana obnovuje každých 5 minut, nejvýše po dobu 30 minut. Chrání přípravu aplikace včetně stahování a spuštění Compose a počátečního směrování. Před přechodem do stavu Ready se ukončí. Při selhání nebo pádu obnovování skončí a poslední ochrana sama vyprší; nejde o trvalé vypnutí uspávání. Během přípravy nelze ručně měnit údržbu.
