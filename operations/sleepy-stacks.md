@@ -159,3 +159,18 @@ For rollback, first stop assigning sleepy profiles. Coordinate normal-profile co
 - Parent: verified deployment audit, authorized dev canary result, integration order and final billing snapshot/epoch contracts and dev-gate evidence. Replace provisional sections only after these contracts are received.
 
 User documentation draft: [Sleepy stacky](../docs/cs/stacks/sleepy.md). It intentionally describes planned behavior and does not announce availability.
+
+## Hardened dev acceptance update
+
+The parent reports real Incus acceptance passed after hardened deployment on `stack-node-dev-01`:
+
+- Cold HTTP request woke the instance, waited for TCP port 80 readiness and returned the original backend response.
+- Idle shutdown worked; active maintenance prevented it and expiry automatically cleared maintenance.
+- Removing `user.stack-id` preserved the normal running instance; restoring it re-enrolled the instance for idle shutdown.
+- Three requests remained recorded persistently, and durable usage journal entries plus coverage watermarks were nonempty.
+
+The automated acceptance used a disposable Incus project, transient service and separate database; these were automatically cleaned up. Existing dev stacks were untouched. The separate earlier manual project `sleepy-proxy-smoke-20261030` remains stopped pending parent cleanup; this does not mean the automated resources leaked.
+
+The main dev proxy is active/enabled. Its default-project gauges report 19 total containers, 0 sleepy and 0 awake sleepy. Total includes all containers in the configured project, including reserved images; these are node-scoped values, not fleet inventory.
+
+This acceptance does not establish full cross-repository completion. Two proxy follow-up CI attempts failed in setup-go caching before tests; cache-disabled fix `a70c276` is running. Node fixture tests passed after upstream RAM fixture fix `b86113f`, which was pushed; latest node CI is pending. Admin/master billing implementation and final schemas remain subject to their own checks. Charging remains inactive and production remains untouched.
