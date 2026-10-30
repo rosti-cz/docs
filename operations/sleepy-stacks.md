@@ -174,3 +174,9 @@ The automated acceptance used a disposable Incus project, transient service and 
 The main dev proxy is active/enabled. Its default-project gauges report 19 total containers, 0 sleepy and 0 awake sleepy. Total includes all containers in the configured project, including reserved images; these are node-scoped values, not fleet inventory.
 
 This acceptance does not establish full cross-repository completion. Two proxy follow-up CI attempts failed in setup-go caching before tests; cache-disabled fix `a70c276` is running. Node fixture tests passed after upstream RAM fixture fix `b86113f`, which was pushed; latest node CI is pending. Admin/master billing implementation and final schemas remain subject to their own checks. Charging remains inactive and production remains untouched.
+
+## Integration status follow-up
+
+The parent confirms proxy pipeline 3, node pipeline 317 and LB pipeline 127 all succeeded. This supersedes the pending proxy/node CI observations above. Master and admin have not yet been pushed and await final tests/metrics; feature integration is not complete and production remains inactive.
+
+The SPA action label is **Do maintenance**. A successful action starts a stopped stack and prevents idle shutdown for 15 minutes; application readiness may take additional startup time. Uptime belongs in the **Metrics** tab and respects its selected range, rather than being confined to Profile. Include stopped-to-running maintenance and selected-range graph behavior in final admin acceptance.

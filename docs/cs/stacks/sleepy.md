@@ -13,13 +13,13 @@ Při přechodu zpět na běžný profil se odstraní nastavení uspávání i ú
 
 ## Údržba na 15 minut
 
-Údržba dočasně brání automatickému uspání, například při práci se stackem. Platí 15 minut a můžete ji ručně ukončit dříve. Po vypršení se znovu uplatní pravidla nečinnosti; stack se nemusí vypnout přesně v okamžiku konce údržby. Údržba sama není příslibem okamžitého spuštění zastavené aplikace.
+Tlačítko **Do maintenance** spustí zastavený stack a potom na 15 minut zabrání jeho automatickému uspání, například při práci se stackem. Po úspěšném dokončení akce je kontejner spuštěný; aplikace uvnitř ještě může potřebovat čas na start. Údržbu můžete ručně ukončit dříve. Po vypršení se znovu uplatní pravidla nečinnosti; stack se nemusí vypnout přesně v okamžiku konce údržby.
 
 Ovládání bude dostupné v nové administraci a přes API Ninja a MCP. API Ninja používá `GET` a `POST /api-n/{company_id}/stacks/{stack_id}/maintenance`, POST s `{"enabled": true}` nebo `{"enabled": false}`. MCP nabízí `get_stack_maintenance` a `set_stack_maintenance`. Nové ovládání se do staré administrace nepřidává.
 
 ## Doba běhu a grafy
 
-Detail stacku bude zobrazovat dobu běhu dnes, v aktuálním měsíci a graf rozdělený do časových úseků. Denní a měsíční hranice se počítají v UTC. Stejná data poskytuje `GET /api-n/{company_id}/stacks/{stack_id}/uptime` a MCP `get_stack_uptime`; funkce stále podléhá vývojovému ověření. Doba běhu označuje pozorovaný běh stacku, nikoli počet požadavků nebo záruku dostupnosti aplikace.
+Záložka **Metrics** v detailu stacku bude zobrazovat dobu běhu dnes, v aktuálním měsíci a graf rozdělený do časových úseků podle vybraného časového rozsahu. Denní a měsíční hranice se počítají v UTC. Stejná data poskytuje `GET /api-n/{company_id}/stacks/{stack_id}/uptime` a MCP `get_stack_uptime`; funkce stále podléhá vývojovému ověření. Doba běhu označuje pozorovaný běh stacku, nikoli počet požadavků nebo záruku dostupnosti aplikace.
 
 Při výpadku měření mohou být data neúplná. Chybějící měření neznamená nulový běh a nesmí se zobrazit jako spolehlivě naměřená nula. Běh během údržby se také měří. Graf ani provozní čítač sám o sobě neurčuje vyúčtování.
 
