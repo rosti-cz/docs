@@ -1,11 +1,11 @@
 # Sleepy stacky
 
 !!! warning "Pouze vývojové prostředí"
-    Funkce je implementovaná, otestovaná a zapnutá pouze ve vývojovém prostředí. Proxy běží jen na `stack-node-dev-01`. Produkční funkce i sekundové účtování v produkci zůstávají vypnuté.
+    Funkce je určená pouze pro vývojové prostředí. Ověření nové cenové politiky je oddělené od dřívějšího ověření uspávání; aktuální testy, CI ani nasazení nové revize zde nejsou potvrzené. Proxy běží jen na `stack-node-dev-01`. Produkční funkce i sekundové účtování v produkci zůstávají vypnuté.
 
 ## Výběr profilu
 
-Běžný profil udržuje stack spuštěný. Sleepy profil umožní stack při nečinnosti uspat a při dalším HTTP požadavku znovu spustit. Ve výběru profilů budou nejprve běžné profily, potom sleepy profily. Stávající profily se automaticky na sleepy nepřepínají; příznak `sleepy` má při vynechání hodnotu `false`. Úprava profilu v katalogu sama nezmění režim existujícího stacku. Pro přechod vyberte a použijte cílový profil; doporučujeme vytvořit samostatný sleepy profil. Rozhoduje již použitý režim stacku (`stack.sleepy`), nikoli pozdější změny katalogu.
+Běžný profil udržuje stack spuštěný. Sleepy profil umožní stack při nečinnosti uspat a při dalším HTTP požadavku znovu spustit. Ve výběru profilů budou nejprve běžné profily, potom sleepy profily. Stávající profily se automaticky na sleepy nepřepínají; příznak `sleepy` má při vynechání hodnotu `false`. Úprava profilu v katalogu sama nezmění režim existujícího stacku. Změna katalogu platí pro nové alokace nebo přechod na jiný profil. Existující použitý cenový snímek zůstává beze změny. Pro přechod vyberte jiný cílový profil; doporučujeme vytvořit samostatný sleepy profil. `UpdateProfile` odmítá stejné ID profilu, takže opětovné použití stejného profilu změnu neprovede. Rozhoduje již použitý režim stacku (`stack.sleepy`), nikoli pozdější změny katalogu.
 
 Probuzení prodlouží první požadavek o dobu spuštění stacku a připravenosti jeho HTTP služby. Průběžné úlohy, databáze nebo služby, které musí běžet bez příchozích HTTP požadavků, potřebují běžný profil. Uspávání se týká celého stacku, tedy i jeho vnitřních Docker kontejnerů. Samotné SSH připojení nepovažujte za záruku, že automatické uspání nenastane.
 
@@ -23,19 +23,25 @@ Záložka **Metrics** v detailu stacku zobrazuje dobu běhu dnes, v aktuálním 
 
 Při výpadku měření mohou být data neúplná. Chybějící měření neznamená nulový běh a nesmí se zobrazit jako spolehlivě naměřená nula. Běh během údržby se také měří. Graf ani provozní čítač sám o sobě neurčuje vyúčtování.
 
-## Schválené účtování podle sekund — pouze vývojové prostředí
+## Schválené hodinové minimum — pouze vývojové prostředí
 
-Účtování výpočetních prostředků podle sekund běhu bylo **schváleno** a je implementované se zapnutými přepínači pouze ve vývojovém prostředí. Produkční účtování se tím nemění. Ověření dat čtením samo neprokazuje provedení platby z peněženky.
+Nová politika používá parametr profilu `sleepy_minimum_rate_multiplier`, výchozí hodnota je `0.2`. Přijímá pouze konečné číslo od `0` do `1` včetně, s nejvýše šesti desetinnými místy. V nové správě profilů je pole viditelné a upravitelné pro sleepy profily. Úprava katalogu ovlivní nové alokace nebo přechod na jiný profil, nikoli již použitý cenový snímek. Běžné profily zachovávají stávající účtování.
 
-Hodinová cena výpočetních prostředků je cena celého profilu snížená o hodinovou cenu zahrnutého disku, nejméně však nula. Tato část se účtuje poměrně podle naměřených sekund běhu, včetně běhu během údržby. Odečtení zahrnutého disku zabrání jeho dvojímu účtování při běhu stacku. Nezavádí se nové sazby. Při změně profilu se jednotlivé úseky běhu přiřadí k příslušné sazbě. Pro každé období sazby je uložené rozdělení ceny mezi disk a výpočetní prostředky s pevnou sazbou úložiště odvozenou z tehdejší jednotkové ceny disku a zahrnuté kapacity, aby budoucí změna jednotkové ceny disku nezměnila cenu historického běhu. Trvalé měření a evidence již zaúčtované doby mají zabránit opakovanému účtování stejných intervalů; zbytky po zaokrouhlení se přenášejí do dalšího výpočtu.
+Za každou jednotlivou hodinu UTC se cena celého profilu vypočítá jako:
 
-Běžné profily zachovávají stávající hodinové účtování. Sekundové účtování se týká sleepy úseků; jejich historický běh se vypořádá jednou i po změně profilu, smazání nebo převodu stacku, podle historického vlastníka a sazby.
+```text
+hodinová cena celého profilu × max(podíl skutečného běhu v hodině, sleepy_minimum_rate_multiplier)
+```
 
-Disk zahrnutý v profilu představuje rezervovanou kapacitu a účtuje se každou hodinu uplynulého času, i během uspání a při menším skutečném využití. Platí stávající sazba **4 Kč nebo 0,16 EUR za GB za 720 hodin**, podle měny firmy; hodinová sazba je tedy tato částka dělená 720. Disk navíc se počítá jako `max(0, ceil(skutečné využití v GiB) − zahrnutá kapacita v GiB)` a účtuje se běžným způsobem průběžně, také během uspání. Účtování snapshotů včetně doby jejich uchování se nemění. Stávající výjimky pro bezplatné účty a zkušební období zůstávají beze změny.
+Běh během údržby se počítá jako běh stacku. Minimum se vyhodnocuje v každé hodině samostatně, nikoli z měsíčního průměru. Cena celého profilu se nesnižuje o zahrnutý disk a zahrnutý disk nemá samostatnou trvale účtovanou složku.
 
-Například profil s 20 GB zahrnutého disku při skutečném využití 100 GiB platí průběžně za 20 GB rezervovaného základu a 80 GB disku navíc. Rezervovaný základ 100 GB stojí **400 Kč nebo 16 EUR za 720 hodin**; stejné celkové ceně úložiště odpovídá i uvedených 20 GB zahrnutého disku a 80 GB navíc. Platíte pouze částku v měně své firmy, nikoli obě částky. I bez jediného požadavku se úložiště nadále účtuje. Nejde o libovolný minimální poplatek z peněženky: základ odpovídá rezervovanému disku za stávající sazbu. Uspání zastaví účtování výpočetních prostředků, nikoli úložiště. Toto chování je dostupné pouze ve vývojovém prostředí; produkční účtování nemění.
+Profil za **100 Kč za 720 hodin** s násobitelem `0.2` stojí za samotný profil **20 Kč za 720 hodin**, pokud stack v každé hodině běží nejvýše 20 % času. Při nepřetržitém běhu stojí **100 Kč**. Hodina s půlhodinou běhu stojí 50 % plné hodinové ceny; hodina bez běhu stojí 20 %. Střídání hodin plného běhu a spánku se proto neúčtuje podle průměrného měsíčního běhu. Ke všem těmto částkám se přičítají disk navíc a snapshoty.
 
-Čtení přes `GET` vrací kumulativní údaje a nespotřebovává je: opakované načtení nenuluje měření ani samo neodečítá peníze. Administrace ukládá účetní kurzory a již zaúčtované hodiny uchování atomicky spolu s odečtem z peněženky. Opakované zpracování tak nesmí stejnou dobu naúčtovat znovu; při selhání transakce se neposunou ani kurzory, ani evidence hodin.
+Disk navíc je `max(ceil(skutečné logické využití v GiB) − zahrnutá kapacita v GiB, 0)` a účtuje se běžnou jednotkovou cenou disku za uplynulý čas, i během uspání. Násobitel jej nezlevňuje. Například při 20 GiB zahrnuté kapacity a skutečném využití 100 GiB se průběžně účtuje 80 GiB navíc; za zahrnutých 20 GiB se samostatný poplatek nepřidává. Snapshoty včetně doby uchování se účtují beze změny. Stávající výjimky pro bezplatné účty a zkušební období zůstávají zachované.
+
+Při změně profilu nebo vlastníka uvnitř hodiny se hodina rozdělí na příslušné úseky. Pro každý úsek platí jeho historická cena a násobitel; minimum je poměrné délce tohoto úseku. Pro úsek délky `s` hodin a skutečného běhu `a` hodin je cena `hodinová cena celého profilu × max(a, násobitel × s)`. Historické ceny jsou neměnné. Starší období s původní politikou zahrnutého úložiště zůstávají zmrazená podle původních pravidel a automaticky se nepřeceňují; nově aplikovaná cenová období používají nové minimum. Historické vypořádání zůstává přiřazené původnímu vlastníkovi i po změně profilu, převodu nebo smazání stacku.
+
+Grafy a endpointy doby běhu dál ukazují skutečný pozorovaný běh, nikoli dobu zvýšenou o cenové minimum. Master pro účtování poskytuje kumulativní `billable_ns` s minimem vyhodnoceným po hodinách a jejich úsecích. Čtení přes `GET` je nespotřebovávající: nenuluje měření ani neodečítá peníze. Administrace ukládá účetní checkpointy a odečet z peněženky atomicky, včetně již zaúčtovaného disku navíc a uchování snapshotů. Opakování nesmí stejný úsek naúčtovat znovu; selhání neposune checkpointy. Zbytky po zaokrouhlení se přenášejí. Ověření dat čtením samo neprokazuje platbu z peněženky. Produkční účtování se nemění.
 
 ## Uzavření firemního účtu
 
