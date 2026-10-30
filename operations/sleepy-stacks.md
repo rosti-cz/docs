@@ -23,7 +23,7 @@ Status: coordinated implementation, 2026-10-30. Production activation and deploy
 
 ## Agreed shared contracts
 
-Profile JSON has `sleepy: boolean`, defaulting to `false` when absent. Normal profiles appear before sleepy profiles in pickers. No existing profile becomes sleepy implicitly.
+Profile JSON has `sleepy: boolean`, defaulting to `false` when absent. The applied runtime field `stack.sleepy` is authoritative. Editing the profile catalog does not silently change existing stacks, consistent with existing resource/rate application. Create a separate sleepy profile and explicitly choose/apply the target profile for conversion; never infer applied mode from mutable catalog data. Master management UI supports the Sleepy checkbox on profile create/edit (`f607cb3`, real-JavaScript tested); admin alignment is `ff4509c3`. Normal profiles appear before sleepy profiles in pickers. No existing profile becomes sleepy implicitly.
 
 Sleepy Incus instances use `user.stack-id` equal to the canonical vm-master-api stack ID. Never substitute `billing_id`, container/backend name or display name. `user.stack-maintenance` is `"1"` only during active maintenance. The shared expiry is `user.stack-maintenance-until`, RFC3339 in UTC, with a 15-minute window. Manual end removes maintenance state. Expired maintenance must stop suppressing idle shutdown even if the writer is unavailable. The proxy persists a fresh 15-minute expiry when an active flag has missing or malformed expiry. On expiry it clears local maintenance values, masking inherited settings. Persistence failures surface as errors; verify retry behavior in integration.
 
@@ -78,6 +78,7 @@ SLEEPY_STACKS_INCUS=incus
 SLEEPY_STACKS_INCUS_SOCKET=/var/lib/incus/unix.socket
 SLEEPY_STACKS_LOCK_DIR=/run/lock/sleepy-stacks
 SLEEPY_STACKS_UPSTREAM_INTERFACE=eth0
+SLEEPY_STACKS_INVENTORY_EXCLUDED_INSTANCES=stackimage0
 SLEEPY_STACKS_PROJECT=default
 SLEEPY_STACKS_IDLE_TIMEOUT=60s
 SLEEPY_STACKS_READY_TIMEOUT=60s
@@ -111,7 +112,7 @@ Each usage page adds `coverage: {observed_from, observed_until, gaps, gaps_compl
 
 | Gauge | Scope/meaning |
 | --- | --- |
-| `sleepy_stacks_stacks` | Proxy node, all containers in configured Incus project, including reserved image containers; same scope as node API |
+| `sleepy_stacks_stacks` | Proxy node container inventory in configured Incus project, excluding configured unlabeled reference instances |
 | `sleepy_stacks_sleepy_stacks` | Enrolled sleepy instances in that project |
 | `sleepy_stacks_awake_sleepy_stacks` | Sleepy instances whose Incus state is Running |
 | `sleepy_stacks_inventory_success` | 0/1 success of latest inventory sweep |
@@ -121,6 +122,8 @@ Each usage page adds `coverage: {observed_from, observed_until, gaps, gaps_compl
 | `total_number_of_awake_sleepy_stacks` | Master awake sleepy fleet inventory |
 
 These counts are gauges, not event counters; do not use counter `rate()` queries. Stopped sleepy instances are not awake; running maintenance instances are awake regardless of requests. Proxy emits no count series before the first successful sweep and retains last-good counts on failure. Gate dashboards on success and freshness rather than interpreting failure/staleness as zero. Master success/freshness metric names remain pending confirmation. Node and fleet scopes are not additive independent inventories.
+
+`SLEEPY_STACKS_INVENTORY_EXCLUDED_INSTANCES` defaults to `stackimage0`; it is an exact, case-sensitive comma-separated list replacing the default, with whitespace/empty entries ignored. An explicitly empty value disables exclusions. Nonempty effective `user.stack-id` overrides any name exclusion. VM instances are excluded. These exclusions affect inventory only, not routing/enrollment/lifecycle; ordinary unmarked administrative containers need explicit names to be excluded. Inventory is sampled after lifecycle actions.
 
 ## Acceptance matrix
 
@@ -169,9 +172,9 @@ The parent reports real Incus acceptance passed after hardened deployment on `st
 - Removing `user.stack-id` preserved the normal running instance; restoring it re-enrolled the instance for idle shutdown.
 - Three requests remained recorded persistently, and durable usage journal entries plus coverage watermarks were nonempty.
 
-The automated acceptance used a disposable Incus project, transient service and separate database; these were automatically cleaned up. Existing dev stacks were untouched. The separate earlier manual project `sleepy-proxy-smoke-20261030` remains stopped pending parent cleanup; this does not mean the automated resources leaked.
+The automated acceptance used a disposable Incus project, transient service and separate database; these were automatically cleaned up. Existing dev stacks were untouched. The parent subsequently confirmed that all test projects, including the earlier manual smoke project, were cleaned up.
 
-The main dev proxy is active/enabled. Its default-project gauges report 19 total containers, 0 sleepy and 0 awake sleepy. Total includes all containers in the configured project, including reserved images; these are node-scoped values, not fleet inventory.
+The main dev proxy is active/enabled. Before reference-image exclusion, its default-project gauges reported 19 containers, 0 sleepy and 0 awake sleepy. The additional physical container is reference image `stackimage0`; the new default inventory-only exclusion targets 18 actual stacks, while explicit enrollment overrides the exclusion. These node counts remain distinct from canonical fleet inventory.
 
 This acceptance does not establish full cross-repository completion. Two proxy follow-up CI attempts failed in setup-go caching before tests; cache-disabled fix `a70c276` is running. Node fixture tests passed after upstream RAM fixture fix `b86113f`, which was pushed; latest node CI is pending. Admin/master billing implementation and final schemas remain subject to their own checks. Charging remains inactive and production remains untouched.
 
@@ -180,3 +183,9 @@ This acceptance does not establish full cross-repository completion. Two proxy f
 The parent confirms proxy pipeline 3, node pipeline 317 and LB pipeline 127 all succeeded. This supersedes the pending proxy/node CI observations above. Master and admin have not yet been pushed and await final tests/metrics; feature integration is not complete and production remains inactive.
 
 The SPA action label is **Do maintenance**. A successful action starts a stopped stack and prevents idle shutdown for 15 minutes; application readiness may take additional startup time. Uptime belongs in the **Metrics** tab and respects its selected range, rather than being confined to Profile. Include stopped-to-running maintenance and selected-range graph behavior in final admin acceptance.
+
+## Latest integration verification
+
+Master dev `sleepy-apply` and verification both exited 0. Live canonical fleet gauges are 18 total, 0 sleepy and 0 awake sleepy. Node real acceptance, including a 1/1/1 total/sleepy/awake gauge fixture, passed. All smoke projects are now cleaned up. Proxy reference-image exclusion follow-up still requires its final CI/deploy confirmation; do not treat expected post-exclusion counts as an already observed measurement.
+
+Parent published the feature-only docs to default `master` at `e09b829`; GitHub build/deploy run `41135725607` succeeded. That publication documents a dev-only feature and does not activate a production workload. The parent will publish these subsequent corrections after review. Charging and production rollout remain inactive; final admin/master integration status must come from the coordinator.
