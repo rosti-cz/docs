@@ -1,6 +1,6 @@
 # Sleepy stacks: implementation and acceptance plan
 
-Status: coordinated implementation, 2026-10-30. Production activation and deployment are disabled. The user approved the per-second billing design. Implementation is tested and active on dev only; billing flags are enabled only in rosti-dev. Production remains disabled. This document records the implemented contracts and dev acceptance. The user has authorized eventual main-branch pushes and proxy deployment to `stack-node-dev-01`. All published feature heads are green and dev rollouts are Ready; final image-head verification is being completed by the coordinator; this agent does not push or deploy.
+Status: coordinated implementation, 2026-10-30. Production activation and deployment are disabled. The user approved the per-second billing design. Implementation is tested and active on dev only; billing flags are enabled only in rosti-dev. Production remains disabled. This document records the implemented contracts and dev acceptance. The user has authorized eventual main-branch pushes and proxy deployment to `stack-node-dev-01`. All published feature heads are green and dev rollouts are Ready; exact deployed image heads are verified by the coordinator; this agent does not push or deploy.
 
 ## Owners and dependency order
 
@@ -31,7 +31,7 @@ Applying a normal profile removes all sleepy metadata, including stack ID, maint
 
 ### Master API
 
-These owner-scoped paths are agreed; implementation and OpenAPI parity still require verification:
+Implemented owner-scoped master paths:
 
 | Operation | Contract |
 | --- | --- |
@@ -144,9 +144,9 @@ Record exact test commands/results and remaining limitations from each owner. A 
 
 ## Rollout gates and rollback
 
-The coordinator reports that admin, LB, node and master main pipelines deploy only to dev; production uses release/manual workflows. Audit exact refs, tags, reusable workflows and registry/image promotion before pushing. The proposed proxy production workflow is manual opt-in only, with no release trigger; its final YAML still needs review. The docs repository's `.github/workflows/main.yml` builds and deploys on pushes to `master`; the parent will inspect the docs remote/default branch before the authorized main-branch integration push. This docs publication path does not authorize production feature rollout.
+The coordinator reports that admin, LB, node and master main pipelines deploy only to dev; production uses release/manual workflows. Audit exact refs, tags, reusable workflows and registry/image promotion before pushing. Proxy production deployment is manual opt-in only, with no release trigger. Production remains disabled. The docs repository's `.github/workflows/main.yml` builds and deploys on pushes to `master`; the parent publishes the reviewed feature-only docs to default `master` and coordinates the original local default branch fast-forward with Pauli. This docs publication path does not authorize production feature rollout.
 
-The parent completed read-only SSH preflight: `stack-node-dev-01` (`192.168.220.11`), x86_64 Debian 13.3, active vmapi, Incus project `default`, TCP port 80 free, no proxy service and no existing `user.stack-id` labels. No existing containers were touched. Subsequent parent reports confirm initial proxy/LB pipelines green and dev proxy active/enabled. Smoke uses an owned temporary project and separate database; existing dev stacks remain untouched. Subsequent hardened acceptance passed; current final-head limitations are recorded below. Admin initially reported 31 Chromium tests green.
+The parent completed read-only SSH preflight: `stack-node-dev-01` (`192.168.220.11`), x86_64 Debian 13.3, active vmapi, Incus project `default`, TCP port 80 free, no proxy service and no existing `user.stack-id` labels. No existing containers were touched. Subsequent parent reports confirm initial proxy/LB pipelines green and dev proxy active/enabled. Smoke uses an owned temporary project and separate database; existing dev stacks remain untouched. Subsequent hardened acceptance passed; final deployed heads are recorded below. Admin initially reported 31 Chromium tests green.
 
 For the authorized dev canary after integration checks: capture existing routing/profile configuration, runtime state, image versions and journal identity; deploy compatible producers before consumers; keep production billing disabled and isolate any dev billing verification; enable only explicitly selected disposable sleepy stacks on `stack-node-dev-01`. Verify wake/readiness, maintenance/manual end/expiry, idle shutdown, UTC uptime, journal replay and rollback. Observe errors, request latency and counters. Do not expand to other nodes automatically.
 
@@ -160,14 +160,14 @@ Real hardened proxy acceptance passed: cold wake waited for TCP port 80 and retu
 
 Master dev extension apply and verification both exited 0. Master/admin/rq/rq-admin rollouts are ready. Billing configuration is enabled only in rosti-dev (master flag true, common `SLEEPY_BILLING_ENABLED=1`). Admin read-through-master validation returned 1 billing owner and 18 rows without issuing Wallet charges. Both live master fleet and proxy node gauges report 18 total, 0 sleepy and 0 awake sleepy after reference-image exclusion.
 
-All final published code heads are green: master `a0ae0db` CI 366, admin `b92d595f` CI 1281, node `527dfe1` CI 318, proxy `bc66832` CI 5 and LB `0a25901` CI 127. This includes the setup guard and admin refresh callback, with no API change or SQL model/seal change in the final master helper. The coordinator is completing actual deployed-image verification for master/admin; green source CI is not a substitute for that image check.
+All final published code heads are green: master `a0ae0db` ([CI 366](https://git.ceperka.net/Rosti/vm-master-api/actions/runs/366)), admin `b92d595f` ([CI 1281](https://git.ceperka.net/Rosti/admin/actions/runs/1281)), node `527dfe1` ([CI 318](https://git.ceperka.net/Rosti/vm-api/actions/runs/318)), proxy `bc66832` ([CI 5](https://git.ceperka.net/Rosti/sleepy-stacks-proxy/actions/runs/5)) and LB `0a25901` ([CI 127](https://git.ceperka.net/Rosti/lbservice/actions/runs/127)). This includes the setup guard and admin refresh callback, with no API change or SQL model/seal change in the final master helper. The coordinator verified exact dev images: master `a0ae0db` and admin/rq/rq-admin `b92d595f`. All workloads are Ready (1/1; rq has 3 ready replicas). Proxy `bc66832` is enabled/active with gauges 18/0/0; node lease implementation `527dfe1` is active. No production workload was changed.
 
 Master management UI Sleepy create/edit checkbox is tested using real JavaScript. Applied `stack.sleepy` remains authoritative; profile catalog changes do not mutate existing stacks. The SPA **Do maintenance** action starts a stopped stack and prevents idle shutdown for 15 minutes. Uptime is in **Metrics** and uses its selected range.
 
-Parent published docs default `master` at `88589b0`; GitHub build/deploy `41141098455` succeeded. This final status correction is local for parent publication. Docs publication is not production feature activation. No production release, migration, configuration change or workload deployment was performed.
+Parent published docs default `master` at `88589b0`; GitHub [build/deploy 41141098455](https://github.com/rosti-cz/docs/actions/runs/41141098455) succeeded. This final status correction is local for parent publication. Docs publication is not production feature activation. No production release, migration, configuration change or workload deployment was performed.
 
 ## Initial sleepy provisioning lease
 
 New sleepy creation installs an initial 15-minute node maintenance lease before boot. During active Setup, master renews it every 5 minutes; each renewal request has a 30-second timeout and the setup guard has an overall 30-minute maximum. Protection spans runtime readiness, initial Compose pull/up and initial LB setup, preventing idle shutdown during long provisioning. Normal stack provisioning is unchanged.
 
-On failure the renewal worker is cancelled and joined before cleanup. On success the worker is also joined and the setup lease is cleared before phase Ready. Manual maintenance changes are blocked while setup is pending. Crashes cannot leave an infinite exemption: the last persisted 15-minute lease expires without further renewal. These provisioning leases are separate from the user's ordinary maintenance action. Both node and master setup-guard heads are published with green CI; node deployment is confirmed and final master/admin image verification is owned by the coordinator.
+On failure the renewal worker is cancelled and joined before cleanup. On success the worker is also joined and the setup lease is cleared before phase Ready. Manual maintenance changes are blocked while setup is pending. Crashes cannot leave an infinite exemption: the last persisted 15-minute lease expires without further renewal. These provisioning leases are separate from the user's ordinary maintenance action. Both node and master setup-guard heads are published with green CI and their exact deployed dev images are verified; normal provisioning remains unchanged.
