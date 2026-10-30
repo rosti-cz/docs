@@ -62,6 +62,8 @@ Missing/reset meters, negative deltas and unknown epochs require reconciliation 
 
 Historical sleepy compute settles once after normal conversion, deletion or owner transfer using retained historical epochs and terminal settlements. Terminal rows settle compute only; active normal rows settle historical sleepy compute alongside unchanged normal hourly sampling. Journal ingestion cursors and consumed cumulative runtime are distinct.
 
+Company account closure has an explicit compatibility limit: financial checkpoints protect company audit references with `PROTECT` foreign keys. `CompanyProcessor.close` preflights for sleepy financial history before any external cleanup and returns an explicit error when such history exists. This avoids partial external cleanup followed by a foreign-key failure. Closing these company accounts requires a future archival/final-settlement workflow; financial audit history must not silently cascade away. This guard does not restrict supported stack deletion, profile changes or owner transfers, which use retained epochs and terminal settlements. Changing the future retention/closure policy requires its own review; implementing the guard does not require renewed approval. Production remains untouched.
+
 Admin opt-in is `SLEEPY_BILLING_ENABLED=1`, default `0`. Migration `0135_sleepy_billing` depends on `0134`. Master explicitly runs `vm-master-api migration sleepy-apply` to extend sealed schema 2; no automatic production apply. `GET /v2/admin/stack-billing-owners` is service-only owner discovery. Exact cumulative snapshot/epoch and Decimal carry schemas still await final agents' contracts.
 
 ## Proxy configuration and node routing
