@@ -164,7 +164,7 @@ All final published code heads are green: master `a0ae0db` ([CI 366](https://git
 
 Master management UI Sleepy create/edit checkbox is tested using real JavaScript. Applied `stack.sleepy` remains authoritative; profile catalog changes do not mutate existing stacks. The SPA **Do maintenance** action starts a stopped stack and prevents idle shutdown for 15 minutes. Uptime is in **Metrics** and uses its selected range.
 
-Parent published docs default `master` at `88589b0`; GitHub [build/deploy 41141098455](https://github.com/rosti-cz/docs/actions/runs/41141098455) succeeded. This final status correction is local for parent publication. Docs publication is not production feature activation. No production release, migration, configuration change or workload deployment was performed.
+Parent published docs default `master` at `88589b0`; GitHub [build/deploy 41141098455](https://github.com/rosti-cz/docs/actions/runs/41141098455) succeeded. Subsequent documentation updates use the same default-branch build/deploy workflow. Docs publication is not production feature activation. No production release, migration, configuration change or workload deployment was performed.
 
 ## Initial sleepy provisioning lease
 
