@@ -1,6 +1,6 @@
 # Sleepy stacks: implementation and acceptance plan
 
-Status: coordinated implementation, 2026-10-30. Production activation and deployment are disabled. The user approved the per-second billing design. Implementation and charges are not yet active and remain gated on tests and dev acceptance. This document records agreed contracts separately from pending implementation verification. The user has authorized eventual main-branch pushes and proxy deployment to `stack-node-dev-01`. Initial proxy/LB dev deployment is complete, while final hardening and integration acceptance remain pending; this agent does not push or deploy.
+Status: coordinated implementation, 2026-10-30. Production activation and deployment are disabled. The user approved the per-second billing design. Implementation is tested and active on dev only; billing flags are enabled only in rosti-dev. Production remains disabled. This document records agreed contracts separately from pending implementation verification. The user has authorized eventual main-branch pushes and proxy deployment to `stack-node-dev-01`. Dev rollout and real acceptance are complete for the previously deployed heads; final setup-guard head publication/CI and admin UI refresh follow-up remain pending; this agent does not push or deploy.
 
 ## Owners and dependency order
 
@@ -9,7 +9,7 @@ Status: coordinated implementation, 2026-10-30. Production activation and deploy
 | sleepy-stack-service | Nash | Per-node HTTP proxy, idle lifecycle, expiring maintenance, durable usage journal, counters, environment configuration and tests | Shared identity and journal contract |
 | vm-api | Wegener | Node profile application, Incus metadata, normal-profile recovery and tests | Profile and maintenance contract |
 | vm-master-api | Herschel | Canonical stack metadata, maintenance, journal ingestion, UTC uptime aggregation and tests | Node support and proxy journal |
-| admin | Aquinas | Normal-first profile picker, SPA/API Ninja/MCP maintenance and uptime, approved billing design with charges inactive, and tests | Master endpoints and authoritative profile flag |
+| admin | Aquinas | Normal-first profile picker, SPA/API Ninja/MCP maintenance and uptime, approved billing design enabled only on dev, and tests | Master endpoints and authoritative profile flag |
 | LB | Hypatia | Node-aware routing and trusted canonical stack header, with normal routing preserved | Node proxy reachability and master stack identity |
 | docs | Faraday | Czech user guide, operations plan, configuration and rollout guidance | Confirmed implementation contracts from all owners |
 | Integration and rollout | Parent coordinator | Contract review, pipeline audit, cross-repository CI and approved dev canary | All owners' reviewable changes and acceptance evidence |
@@ -19,7 +19,7 @@ Status: coordinated implementation, 2026-10-30. Production activation and deploy
 3. Implement master ingestion and owner-scoped maintenance/uptime. Verify node/master identity mapping with distinct stack ID, backend name and billing reference.
 4. Implement LB routing and admin consumers after producer schemas stabilize. Add features only to the new SPA, API Ninja and MCP; do not extend the legacy Django UI.
 5. Reconcile this plan and the user guide with final contracts. Run repository checks and cross-repository acceptance before any push. The coordinator owns integration, green CI and eventual main-branch pushes.
-6. After the coordinator completes integration, CI and deployment checks, deploy the already authorized proxy only to `stack-node-dev-01`. Keep production activation and per-second charges disabled. Production requires a later explicit decision.
+6. After the coordinator completes integration, CI and deployment checks, deploy the already authorized proxy only to `stack-node-dev-01`. Keep production activation and production per-second charges disabled. Production requires a later explicit decision.
 
 ## Agreed shared contracts
 
@@ -50,9 +50,9 @@ The current proxy implementation (`usage.go`) returns `{version: 1, meter_id, ha
 
 The meter ID survives restarts and changes with database replacement. Deduplicate using `(meter_id, cursor)`. Preserve the database and WAL; do not clone an identity into independent active meters. Observed intervals do not reconstruct proxy-offline runtime. The proxy also exposes `GET :8080/v1/gaps?after=0`, an ordered diagnostic array (up to 1000 rows) with `cursor`, UTC `started_at`, nullable `ended_at` and `reason`; a null end denotes an ongoing gap. Master must consume or otherwise account for gaps before claiming completeness. Retention, backup recovery and timestamp/bucket reconciliation still need integration evidence. A Prometheus counter alone is insufficient as an accounting source.
 
-## Per-second billing design — approved, charges inactive
+## Per-second billing design — approved, enabled only on dev
 
-The user approved prorating the existing hourly compute price by measured runtime, including runtime during maintenance. This introduces no new rate values. Only existing extra disk usage above the included allowance and snapshots retain existing wall-hour policies, including while asleep. There is no new separate price for included disk. Normal profiles retain existing hourly sampling; per-second charging applies only to sleepy runtime epochs. Production rollout remains forbidden. Implementation and charges are not yet active; tests and the dev gate must pass before activation within the coordinator's authorized scope.
+The user approved prorating the existing hourly compute price by measured runtime, including runtime during maintenance. This introduces no new rate values. Only existing extra disk usage above the included allowance and snapshots retain existing wall-hour policies, including while asleep. There is no new separate price for included disk. Normal profiles retain existing hourly sampling; per-second charging applies only to sleepy runtime epochs. Production rollout remains forbidden. Implementation is tested and the dev billing gates are enabled; production flags and charges remain untouched. Read-only validation is not a Wallet debit test.
 
 The parent is coordinating cumulative integer runtime snapshots identified by `(stack, node, meter, rate_epoch)`. Admin atomically records consumed nanoseconds and the corresponding debit in one database transaction. Charge only positive, unseen runtime deltas; retries, concurrent workers and delayed delivery must not charge twice. Failed transactions advance neither consumed runtime nor ledger state. Journal ingestion cursors remain distinct from billing's consumed cumulative nanoseconds.
 
@@ -137,7 +137,7 @@ These counts are gauges, not event counters; do not use counter `rate()` queries
 | Uptime | Today/month UTC totals; interval/bucket clipping; midnight/month rollover; requested ranges; incomplete data and errors; no inference of zero from failure |
 | Admin | SPA graphs/totals and maintenance; API Ninja and MCP parity; ownership/company locks; normal-stack behavior; no new legacy UI |
 | Routing | Correct node and trusted header; direct-header spoofing blocked; normal route preserved; metrics private; canary only on approved dev node |
-| Billing design | Approved but inactive; verify atomic debit/consumed-nanosecond rollback, replay/concurrency idempotency, reset/negative deltas, historical epoch rates, Decimal rounding carry, maintenance runtime and wall-time disk/snapshot policy before passing the dev gate |
+| Billing design | Approved and dev-enabled only; verify atomic debit/consumed-nanosecond rollback, replay/concurrency idempotency, reset/negative deltas, historical epoch rates, Decimal rounding carry, maintenance runtime and wall-time disk/snapshot policy before passing the dev gate |
 | Integration | Producer/consumer schema parity; each repository's appropriate tests/CI; reviewed migration/rollback; no production changes or charges |
 
 Record exact test commands/results and remaining limitations from each owner. A green unit suite does not replace the dev canary, and this plan does not claim that acceptance has passed.
@@ -146,46 +146,37 @@ Record exact test commands/results and remaining limitations from each owner. A 
 
 The coordinator reports that admin, LB, node and master main pipelines deploy only to dev; production uses release/manual workflows. Audit exact refs, tags, reusable workflows and registry/image promotion before pushing. The proposed proxy production workflow is manual opt-in only, with no release trigger; its final YAML still needs review. The docs repository's `.github/workflows/main.yml` builds and deploys on pushes to `master`; the parent will inspect the docs remote/default branch before the authorized main-branch integration push. This docs publication path does not authorize production feature rollout.
 
-The parent completed read-only SSH preflight: `stack-node-dev-01` (`192.168.220.11`), x86_64 Debian 13.3, active vmapi, Incus project `default`, TCP port 80 free, no proxy service and no existing `user.stack-id` labels. No existing containers were touched. Subsequent parent reports confirm initial proxy/LB pipelines green and dev proxy active/enabled. Smoke uses an owned temporary project and separate database; existing dev stacks remain untouched. Final hardening is pending; full acceptance is not claimed. Admin reports 31 Chromium tests green; complete backend checks are still running. Parent runs proxy `deploy/smoke-test.sh` after final CI.
+The parent completed read-only SSH preflight: `stack-node-dev-01` (`192.168.220.11`), x86_64 Debian 13.3, active vmapi, Incus project `default`, TCP port 80 free, no proxy service and no existing `user.stack-id` labels. No existing containers were touched. Subsequent parent reports confirm initial proxy/LB pipelines green and dev proxy active/enabled. Smoke uses an owned temporary project and separate database; existing dev stacks remain untouched. Subsequent hardened acceptance passed; current final-head limitations are recorded below. Admin initially reported 31 Chromium tests green.
 
-For the authorized dev canary after integration checks: capture existing routing/profile configuration, runtime state, image versions and journal identity; deploy compatible producers before consumers; keep per-second billing disabled; enable only explicitly selected disposable sleepy stacks on `stack-node-dev-01`. Verify wake/readiness, maintenance/manual end/expiry, idle shutdown, UTC uptime, journal replay and rollback. Observe errors, request latency and counters. Do not expand to other nodes automatically.
+For the authorized dev canary after integration checks: capture existing routing/profile configuration, runtime state, image versions and journal identity; deploy compatible producers before consumers; keep production billing disabled and isolate any dev billing verification; enable only explicitly selected disposable sleepy stacks on `stack-node-dev-01`. Verify wake/readiness, maintenance/manual end/expiry, idle shutdown, UTC uptime, journal replay and rollback. Observe errors, request latency and counters. Do not expand to other nodes automatically.
 
-For rollback, first stop assigning sleepy profiles. Coordinate normal-profile conversion, metadata removal, explicit startup and LB restoration while the proxy is still available; verify application health before stopping the proxy. Preserve journal/database, meter identity, accepted cursors and ledger history. Revert consumers before removing producer APIs. Never reset cursors or replay accounting mutations to hide errors. If conversion fails, keep the managed route available and reconcile the instance instead of shutting off its only wake path. Billing stays disabled throughout rollback.
+For rollback, first stop assigning sleepy profiles. Coordinate normal-profile conversion, metadata removal, explicit startup and LB restoration while the proxy is still available; verify application health before stopping the proxy. Preserve journal/database, meter identity, accepted cursors and ledger history. Revert consumers before removing producer APIs. Never reset cursors or replay accounting mutations to hide errors. If conversion fails, keep the managed route available and reconcile the instance instead of shutting off its only wake path. Disable dev billing before rollback; production billing remains disabled.
 
 ## Coordinator handoff: open dependencies
 
 - Nash: final README/unit parity with the environment and journal contracts above, durability/retention, maintenance edge cases and tests.
 - Wegener: exact sleepy metadata inventory and reconciliation behavior, normal-profile recovery and retry evidence.
 - Herschel: OpenAPI and final uptime precision/boundaries/completeness, journal ingestion and deduplication evidence.
-- Aquinas: final billing schema and backend results, picker behavior/graph labels and explicit inactive charging boundary and approved billing implementation contracts.
+- Aquinas: final billing schema and backend results, picker behavior/graph labels and explicit dev-only charging boundary and approved billing implementation contracts.
 - Hypatia: routing configuration names, trusted-header enforcement and node transition/rollback evidence.
 - Parent: verified deployment audit, authorized dev canary result, integration order and final billing snapshot/epoch contracts and dev-gate evidence. Replace provisional sections only after these contracts are received.
 
 User documentation draft: [Sleepy stacky](../docs/cs/stacks/sleepy.md). It intentionally describes planned behavior and does not announce availability.
 
-## Hardened dev acceptance update
+## Current dev acceptance and publication status
 
-The parent reports real Incus acceptance passed after hardened deployment on `stack-node-dev-01`:
+Real hardened proxy acceptance passed: cold wake waited for TCP port 80 and returned the original HTTP response; idle shutdown worked; maintenance prevented shutdown and expired/cleared; removal of `user.stack-id` preserved a normal running instance and re-addition re-enrolled it; three requests persisted with nonempty durable journal and coverage. Node real acceptance included a 1/1/1 gauge fixture. All disposable and earlier manual test projects, transient services, separate databases and profile canaries are cleaned up; existing dev stacks were untouched.
 
-- Cold HTTP request woke the instance, waited for TCP port 80 readiness and returned the original backend response.
-- Idle shutdown worked; active maintenance prevented it and expiry automatically cleared maintenance.
-- Removing `user.stack-id` preserved the normal running instance; restoring it re-enrolled the instance for idle shutdown.
-- Three requests remained recorded persistently, and durable usage journal entries plus coverage watermarks were nonempty.
+Master dev extension apply and verification both exited 0. Master/admin/rq/rq-admin rollouts are ready. Billing configuration is enabled only in rosti-dev (master flag true, common `SLEEPY_BILLING_ENABLED=1`). Parent read-only validation uses 18 canonical stacks and does not issue Wallet charges. Both live master fleet and proxy node gauges report 18 total, 0 sleepy and 0 awake sleepy after reference-image exclusion.
 
-The automated acceptance used a disposable Incus project, transient service and separate database; these were automatically cleaned up. Existing dev stacks were untouched. The parent subsequently confirmed that all test projects, including the earlier manual smoke project, were cleaned up.
+Confirmed successful CI heads: master `f607cb3` pipeline 365, admin `ff4509c3` pipeline 1280, node `b86113f` pipeline 317, LB `0a` pipeline 127. Provisioning node follow-up `527` is deployed with pipeline 318 successful. Proxy `bc668` pipeline 5 was pending at the last supplied check. Master setup-guard `a0ae0db` (parent `f607cb3`) passed full Go, race and management UI tests without SQL model/seal changes; its push is awaiting parent automatic review, so final-head publication/CI is not claimed. Admin UI refresh callback follow-up remains under test with no API change.
 
-The main dev proxy is active/enabled. Before reference-image exclusion, its default-project gauges reported 19 containers, 0 sleepy and 0 awake sleepy. The additional physical container is reference image `stackimage0`; the new default inventory-only exclusion targets 18 actual stacks, while explicit enrollment overrides the exclusion. These node counts remain distinct from canonical fleet inventory.
+Master management UI Sleepy create/edit checkbox is tested using real JavaScript. Applied `stack.sleepy` remains authoritative; profile catalog changes do not mutate existing stacks. The SPA **Do maintenance** action starts a stopped stack and prevents idle shutdown for 15 minutes. Uptime is in **Metrics** and uses its selected range.
 
-This acceptance does not establish full cross-repository completion. Two proxy follow-up CI attempts failed in setup-go caching before tests; cache-disabled fix `a70c276` is running. Node fixture tests passed after upstream RAM fixture fix `b86113f`, which was pushed; latest node CI is pending. Admin/master billing implementation and final schemas remain subject to their own checks. Charging remains inactive and production remains untouched.
+Parent published docs default `master` at `e09b829`; GitHub build/deploy `41135725607` succeeded. These later corrections are local for parent publication after final head/CI checks. Docs publication is not production feature activation. No production release, migration, configuration change or workload deployment was performed.
 
-## Integration status follow-up
+## Initial sleepy provisioning lease
 
-The parent confirms proxy pipeline 3, node pipeline 317 and LB pipeline 127 all succeeded. This supersedes the pending proxy/node CI observations above. Master and admin have not yet been pushed and await final tests/metrics; feature integration is not complete and production remains inactive.
+New sleepy creation installs an initial 15-minute node maintenance lease before boot. During active Setup, master renews it every 5 minutes; each renewal request has a 30-second timeout and the setup guard has an overall 30-minute maximum. Protection spans runtime readiness, initial Compose pull/up and initial LB setup, preventing idle shutdown during long provisioning. Normal stack provisioning is unchanged.
 
-The SPA action label is **Do maintenance**. A successful action starts a stopped stack and prevents idle shutdown for 15 minutes; application readiness may take additional startup time. Uptime belongs in the **Metrics** tab and respects its selected range, rather than being confined to Profile. Include stopped-to-running maintenance and selected-range graph behavior in final admin acceptance.
-
-## Latest integration verification
-
-Master dev `sleepy-apply` and verification both exited 0. Live canonical fleet gauges are 18 total, 0 sleepy and 0 awake sleepy. Node real acceptance, including a 1/1/1 total/sleepy/awake gauge fixture, passed. All smoke projects are now cleaned up. Proxy reference-image exclusion follow-up still requires its final CI/deploy confirmation; do not treat expected post-exclusion counts as an already observed measurement.
-
-Parent published the feature-only docs to default `master` at `e09b829`; GitHub build/deploy run `41135725607` succeeded. That publication documents a dev-only feature and does not activate a production workload. The parent will publish these subsequent corrections after review. Charging and production rollout remain inactive; final admin/master integration status must come from the coordinator.
+On failure the renewal worker is cancelled and joined before cleanup. On success the worker is also joined and the setup lease is cleared before phase Ready. Manual maintenance changes are blocked while setup is pending. Crashes cannot leave an infinite exemption: the last persisted 15-minute lease expires without further renewal. These provisioning leases are separate from the user's ordinary maintenance action. The node follow-up is deployed; the master helper has passed its tests and awaits parent publication/final CI.
