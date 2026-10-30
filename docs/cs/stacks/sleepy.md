@@ -32,3 +32,9 @@ Cena výpočetních prostředků se má odvozovat od stávající hodinové ceny
 Běžné profily zachovávají stávající hodinové účtování. Sekundové účtování se týká sleepy úseků; jejich historický běh se vypořádá jednou i po změně profilu, smazání nebo převodu stacku, podle historického vlastníka a sazby.
 
 Dodatečné využití disku nad zahrnutý limit a snapshoty zachovávají stávající hodinové sazby podle uplynulého času i během uspání. Za disk zahrnutý v profilu nevzniká nová samostatná cena. Uspání proto neznamená nulovou cenu. Tato stránka popisuje schválený návrh budoucího chování; současné účtování zatím nemění.
+
+## Uzavření firemního účtu
+
+Pokud firma má historii finančního vypořádání sleepy stacků, uzavření jejího účtu je zatím zablokované výslovnou chybou ještě před zahájením rušení externích služeb. Finanční auditní historie se automaticky nemaže. Pro uzavření takového účtu je potřeba budoucí postup archivace a konečného vypořádání.
+
+Toto omezení se netýká smazání jednotlivého stacku, změny profilu ani převodu stacku na jiného vlastníka; historický běh se při těchto operacích nadále vypořádá.
