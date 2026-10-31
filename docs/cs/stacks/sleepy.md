@@ -75,8 +75,8 @@ Nový sleepy stack dostane před spuštěním dočasnou ochranu před uspáním 
 
 V nové administraci zobrazuje záložka **Overview** časovou osu posledních 24 hodin pouze pro stack s již použitým sleepy režimem. Pozdější změna profilu v katalogu sama o sobě její zobrazení nemění. Jde o klouzavých 24 hodin do okamžiku načtení, nikoli o kalendářní den UTC.
 
-Zelené úseky znamenají pozorovaný běh, šedé pozorovaný spánek. Šedé šrafované úseky označují **neznámý stav**: chybějící nebo neúplná historie není důkazem spánku. Při chybě načtení není možné spánek z chybějících dat odvodit. Na jedné ose jsou zobrazeny úseky běhu i spánku.
+Zelené úseky znamenají pozorovaný běh, šedé pozorovaný spánek. Šedé šrafované úseky označují **neznámý stav**: chybějící nebo neúplná historie není důkazem spánku. Při částečné historii zůstávají známé úseky běhu i spánku zachované. Při chybě načtení není možné spánek z chybějících dat odvodit. Na jedné ose jsou zobrazeny úseky běhu i spánku.
 
-Po najetí ukazatelem nebo zaměření úseku klávesnicí se zobrazí stav, začátek, konec a délka v čitelném formátu i přesný počet sekund. Délky odpovídají části historie uvnitř zobrazeného rozsahu. Osa ukazuje skutečnou pozorovanou historii, nikoli účtovanou dobu navýšenou o hodinové minimum. Samotné načtení historie stack neprobudí ani nespustí údržbu nebo Pull+Up.
+Po najetí ukazatelem nebo zaměření úseku klávesnicí se zobrazí stav, začátek, konec a délka v čitelném formátu i přesný počet sekund včetně desetinné části. Délky odpovídají části historie uvnitř zobrazeného rozsahu. Osa ukazuje skutečnou pozorovanou historii, nikoli účtovanou dobu navýšenou o hodinové minimum. Samotné načtení historie stack neprobudí ani nespustí údržbu nebo Pull+Up.
 
 Tato část popisuje dohodnutý kontrakt nové funkce. Její aktuální CI, publikaci a nasazení potvrzuje integrační koordinátor samostatně.
