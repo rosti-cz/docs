@@ -27,6 +27,10 @@ Nedostupné části se nezobrazují jako nulové náklady. To platí i při neú
 
 Stejný přehled je dostupný přes REST API (`GET /api-n/{company_id}/payments/regular-payments`) a MCP nástroj `get_regular_payments`. Pole `unavailable_services` označuje nedostupné části; při neúplných datech je `total_amount` rovno `null`.
 
+Přehled zahrnuje i bezplatné prostředky s nulovou cenou a stacky, které se teprve vytvářejí a zatím se neúčtují. U aplikací a stacků je oddělená cena balíčku či profilu a disku navíc, a to i na telefonu.
+
+U uspávaných (sleepy) stacků se zobrazuje cenové rozpětí od minimálního účtovaného provozu po nepřetržitý běh po dobu 30 dní. Známá cena disku navíc a snapshotů se přičítá k oběma hranicím. Stejné rozpětí se promítá do součtu skupiny i celkového odhadu. Skutečná částka závisí na běhu stacku a případných změnách využití úložiště.
+
 ## Dobití kreditu
 
 Pro dobití kreditu přejděte do sekce *Platby* v administraci a vyberte časový interval spočítaný podle aktuální spotřeby kreditů nebo zadejte přímo částku, kterou chcete dobít. Minimální dobití je 100 Kč, což odpovídá 200 kreditům.
