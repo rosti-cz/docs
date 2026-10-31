@@ -17,6 +17,16 @@ Tlačítko **Do maintenance** spustí zastavený stack a potom na 15 minut zabr�
 
 Ve vývojovém prostředí je ovládání dostupné v nové administraci a přes API Ninja a MCP. API Ninja používá `GET` a `POST /api-n/{company_id}/stacks/{stack_id}/maintenance`, POST s `{"enabled": true}` nebo `{"enabled": false}`. MCP nabízí `get_stack_maintenance` a `set_stack_maintenance`. Nové ovládání se do staré administrace nepřidává.
 
+## Detail uspaného stacku a Pull+Up
+
+Detail uspaného stacku vrací stav hned po ověření stavu kontejneru a zobrazí hlášení **Stack is sleeping**. Samotné otevření administrace stack neprobudí. Dokud spí, administrace nenačítá Docker služby, Compose, terminál ani další údaje vyžadující běžící kontejner; jejich formuláře nelze uložit jako prázdné nastavení. Pro práci s nimi stack nejprve spusťte pomocí údržby.
+
+Pull+Up nejprve zapne ochranu před uspáním a probudí stack. Po připravenosti Dockeru provede pull, up a úklid. Ochranu průběžně obnovuje a po dokončení nebo chybě ukončí ochranu, kterou sám vlastní. Aktivní ruční údržbu jiného požadavku nemaže. Po pádu procesu poslední dočasná ochrana sama vyprší. Doba běhu během Pull+Up se účtuje běžným způsobem.
+
+Souběžný Pull+Up na stejném stacku se nespouští podruhé: synchronní volání dostane HTTP 409, asynchronní spouštěč vrátí již běžící úlohu.
+
+Pokud ještě žádný Pull+Up neproběhl, endpoint stavu úlohy vrací očekávané HTTP 404. Administrace jej považuje za stav „zatím žádná úloha“, nikoli za chybu serveru.
+
 ## Doba běhu a grafy
 
 Záložka **Metrics** v detailu stacku zobrazuje dobu běhu dnes, v aktuálním měsíci a graf rozdělený do časových úseků podle vybraného časového rozsahu. Denní a měsíční hranice se počítají v UTC. Stejná data poskytuje `GET /api-n/{company_id}/stacks/{stack_id}/uptime` a MCP `get_stack_uptime`; funkce stále podléhá vývojovému ověření. Doba běhu označuje pozorovaný běh stacku, nikoli počet požadavků nebo záruku dostupnosti aplikace.
