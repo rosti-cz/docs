@@ -70,3 +70,13 @@ Toto omezení se netýká smazání jednotlivého stacku, změny profilu ani př
 ## Ochrana při prvním nasazení
 
 Nový sleepy stack dostane před spuštěním dočasnou ochranu před uspáním na 15 minut. Během aktivní počáteční přípravy se ochrana obnovuje každých 5 minut, nejvýše po dobu 30 minut. Chrání přípravu aplikace včetně stahování a spuštění Compose a počátečního směrování. Před přechodem do stavu Ready se ukončí. Při selhání nebo pádu obnovování skončí a poslední ochrana sama vyprší; nejde o trvalé vypnutí uspávání. Během přípravy nelze ručně měnit údržbu.
+
+## Časová osa posledních 24 hodin v Overview
+
+V nové administraci zobrazuje záložka **Overview** časovou osu posledních 24 hodin pouze pro stack s již použitým sleepy režimem. Pozdější změna profilu v katalogu sama o sobě její zobrazení nemění. Jde o klouzavých 24 hodin do okamžiku načtení, nikoli o kalendářní den UTC.
+
+Zelené úseky znamenají pozorovaný běh, šedé pozorovaný spánek. Šedé šrafované úseky označují **neznámý stav**: chybějící nebo neúplná historie není důkazem spánku. Při chybě načtení není možné spánek z chybějících dat odvodit. Na jedné ose jsou zobrazeny úseky běhu i spánku.
+
+Po najetí ukazatelem nebo zaměření úseku klávesnicí se zobrazí stav, začátek, konec a délka v čitelném formátu i přesný počet sekund. Délky odpovídají části historie uvnitř zobrazeného rozsahu. Osa ukazuje skutečnou pozorovanou historii, nikoli účtovanou dobu navýšenou o hodinové minimum. Samotné načtení historie stack neprobudí ani nespustí údržbu nebo Pull+Up.
+
+Tato část popisuje dohodnutý kontrakt nové funkce. Její aktuální CI, publikaci a nasazení potvrzuje integrační koordinátor samostatně.
