@@ -19,9 +19,11 @@ Pokud aplikaci nepotřebujete, je možné ji vypnout. Přestanete platit za běh
 
 ## Pravidelné platby
 
-V sekci **Platby → Pravidelné platby** najdete odhad nákladů na Aplikace, Stacky a Pages za 30 dní v měně firmy. U Stacků je rozepsaná cena profilu, disku navíc a snapshotů; u Aplikací je uveden i disk navíc. Pages používají měsíční sazbu poskytovanou službou.
+V sekci **Platby → Odhad nákladů** najdete odhad nákladů na Aplikace, Stacky, Pages a e-mailové schránky za 30 dní v měně firmy. U Stacků je rozepsaná cena profilu, disku navíc a snapshotů; u Aplikací je uveden i disk navíc. Pages používají měsíční sazbu poskytovanou službou.
 
 Částky vycházejí z aktuálně dostupných sazeb a využití, jsou bez DPH a nezohledňují zkušební období ani bezplatný provoz na úrovni celé firmy. Skutečné odpočty se mohou při změně služeb nebo využití lišit. Pokud nelze načíst náklady některé služby, přehled zobrazí upozornění a dostupné položky; celkový odhad se v takovém případě nezobrazí.
+
+Nedostupné části se nezobrazují jako nulové náklady. To platí i při neúplné historii využití sleepy stacku: dostupné služby zůstanou viditelné a tlačítkem **Zkusit znovu** lze odhad načíst znovu. REST API a MCP v takovém případě vracejí `total_amount: null` a seznam `unavailable_services`.
 
 Stejný přehled je dostupný přes REST API (`GET /api-n/{company_id}/payments/regular-payments`) a MCP nástroj `get_regular_payments`. Pole `unavailable_services` označuje nedostupné části; při neúplných datech je `total_amount` rovno `null`.
 
@@ -47,7 +49,7 @@ Roky, souhrnné částky, měsíce, denní náklady a skupiny služeb jsou vizu�
 
 Po výběru měsíce uvidíte náklady podle služeb: stacky, aplikace, domény, schránky a ostatní služby. Kliknutím na skupinu zobrazíte měsíční náklady jednotlivých prostředků. U stacku jsou sloučené náklady za běh, disk navíc a snapshoty. Tlačítko **Zobrazit transakce** rozbalí původní denní položky. Historické identifikátory zůstávají dostupné i po smazání prostředku.
 
-U nově zaznamenaných odečtů sleepy stacků je uveden účtovaný počet sekund včetně případného účtovacího minima, cena běhu, úložiště navíc v GB·h a celková cena úložiště. GB·h je součet velikosti úložiště navíc v GB násobené účtovanými hodinami, takže se správně zohlední změny velikosti během měsíce. Snapshoty jsou zahrnuté v celkové ceně stacku. Starší odečty mohou mít podrobnosti využití nedostupné nebo dostupné jen pro část období; současný stav stacku se nepoužívá k odhadování historické spotřeby.
+U nově zaznamenaných odečtů sleepy stacků je uveden účtovaný čas v hodinách, minutách a sekundách i celkový počet sekund, včetně případného účtovacího minima. Jde o účtovaný čas, nikoli skutečnou dobu běhu. Pro normální i sleepy stacky je zvlášť uvedena cena úložiště navíc a cena snapshotů; obě jsou již zahrnuté v celkové ceně stacku. Pokud jsou zaznamenané potřebné údaje, zobrazí se i úložiště navíc v GB·h. Nové odečty běžných stacků zaznamenávají tento údaj také, pokud je velikost úložiště známá. GB·h je součet velikosti úložiště navíc v GB násobené účtovanými hodinami, takže se správně zohlední změny velikosti během měsíce. Starší odečty mohou mít podrobnosti využití nedostupné nebo dostupné jen pro část období; současný stav stacku se nepoužívá k odhadování historické spotřeby. Náklady z historických diskových položek lze zobrazit i tehdy, když množství v GB·h nebylo zaznamenané.
 
 Stejná data poskytuje REST API `GET /api-n/{company_id}/payments/subtractions/{year}/{month}` a MCP nástroj `get_payment_subtraction_detail`. Pole `groups` obsahuje skupiny služeb a jejich prostředky; původní transakce jsou stále v poli `items`. Pole `days` obsahuje denní součty jako `{date, credits, amount}`; záporná částka v tomto poli znamená čisté vrácení kreditu.
 
