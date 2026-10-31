@@ -43,10 +43,12 @@ V administraci je možné nastavit i automatické generování plateb pod zálo�
 
 V sekci **Platby → Odečty** vyberte rok a měsíc. Roční přehled ukazuje celkové náklady a průměr za měsíce, ve kterých jsou evidované odečty. Právě probíhající měsíc obsahuje zatím zaúčtovanou spotřebu. Částky jsou v měně firmy, bez DPH, a zahrnují vrácený kredit.
 
+Roky, souhrnné částky, měsíce, denní náklady a skupiny služeb jsou vizuálně oddělené. Sloupcové grafy umožňují porovnat roky, měsíce i jednotlivé dny; kliknutím na roční nebo měsíční sloupec vyberete období. Po najetí myší nebo zaměření klávesnicí se zobrazí částka. Denní graf zahrnuje i dny bez odečtů a vrácený kredit zobrazuje pod nulovou osou. Denní součty se počítají z kreditů před převodem do měny firmy a zaokrouhlením, aby se neztrácely malé hodinové odečty.
+
 Po výběru měsíce uvidíte náklady podle služeb: stacky, aplikace, domény, schránky a ostatní služby. Kliknutím na skupinu zobrazíte měsíční náklady jednotlivých prostředků. U stacku jsou sloučené náklady za běh, disk navíc a snapshoty. Tlačítko **Zobrazit transakce** rozbalí původní denní položky. Historické identifikátory zůstávají dostupné i po smazání prostředku.
 
 U nově zaznamenaných odečtů sleepy stacků je uveden účtovaný počet sekund včetně případného účtovacího minima, cena běhu, úložiště navíc v GB·h a celková cena úložiště. GB·h je součet velikosti úložiště navíc v GB násobené účtovanými hodinami, takže se správně zohlední změny velikosti během měsíce. Snapshoty jsou zahrnuté v celkové ceně stacku. Starší odečty mohou mít podrobnosti využití nedostupné nebo dostupné jen pro část období; současný stav stacku se nepoužívá k odhadování historické spotřeby.
 
-Stejná data poskytuje REST API `GET /api-n/{company_id}/payments/subtractions/{year}/{month}` a MCP nástroj `get_payment_subtraction_detail`. Pole `groups` obsahuje skupiny služeb a jejich prostředky; původní transakce jsou stále v poli `items`.
+Stejná data poskytuje REST API `GET /api-n/{company_id}/payments/subtractions/{year}/{month}` a MCP nástroj `get_payment_subtraction_detail`. Pole `groups` obsahuje skupiny služeb a jejich prostředky; původní transakce jsou stále v poli `items`. Pole `days` obsahuje denní součty jako `{date, credits, amount}`; záporná částka v tomto poli znamená čisté vrácení kreditu.
 
 Vrácení kreditu za neúspěšnou registraci domény se v záložce **Odečty** zobrazí jako samostatná kladná částka s popisem vrácení kreditu. Původní odečet zůstává v historii označený **Kredit vrácen**. Měsíční součet zohledňuje vrácené částky; vrácení kreditu patří do měsíce, ve kterém bylo připsáno, i když registrace proběhla dříve.
