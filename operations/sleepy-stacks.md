@@ -148,6 +148,8 @@ All three gauges use `rosti_node`, `rosti_service` and `rosti_endpoint`. Use suc
 
 ### Shared Bearer authentication
 
+Master's own `/metrics` also requires its existing service `TOKEN` in the `Authorization: Bearer` header. Scrapers must use the master token for this endpoint; it is distinct from the per-node tokens master uses below. Missing or incorrect credentials return HTTP 403.
+
 All three source requests use the same existing per-node token in the `Authorization: Bearer` header. Node `/metrics/incus` accepts authenticated remote collection; its former loopback-only restriction is removed, while token protection remains in place. This does not make Incus metrics anonymous.
 
 The proxy requires `TOKEN` for the entire listener on port `8080`, including `/metrics`, `/v1/usage` and the gap endpoint. Configure the same token already used by that node's vm-api. The vm-api usage client now forwards its `TOKEN` when reading the proxy journal, so journal/coverage reads must be verified as well as Prometheus collection when rolling out the authentication change. Management-network restrictions still apply; the metrics/journal listener must not become public.
