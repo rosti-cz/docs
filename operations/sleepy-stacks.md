@@ -122,7 +122,7 @@ Normal-profile traffic retains its normal route. Test multiple nodes with identi
 
 ## Authenticated node and proxy fleet metrics
 
-This change is under coordinated implementation and review. Master and node full Go suites and race checks are reported passed locally; the proxy agent is still working. This section does not establish green CI or a completed deployment for these changes. The parent owns publication and dev-only rollout; production deployment is not authorized.
+Deployed and verified in development on 2026-10-31. Master `7e468b0`, vm-api `43b4bfe` and proxy `c424945` are published to their main branches with green pipelines: [master 374](https://git.ceperka.net/Rosti/vm-master-api/actions/runs/374), [node 322](https://git.ceperka.net/Rosti/vm-api/actions/runs/322) and [proxy 7](https://git.ceperka.net/Rosti/sleepy-stacks-proxy/actions/runs/7). Production was not deployed or reconfigured.
 
 ### Sources, collection limits and cache
 
@@ -157,6 +157,10 @@ The proxy requires `TOKEN` for the entire listener on port `8080`, including `/m
 The dev deployment pipeline must read the running systemd vm-api service's effective `TOKEN` privately and synchronize it into the proxy's protected environment configuration. Read the effective service environment rather than assuming a particular environment file contains the active value. Keep the value out of command output, shell tracing, pipeline logs, repository files and review artifacts. Store it only in the protected environment used by the proxy service, with access limited to the service and deployment administrator. No token value belongs in this document or a deployment report.
 
 Deploy the coordinated changes only through the parent-approved dev pipeline. Before calling this rollout complete, verify authenticated collection of all three sources, denial of unauthenticated requests to the protected proxy listener and node metrics endpoints, and authenticated vm-api journal access after synchronization. Verify that a failed source disappears from the next master snapshot while its success gauge reports failure, its last-success timestamp remains unchanged, and master's local metrics and healthy remote sources remain available. Also check preserved histogram/summary samples and collision-safe source labels. Record exact reviewed revisions, CI and dev acceptance separately; the local master/node Go and race results do not establish proxy completion or deployment status.
+
+Development acceptance confirmed all three source-success gauges equal `1` on master's actual `/metrics`, containing 3 vm-api, 58 Incus and 7 proxy metric families alongside master's own metrics. Node metrics reject anonymous requests with `403`; proxy metrics and journal reject anonymous and wrong-token requests with `401`. Authenticated reads succeed with the same existing node token, and `/etc/sleepy-stacks/token.env` has mode `0600`. Admin's stack 138 timeline still reads the journal through vm-api after authentication was enabled. Its historical observation gaps remain explicit rather than being filled with estimated usage.
+
+Master and node full Go suites and race checks passed, as did proxy tests, race checks, vet, token-synchronization tests and build. Automated federation tests cover source failures and stale-series removal, redirect refusal, malformed/oversized responses, histogram/summary preservation, label conflicts and concurrent refresh/scrapes. The isolated dev Incus smoke test passed cold wake/readiness, HTTP response, idle shutdown, maintenance expiry, enrollment changes, request counters and authenticated durable-journal coverage; its temporary project is cleaned up by the test.
 
 ## Coverage and inventory metrics
 
