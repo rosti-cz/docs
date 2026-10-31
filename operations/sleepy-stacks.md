@@ -44,7 +44,7 @@ Admin API Ninja: `GET` and `POST /api-n/{company_id}/stacks/{stack_id}/maintenan
 
 ### Proxy journal: agreed contract
 
-The agreed endpoint is `GET` on the local metrics listener at `:8080/v1/usage`, with `after`, `limit`, and optional `stack_id`. Entries carry persistent `meter_id`, immutable cursor, integer `duration_ns`, and UTC start/end timestamps; master ingests with durable deduplication.
+The agreed endpoint is `GET` on the authenticated metrics listener at `:8080/v1/usage`, with `after`, `limit`, and optional `stack_id`. The entire listener requires the existing node token as Bearer authentication; see the fleet metrics authentication and rollout procedure below. Entries carry persistent `meter_id`, immutable cursor, integer `duration_ns`, and UTC start/end timestamps; master ingests with durable deduplication.
 
 The current proxy implementation (`usage.go`) returns `{version: 1, meter_id, has_more, records, next_cursor}`. Records contain `cursor`, `stack_id`, `container`, `started_at`, `ended_at`, integer `duration_ns` and compatibility `uptime_seconds`. `after` defaults to 0 and must be nonnegative; `limit` defaults to 1000 and accepts 1–10000. Results are ordered by cursor, strictly after the supplied cursor. `next_cursor` is the last returned cursor, or the supplied cursor for an empty page. Filtering by `stack_id` preserves global cursor values; ingestion must keep separate cursors when using separate filters. Invalid pagination returns 400; database failures return 503.
 
@@ -119,6 +119,44 @@ Proxy and node vm-api must use the same Linux flock directory (`SLEEPY_STACKS_LO
 The existing LB terminates public TLS. Hypatia must route sleepy traffic to the proxy on the stack's assigned node, supplying a trusted `X-Stack-ID` containing the canonical stack ID. Public callers must not be able to override this identity. Proxy HTTP access must be limited to trusted ingress; metrics/journal must not become public. Confirm actual routing/configuration keys with Hypatia before writing commands.
 
 Normal-profile traffic retains its normal route. Test multiple nodes with identical backend names and distinct stack IDs, node moves and stale inventory. Confirm the final ordering of metadata, route and profile changes to avoid requests reaching an unmanaged stopped instance. TLS ownership does not move to the proxy. The proxy is separate from any application-level Traefik inside the stack.
+
+## Authenticated node and proxy fleet metrics
+
+This change is under coordinated implementation and review. Master and node full Go suites and race checks are reported passed locally; the proxy agent is still working. This section does not establish green CI or a completed deployment for these changes. The parent owns publication and dev-only rollout; production deployment is not authorized.
+
+### Sources, collection limits and cache
+
+Master collects each configured node's metrics immediately when the collector starts, then every 30 seconds. Collection uses at most eight concurrent workers, a five-second timeout per source request and a 32 MiB response-body limit. It reuses the existing node inventory, protocol, port and token configuration; no master configuration changes are required.
+
+| Source | Address | Metric-family prefix | `rosti_service` | `rosti_endpoint` |
+| --- | --- | --- | --- | --- |
+| Node vm-api | Existing configured node protocol and port, `/metrics` | `node_vm_api_` | `vm-api` | `/metrics` |
+| Incus via vm-api | Existing configured node protocol and port, `/metrics/incus` | `node_incus_` | `incus` | `/metrics/incus` |
+| Sleepy proxy | HTTP on the same node hostname, port `8080`, path `/metrics` | `node_sleepy_stacks_proxy_` | `sleepy-stacks-proxy` | `/metrics` |
+
+Master's metrics endpoint serves the cached remote snapshots alongside its existing local metrics. A scrape of master does not synchronously contact the nodes, so a failed or slow source does not stall that scrape or remove master's local metrics. On a failed collection, that source's previous sample families are omitted from the next snapshot rather than exposed as current values. Other successful sources remain available. Missing source samples indicate unavailable collection, not measured zero.
+
+The collector prefixes metric-family names while preserving source labels and histogram/summary structure, including buckets, quantiles, sums and counts. Every remote sample also receives `rosti_node`, `rosti_service` and `rosti_endpoint`; `rosti_node` identifies the configured node hostname. Conflicting upstream labels with these names are preserved under `exported_` names, repeating that prefix if necessary to avoid overwriting an existing label. For example, an upstream `rosti_node` becomes `exported_rosti_node` when that name is available.
+
+| Collection gauge | Meaning |
+| --- | --- |
+| `node_metrics_collection_success` | Whether the latest collection succeeded for this source: `1` or `0` |
+| `node_metrics_collection_duration_seconds` | Duration of the latest source collection attempt |
+| `node_metrics_collection_last_success_timestamp_seconds` | Unix timestamp of the last successful collection; retained through failures, zero before any success |
+
+All three gauges use `rosti_node`, `rosti_service` and `rosti_endpoint`. Use success and last-success age together to distinguish a failed or stale source from a healthy reading. These are separate from the existing sleepy inventory collection gauges described below. Omission of a failed source by master does not change the proxy's own inventory last-good-value behavior.
+
+### Shared Bearer authentication
+
+All three source requests use the same existing per-node token in the `Authorization: Bearer` header. Node `/metrics/incus` accepts authenticated remote collection; its former loopback-only restriction is removed, while token protection remains in place. This does not make Incus metrics anonymous.
+
+The proxy requires `TOKEN` for the entire listener on port `8080`, including `/metrics`, `/v1/usage` and the gap endpoint. Configure the same token already used by that node's vm-api. The vm-api usage client now forwards its `TOKEN` when reading the proxy journal, so journal/coverage reads must be verified as well as Prometheus collection when rolling out the authentication change. Management-network restrictions still apply; the metrics/journal listener must not become public.
+
+### Dev pipeline token synchronization and acceptance
+
+The dev deployment pipeline must read the running systemd vm-api service's effective `TOKEN` privately and synchronize it into the proxy's protected environment configuration. Read the effective service environment rather than assuming a particular environment file contains the active value. Keep the value out of command output, shell tracing, pipeline logs, repository files and review artifacts. Store it only in the protected environment used by the proxy service, with access limited to the service and deployment administrator. No token value belongs in this document or a deployment report.
+
+Deploy the coordinated changes only through the parent-approved dev pipeline. Before calling this rollout complete, verify authenticated collection of all three sources, denial of unauthenticated requests to the protected proxy listener and node metrics endpoints, and authenticated vm-api journal access after synchronization. Verify that a failed source disappears from the next master snapshot while its success gauge reports failure, its last-success timestamp remains unchanged, and master's local metrics and healthy remote sources remain available. Also check preserved histogram/summary samples and collision-safe source labels. Record exact reviewed revisions, CI and dev acceptance separately; the local master/node Go and race results do not establish proxy completion or deployment status.
 
 ## Coverage and inventory metrics
 
