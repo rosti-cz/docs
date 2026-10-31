@@ -11,6 +11,14 @@ Probuzení prodlouží první požadavek o dobu spuštění stacku a připraveno
 
 Při přechodu zpět na běžný profil se odstraní nastavení uspávání i údržby a zastavený stack se spustí. Domény a aplikace mají být po dokončení změny dostupné obvyklým způsobem.
 
+## Vlastní doba nečinnosti
+
+V detailu stacku v **Settings** lze nastavit dobu nečinnosti v sekundách. Kladné celé číslo od `1` do `2147483647` přepíše výchozí hodnotu uzlu; prázdné pole ji obnoví. Výchozí hodnota proxy je 60 sekund, ale provozovatel ji může na uzlu změnit.
+
+Nastavení se uplatní **pouze při aktivním sleepy profilu**. U běžného profilu lze hodnotu předem uložit; automatické uspávání tím nezačne. Při přepnutí na běžný profil se preference zachová pro pozdější použití. Uložení ani vymazání hodnoty spící stack neprobudí. Údržba a zpracovávané HTTP požadavky nadále brání automatickému uspání.
+
+Hodnotu čte proxy z konfiguračního pole Incus `user.idle-timeout`, v celých sekundách. Změny se projeví bez restartu proxy. Chybějící nebo neplatná hodnota používá výchozí čas uzlu. API nabízí `PUT /api-n/{company_id}/stacks/{stack_id}/idle-timeout` s tělem `{"idle_timeout_seconds": 120}` nebo `{"idle_timeout_seconds": null}`. MCP má nástroj `set_stack_idle_timeout`; aktuální preference je součástí detailu stacku.
+
 ## Údržba na 15 minut
 
 Tlačítko **Do maintenance** spustí zastavený stack a potom na 15 minut zabrání jeho automatickému uspání, například při práci se stackem. Po úspěšném dokončení akce je kontejner spuštěný; aplikace uvnitř ještě může potřebovat čas na start. Údržbu můžete ručně ukončit dříve. Po vypršení se znovu uplatní pravidla nečinnosti; stack se nemusí vypnout přesně v okamžiku konce údržby.

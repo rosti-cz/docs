@@ -8,9 +8,11 @@ startup/readiness HTTP probes on `/readiness:8000`, and a liveness probe on
 `/healthcheck:8000`. The current pod had zero restarts and a ready EndpointSlice.
 Deployment events showed four replacements. Most recently the old ReplicaSet
 scaled down at 00:21:12 UTC; the replacement became Ready at 00:21:19 UTC.
-Current pod logs had no panic/fatal indicators. These observations support
-rollout availability gaps, not an ongoing process crash. Without the original
-trace timestamp they do not establish exact temporal correlation.
+Current pod logs had no panic/fatal indicators. The traceback includes a Requests
+start timestamp of `1793406076.955999`, which converts to
+`2026-10-31T00:21:16.955999Z`: inside that seven-second replacement gap. This
+correlates the reported connection refusal with the rollout, rather than an
+ongoing process crash.
 
 Readiness removes unready pods from routing but cannot provide an endpoint
 while a single-replica Recreate replacement is starting. The DEV deployment
@@ -41,14 +43,13 @@ financial-data fallback is fabricated.
 Sentry frame locals are disabled centrally. Credential-bearing transport frames
 are marked sensitive for Django reports. Tests use synthetic credentials only.
 
-## Required integration before publication
+## Long-running operations
 
-The separate owner of `external/stack_api.py` must pass a long timeout from
-`StackAPIClient.do_stack_action` for synchronous Pull+Up (30-minute execution
-budget plus cleanup/final persistence). Use a read timeout above 31 minutes,
-for example `(3.05, 1920)`. Audit other synchronous long-running client calls
-before publishing the new 60-second default. Do not replay an action after a
-read timeout without first checking its outcome.
+`StackAPIClient.do_stack_action` passes `(3.05, 1920)` for synchronous Pull+Up,
+preserving its 30-minute execution budget plus cleanup/final persistence. Other
+actions retain the bounded default. Do not replay an action after a read timeout
+without first checking its outcome. Prefer the asynchronous Pull+Up job endpoint
+for deployment automation.
 
-No production operation or DEV workload mutation was performed for this work.
-The coordinator owns publication, CI and any later DEV deployment.
+Production remains unchanged. The probes are enforced by the DEV deployment
+script; deployment and CI verification use the explicit `rosti-dev` context.
