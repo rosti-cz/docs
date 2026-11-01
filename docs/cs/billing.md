@@ -23,7 +23,11 @@ V sekci **Platby → Odhad nákladů** najdete odhad nákladů na Aplikace, Stac
 
 Částky vycházejí z aktuálně dostupných sazeb a využití, jsou bez DPH a nezohledňují zkušební období ani bezplatný provoz na úrovni celé firmy. Skutečné odpočty se mohou při změně služeb nebo využití lišit. Pokud nelze načíst náklady některé služby, přehled zobrazí upozornění a dostupné položky; celkový odhad se v takovém případě nezobrazí.
 
-Nedostupné části se nezobrazují jako nulové náklady. To platí i při neúplné historii využití sleepy stacku: dostupné služby zůstanou viditelné a tlačítkem **Zkusit znovu** lze odhad načíst znovu. REST API a MCP v takovém případě vracejí `total_amount: null` a seznam `unavailable_services`.
+Odhad stacků vychází z cen skutečně použitých na daném stacku a z aktuálního měření disku a snapshotů. Samotná změna ceny v katalogu profilů tento odhad nepřepočítá, dokud se nová cena na stack nepoužije. Neúplná historie běhu sleepy stacku sama o sobě nebrání zobrazení odhadu dalších 30 dní: odhad nepotřebuje rekonstruovat minulé účtované hodiny.
+
+Nedostupné aktuální ceny nebo měření se nezobrazují jako nulové náklady. Dostupné služby zůstanou viditelné a tlačítkem **Zkusit znovu** lze odhad načíst znovu. REST API a MCP v takovém případě vracejí `total_amount: null` a seznam `unavailable_services`.
+
+Odhad není vyúčtování. Historické odečty nadále vyžadují úplná účetní data a používají ceny platné v účtovaném období. Aktuální odhad nedoplňuje chybějící historii, nemění již zaúčtované částky ani sám neodečítá kredit.
 
 Stejný přehled je dostupný přes REST API (`GET /api-n/{company_id}/payments/regular-payments`) a MCP nástroj `get_regular_payments`. Pole `unavailable_services` označuje nedostupné části; při neúplných datech je `total_amount` rovno `null`.
 
