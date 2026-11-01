@@ -7,6 +7,8 @@
 
 Po registraci máte 30 dní na vyzkoušení. Během této doby můžete aplikace a dostupné balíčky nastavit a používat stejně jako později. Větší balíčky jsou k dispozici až po připsání první platby. Po skončení zkušebního období není nutné přecházet na jiný tarif: u aktivních aplikací se začne podle jejich nastaveného balíčku čerpat kredit.
 
+Administrace během bezplatného období zobrazuje na přehledu a ve stránce Platby zelenou informaci s datem konce období místo červeného upozornění na nízký kredit. U trvale bezplatného účtu zobrazuje informaci, že je účet zdarma. REST API `GET /api-n/{company_id}/payments/credit` a MCP nástroj `get_credit` vracejí také `free_account`, `immune_days` a `immune_end_date`.
+
 Roští používá předplacený kreditový systém, proto kredit dobijte před koncem zkušebního období. Systém vás na potřebu dobití upozorní.
 
 Ceny balíčků uvedené za měsíc platí přesně pro 30 dní. U aktivní aplikace se každou hodinu odečte 1/720 ceny jejího balíčku. Za kalendářní měsíc s méně nebo více než 30 dny proto může být celková částka o něco nižší nebo vyšší než uvedená měsíční cena. Výše odpočtu závisí na aktivních aplikacích a jejich balíčcích, nikoli na jejich aktuálním zatížení.
