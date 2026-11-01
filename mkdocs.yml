@@ -9,6 +9,7 @@ nav:
       - Více kontejnerů přes CLI: cs/stacks/rosticli-multicontainer.md
       - Rozdíl mezi aplikacemi a stacky: cs/stacks/apps-vs-stacks.md
       - Sleepy stacky (připravujeme): cs/stacks/sleepy.md
+      - Ochrana prostředků: cs/stacks/resource-protection.md
       - MGM kontejner: cs/stacks/mgm.md
       - Routování s Traefik: cs/stacks/traefik.md
       - Marketplace a psaní receptů: cs/stacks/marketplace.md
