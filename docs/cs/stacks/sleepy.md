@@ -9,6 +9,9 @@ Běžný profil udržuje stack spuštěný. Sleepy profil umožní stack při ne
 
 Probuzení prodlouží první požadavek o dobu spuštění stacku a připravenosti jeho HTTP služby. Průběžné úlohy, databáze nebo služby, které musí běžet bez příchozích HTTP požadavků, potřebují běžný profil. Uspávání se týká celého stacku, tedy i jeho vnitřních Docker kontejnerů. Samotné SSH připojení nepovažujte za záruku, že automatické uspání nenastane.
 
+!!! warning "Připravenost na první požadavek"
+    Aby sleepy stack spolehlivě obsloužil už první požadavek po probuzení, musí být aplikace připravená přijímat požadavky ve chvíli, kdy je port `80` otevřený a všechny kontejnery jsou ve stavu `healthy`. Nastavte kontroly zdraví (healthchecky) tak, aby tento stav odpovídal skutečné připravenosti aplikace včetně jejích závislostí.
+
 Při přechodu zpět na běžný profil se odstraní nastavení uspávání i údržby a zastavený stack se spustí. Domény a aplikace mají být po dokončení změny dostupné obvyklým způsobem.
 
 ## Vlastní doba nečinnosti
