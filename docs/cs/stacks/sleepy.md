@@ -1,11 +1,10 @@
 # Sleepy stacky
 
-!!! warning "Pouze vývojové prostředí"
-    Funkce je určená pouze pro vývojové prostředí. Ověření nové cenové politiky je oddělené od dřívějšího ověření uspávání; aktuální testy, CI ani nasazení nové revize zde nejsou potvrzené. Proxy běží jen na `stack-node-dev-01`. Produkční funkce i sekundové účtování v produkci zůstávají vypnuté.
+Sleepy stacky jsou dostupné k běžnému použití. Pro automatické uspávání při nečinnosti zvolte sleepy profil.
 
 ## Výběr profilu
 
-Běžný profil udržuje stack spuštěný. Sleepy profil umožní stack při nečinnosti uspat a při dalším HTTP požadavku znovu spustit. Ve výběru profilů budou nejprve běžné profily, potom sleepy profily. Stávající profily se automaticky na sleepy nepřepínají; příznak `sleepy` má při vynechání hodnotu `false`. Úprava profilu v katalogu sama nezmění režim existujícího stacku. Změna katalogu platí pro nové alokace nebo přechod na jiný profil. Existující použitý cenový snímek zůstává beze změny. Pro přechod vyberte jiný cílový profil; doporučujeme vytvořit samostatný sleepy profil. `UpdateProfile` odmítá stejné ID profilu, takže opětovné použití stejného profilu změnu neprovede. Rozhoduje již použitý režim stacku (`stack.sleepy`), nikoli pozdější změny katalogu.
+Běžný profil udržuje stack spuštěný. Sleepy profil umožní stack při nečinnosti uspat a při dalším HTTP požadavku znovu spustit. Ve výběru profilů jsou nejprve běžné profily, potom sleepy profily. Stávající profily se automaticky na sleepy nepřepínají; příznak `sleepy` má při vynechání hodnotu `false`. Úprava profilu v katalogu sama nezmění režim existujícího stacku. Změna katalogu platí pro nové alokace nebo přechod na jiný profil. Existující použitý cenový snímek zůstává beze změny. Pro přechod vyberte jiný cílový profil; doporučujeme vytvořit samostatný sleepy profil. `UpdateProfile` odmítá stejné ID profilu, takže opětovné použití stejného profilu změnu neprovede. Rozhoduje již použitý režim stacku (`stack.sleepy`), nikoli pozdější změny katalogu.
 
 Probuzení prodlouží první požadavek o dobu spuštění stacku a připravenosti jeho HTTP služby. Průběžné úlohy, databáze nebo služby, které musí běžet bez příchozích HTTP požadavků, potřebují běžný profil. Uspávání se týká celého stacku, tedy i jeho vnitřních Docker kontejnerů. Samotné SSH připojení nepovažujte za záruku, že automatické uspání nenastane.
 
@@ -26,7 +25,7 @@ Hodnotu čte proxy z konfiguračního pole Incus `user.idle-timeout`, v celých 
 
 Tlačítko **Do maintenance** spustí zastavený stack a potom na 15 minut zabrání jeho automatickému uspání, například při práci se stackem. Po úspěšném dokončení akce je kontejner spuštěný; aplikace uvnitř ještě může potřebovat čas na start. Údržbu můžete ručně ukončit dříve. Po vypršení se znovu uplatní pravidla nečinnosti; stack se nemusí vypnout přesně v okamžiku konce údržby.
 
-Ve vývojovém prostředí je ovládání dostupné v nové administraci a přes API Ninja a MCP. API Ninja používá `GET` a `POST /api-n/{company_id}/stacks/{stack_id}/maintenance`, POST s `{"enabled": true}` nebo `{"enabled": false}`. MCP nabízí `get_stack_maintenance` a `set_stack_maintenance`. Nové ovládání se do staré administrace nepřidává.
+Ovládání je dostupné v nové administraci a přes API Ninja a MCP. API Ninja používá `GET` a `POST /api-n/{company_id}/stacks/{stack_id}/maintenance`, POST s `{"enabled": true}` nebo `{"enabled": false}`. MCP nabízí `get_stack_maintenance` a `set_stack_maintenance`. Nové ovládání se do staré administrace nepřidává.
 
 ## Detail uspaného stacku a Pull+Up
 
@@ -40,13 +39,13 @@ Pokud ještě žádný Pull+Up neproběhl, endpoint stavu úlohy vrací očekáv
 
 ## Doba běhu a grafy
 
-Záložka **Metrics** v detailu stacku zobrazuje dobu běhu dnes, v aktuálním měsíci a graf rozdělený do časových úseků podle vybraného časového rozsahu. Denní a měsíční hranice se počítají v UTC. Stejná data poskytuje `GET /api-n/{company_id}/stacks/{stack_id}/uptime` a MCP `get_stack_uptime`; funkce stále podléhá vývojovému ověření. Doba běhu označuje pozorovaný běh stacku, nikoli počet požadavků nebo záruku dostupnosti aplikace.
+Záložka **Metrics** v detailu stacku zobrazuje dobu běhu dnes, v aktuálním měsíci a graf rozdělený do časových úseků podle vybraného časového rozsahu. Denní a měsíční hranice se počítají v UTC. Stejná data poskytuje `GET /api-n/{company_id}/stacks/{stack_id}/uptime` a MCP `get_stack_uptime`. Doba běhu označuje pozorovaný běh stacku, nikoli počet požadavků nebo záruku dostupnosti aplikace.
 
 Při výpadku měření mohou být data neúplná. Chybějící měření neznamená nulový běh a nesmí se zobrazit jako spolehlivě naměřená nula. Běh během údržby se také měří. Graf ani provozní čítač sám o sobě neurčuje vyúčtování.
 
-## Schválené hodinové minimum — pouze vývojové prostředí
+## Hodinové minimum
 
-Nová politika používá parametr profilu `sleepy_minimum_rate_multiplier`, výchozí hodnota je `0.2`. Přijímá pouze konečné číslo od `0` do `1` včetně, s nejvýše šesti desetinnými místy. V nové správě profilů je pole viditelné a upravitelné pro sleepy profily. Úprava katalogu ovlivní nové alokace nebo přechod na jiný profil, nikoli již použitý cenový snímek. Běžné profily zachovávají stávající účtování.
+Účtování používá parametr profilu `sleepy_minimum_rate_multiplier`, výchozí hodnota je `0.2`. Přijímá pouze konečné číslo od `0` do `1` včetně, s nejvýše šesti desetinnými místy. V nové správě profilů je pole viditelné a upravitelné pro sleepy profily. Úprava katalogu ovlivní nové alokace nebo přechod na jiný profil, nikoli již použitý cenový snímek. Běžné profily zachovávají stávající účtování.
 
 Za každou jednotlivou hodinu UTC se cena celého profilu vypočítá jako:
 
@@ -62,7 +61,7 @@ Disk navíc je `max(ceil(skutečné logické využití v GiB) − zahrnutá kapa
 
 Při změně profilu nebo vlastníka uvnitř hodiny se hodina rozdělí na příslušné úseky. Pro každý úsek platí jeho historická cena a násobitel; minimum je poměrné délce tohoto úseku. Pro úsek délky `s` hodin a skutečného běhu `a` hodin je cena `hodinová cena celého profilu × max(a, násobitel × s)`. Historické ceny jsou neměnné. Starší období s původní politikou zahrnutého úložiště zůstávají zmrazená podle původních pravidel a automaticky se nepřeceňují; nově aplikovaná cenová období používají nové minimum. Historické vypořádání zůstává přiřazené původnímu vlastníkovi i po změně profilu, převodu nebo smazání stacku.
 
-Grafy a endpointy doby běhu dál ukazují skutečný pozorovaný běh, nikoli dobu zvýšenou o cenové minimum. Master pro účtování poskytuje kumulativní `billable_ns`. Souhrny minima a účetní checkpointy mají identitu `(vlastník/firma, stack, cenové období)`. Skutečný běh z různých uzlů a měřidel se v rámci stejné hodiny a této identity nejprve sloučí a teprve potom se uplatní minimum; přesun stacku tak nevytvoří další minimum. Snímky skutečného běhu si ponechávají identitu stacku, uzlu, měřidla a cenového období. Přesný výpočet za hodinový úsek je `billable_ns = max(actual_ns, ceil(eligible_ns × multiplierMicros / 1_000_000))`, kde `eligible_ns` je délka příslušného úseku a `multiplierMicros` je násobitel v miliontinách. Zaokrouhlení minima nahoru přidá nejvýše 1 ns na hodinový úsek vlastníka a cenového období. Čtení přes `GET` je nespotřebovávající: nenuluje měření ani neodečítá peníze. Administrace ukládá účetní checkpointy a odečet z peněženky atomicky, včetně již zaúčtovaného disku navíc a uchování snapshotů. Opakování nesmí stejný úsek naúčtovat znovu; selhání neposune checkpointy. Administrace počítá kredit pomocí Decimal a přenáší zbytek kreditu, aby drobné platby neztrácely přesnost zaokrouhlením. Ověření dat čtením samo neprokazuje platbu z peněženky. Produkční účtování se nemění.
+Grafy a endpointy doby běhu dál ukazují skutečný pozorovaný běh, nikoli dobu zvýšenou o cenové minimum. Master pro účtování poskytuje kumulativní `billable_ns`. Souhrny minima a účetní checkpointy mají identitu `(vlastník/firma, stack, cenové období)`. Skutečný běh z různých uzlů a měřidel se v rámci stejné hodiny a této identity nejprve sloučí a teprve potom se uplatní minimum; přesun stacku tak nevytvoří další minimum. Snímky skutečného běhu si ponechávají identitu stacku, uzlu, měřidla a cenového období. Přesný výpočet za hodinový úsek je `billable_ns = max(actual_ns, ceil(eligible_ns × multiplierMicros / 1_000_000))`, kde `eligible_ns` je délka příslušného úseku a `multiplierMicros` je násobitel v miliontinách. Zaokrouhlení minima nahoru přidá nejvýše 1 ns na hodinový úsek vlastníka a cenového období. Čtení přes `GET` je nespotřebovávající: nenuluje měření ani neodečítá peníze. Administrace ukládá účetní checkpointy a odečet z peněženky atomicky, včetně již zaúčtovaného disku navíc a uchování snapshotů. Opakování nesmí stejný úsek naúčtovat znovu; selhání neposune checkpointy. Administrace počítá kredit pomocí Decimal a přenáší zbytek kreditu, aby drobné platby neztrácely přesnost zaokrouhlením. Ověření dat čtením samo neprokazuje platbu z peněženky.
 
 ## Uzavření firemního účtu
 
@@ -81,8 +80,6 @@ V nové administraci zobrazuje záložka **Overview** časovou osu posledních 2
 Zelené úseky znamenají pozorovaný běh, šedé pozorovaný spánek. Šedé šrafované úseky označují **neznámý stav**: chybějící nebo neúplná historie není důkazem spánku. Při částečné historii zůstávají známé úseky běhu i spánku zachované. Při chybě načtení není možné spánek z chybějících dat odvodit. Na jedné ose jsou zobrazeny úseky běhu i spánku.
 
 Po najetí ukazatelem nebo zaměření úseku klávesnicí se zobrazí stav, začátek, konec a délka v čitelném formátu i přesný počet sekund včetně desetinné části. Délky odpovídají části historie uvnitř zobrazeného rozsahu. Osa ukazuje skutečnou pozorovanou historii, nikoli účtovanou dobu navýšenou o hodinové minimum. Samotné načtení historie stack neprobudí ani nespustí údržbu nebo Pull+Up.
-
-Tato část popisuje dohodnutý kontrakt nové funkce. Její aktuální CI, publikaci a nasazení potvrzuje integrační koordinátor samostatně.
 
 ## Výpadky měření a pokračování účtování
 
