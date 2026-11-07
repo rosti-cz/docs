@@ -10,7 +10,27 @@ Nový web vytvoříte v administraci v sekci **Pages**. Po vytvoření dostane a
 
 Domény se spravují v detailu webu v záložce **Proxy**. Pole domén zobrazuje jednotlivé domény jako štítky; doménu potvrdíte mezerou nebo Enterem. Při psaní administrace nabízí volné domény, subdomény z vašich DNS zón a subdomény na naší testovací doméně `rostiapp.cz`. U domén ve zónách spravovaných v Roští umí po potvrzení automaticky vytvořit A a AAAA záznamy na náš load balancer a doménu přiřadit k Pages webu. Subdomény na `rostiapp.cz` se přiřadí bez vytváření DNS záznamů, ale konkrétní celá doména může být použitá jen u jedné aplikace, stacku nebo Pages webu. Domény mimo vaše zóny se přidají jako externě spravované a DNS musíte nastavit u svého poskytovatele. Zelené štítky označují domény v našich DNS zónách, modré subdomény na testovací doméně a oranžové externě spravované domény. Seznam domén nesmí zůstat prázdný.
 
+Wildcard domény (například `*.example.com`) podporují HTTPS, pokud jejich DNS zóna patří stejné firmě jako web Pages a používá jmenné servery Roští. U externího DNS zůstávají pouze na HTTP. Stav certifikátu a případné chyby uvidíte v záložce **Proxy**; obnova probíhá automaticky. Wildcard certifikát nepokrývá samotnou doménu `example.com` ani více úrovní subdomén.
+
 Pokud je v seznamu alespoň dvojice domén, můžete v nastavení **Proxy** zapnout **Přesměrování na první doménu**. Všechny ostatní domény pak přesměrují návštěvníky na první doménu uvedenou v seznamu.
+
+### Správa domén přes CLI
+
+Domény Pages lze spravovat stejně jako domény stacků:
+
+```sh
+rosticli pages domains list
+rosticli pages domains list --json
+rosticli pages domains add www.example.cz
+rosticli pages domains add '*.example.cz'
+rosticli pages domains remove old.example.cz
+```
+
+Příkazy používají aktivní target z `.rostistate`, případně `default`. Jiný target určíte pomocí `--target production`. Mimo projekt lze zadat `--page-id 456` a případně `--company-id 123`; bez společnosti CLI vyhledá web mezi dostupnými firmami.
+
+Přidání domény v zóně spravované v Roští nabídne vytvoření chybějících A/AAAA záznamů. U externího DNS vyžaduje potvrzení a DNS nastavíte u svého poskytovatele. `add --no-input` přeskočí dotazy i změny DNS, ale ověření dostupnosti a oprávnění pro wildcard proběhne vždy. Wildcard vyžaduje zónu vlastněnou stejnou firmou a autoritativní DNS Roští.
+
+Odebrání vyžaduje potvrzení; `remove --no-input` ho přeskočí, `rm` je alias pro `remove`. DNS záznamy zůstanou zachované, stejně jako pořadí ostatních domén a nastavení přesměrování. Poslední doménu nelze odebrat — nejprve přidejte jinou. Příkazy vyžadují podporu API pro kontrolu domén a volitelné vytváření DNS záznamů.
 
 ## Nahrávání souborů přes `rosticli`
 

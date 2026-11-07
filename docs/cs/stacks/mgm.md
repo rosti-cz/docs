@@ -4,13 +4,17 @@ MGM (Management) je servisní kontejner, který na pozadí stacku zajišťuje **
 
 ## Kde mgm žije
 
-Od přechodu na systémový compose soubor je mgm součástí samostatného compose souboru v `/srv/system/docker-compose.yml`, který spravuje Roští. Uživatelský compose v `/srv/stack/docker-compose.yml` zůstává jen vám a vašim službám. Systémový adresář `/srv/system` je z mgm kontejneru viditelný přes bind mount, takže si jeho obsah můžete prohlédnout — měnit ho je ale třeba přes administraci v záložce **System**.
+Od přechodu na systémový compose soubor je mgm součástí samostatného compose souboru v `/srv/system/docker-compose.yml`, který spravuje Roští. Uživatelský compose v `/srv/stack/docker-compose.yml` zůstává jen vám a vašim službám. Systémový adresář `/srv/system` je z mgm kontejneru viditelný přes bind mount, takže si jeho obsah můžete prohlédnout — měnit ho je ale třeba přes administraci v záložce **Nastavení** v části **Systémové služby**.
 
 ## Zapnutí a vypnutí
 
-V detailu stacku je záložka **System**, kde se dá mgm zapínat a vypínat:
+Vypnutí poslední systémové služby odstraní její kontejner ze systémového compose projektu. Pokud nasazení změny selže, požadavek vrátí chybu; samotné uložení přepínače nestačí k potvrzení, že byl kontejner zastaven.
+
+V detailu stacku je záložka **Nastavení**, kde se dá mgm zapínat a vypínat v části **Systémové služby**:
 
 * **mgm** — SSH přístup pro uživatele `root` a webový terminál. Když mgm vypnete, ztratíte SSH i webový terminál spravovaný Roštím. Pokud SSH potřebujete, musíte si ho nakonfigurovat ve vlastním kontejneru.
+
+Během načítání nebo při chybě načtení stavu administrace neoznačuje mgm jako vypnuté a ovládání je nedostupné. Po úspěšné změně zobrazí stav vrácený serverem; při chybě změny zachová předchozí stav.
 
 Výchozí stav je, že je mgm zapnuté. Po každé změně přepínače Roští vygeneruje nový TTYD token a systémový compose se znovu nasadí.
 
@@ -36,7 +40,7 @@ Paměťová stopa je okolo 30 MB RAM.
 
 ## Bezpečnost a omezení přístupu
 
-Pokud nechcete, aby měl do vašeho stacku přístup nikdo mimo vaše vlastní kontejnery, přepněte v záložce **System** přepínač *mgm* do polohy *off*. Roští mgm kontejner okamžitě zastaví a odstraní — ztratíte tím ale i webový terminál a SSH zajištěné systémem. Stejným přepínačem ho kdykoli vrátíte zpět.
+Pokud nechcete, aby měl do vašeho stacku přístup nikdo mimo vaše vlastní kontejnery, přepněte v záložce **Nastavení** v části **Systémové služby** přepínač *mgm* do polohy *off*. Roští mgm kontejner okamžitě zastaví a odstraní — ztratíte tím ale i webový terminál a SSH zajištěné systémem. Stejným přepínačem ho kdykoli vrátíte zpět.
 
 ## Vlastní nástroje v terminálu
 
@@ -44,7 +48,7 @@ Pokud v terminálu potřebujete specifické nástroje, máte tři možnosti:
 
 1. **Pracovat přímo uvnitř vlastních kontejnerů** přes `docker exec` z mgm terminálu — na disku máte přes bind mount `/srv/stack` všechna vaše data.
 2. **Přidat vlastní „utility" kontejner** s nástroji do uživatelského compose a připojovat se do něj přes `docker exec`.
-3. **Nahradit systémový mgm vlastním** — v záložce **System** vypněte přepínač *mgm* a do uživatelského `docker-compose.yml` přidejte vlastní mgm službu (typicky postavenou nad `harbor.rosti.cz/rosti-public/mgm:latest` s vlastním `Dockerfile`). Takovou službu si pak spravujete sami; webový terminál v administraci ale v tomto režimu nefunguje, dokud si ttyd nezveřejníte vlastními prostředky.
+3. **Nahradit systémový mgm vlastním** — v záložce **Nastavení** v části **Systémové služby** vypněte přepínač *mgm* a do uživatelského `docker-compose.yml` přidejte vlastní mgm službu (typicky postavenou nad `harbor.rosti.cz/rosti-public/mgm:latest` s vlastním `Dockerfile`). Takovou službu si pak spravujete sami; webový terminál v administraci ale v tomto režimu nefunguje, dokud si ttyd nezveřejníte vlastními prostředky.
 
 Příklad rozšířeného mgm imagu:
 
@@ -76,3 +80,9 @@ services:
 Pokud váš registry není veřejný, přidejte si k němu přístup v sekci *Registry* v administraci.
 
 
+
+## Aktualizace mgm
+
+Záložka **Systém** ukazuje image mgm a identitu nainstalované verze. I když používá tag `latest`, dostupnost aktualizace se zjišťuje porovnáním skutečného image s registry pro platformu stacku. Tlačítko aktualizace stáhne nový image a znovu vytvoří pouze službu mgm. SSH a webový terminál mohou být během výměny krátce nedostupné.
+
+Aktualizace probíhá na pozadí a její stav zůstává dostupný po opuštění stránky. Stejnou akci lze spustit hromadně ze seznamu hostingů. Vlastní mgm v uživatelském compose není součástí spravované aktualizace.

@@ -10,6 +10,8 @@ Pokud má stejná firma DNS zónu domény spravovanou v Roští, zobrazí se mo�
 
 SPF záznam synchronizace slučuje s existujícím záznamem, aby zachovala další odesílací služby, například Microsoft 365 nebo jiný SMTP server. Pokud nelze SPF záznam bezpečně sloučit, zobrazí se návrh jeho nahrazení k potvrzení.
 
+Kontrola DMARC ignoruje parametr `rua` pro zasílání souhrnných reportů, pořadí parametrů a koncový středník. Ostatní parametry musí odpovídat očekávané hodnotě. Synchronizace již vyhovující DMARC záznam zachová včetně adres pro reporty.
+
 Změny DNS se mohou projevit až po několika minutách podle DNS cache a nastaveného TTL.
 
 ## Schránky a aliasy

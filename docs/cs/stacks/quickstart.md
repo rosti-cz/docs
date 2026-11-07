@@ -68,9 +68,9 @@ Pokud potřebujete na portu 80 obsluhovat víc domén/aplikací najednou, může
 Přejdeme k *.env*:
 
 ```dotenv
-ADMIN_PASSWORD=ohh5ieP7quie3eoze4naimangiexee7E
+ADMIN_PASSWORD=replace-with-a-unique-admin-password
 POSTGRES_USER=miniflux
-POSTGRES_PASSWORD=xs2zrgfdryprpa4vwtrqar8lf458iw6p
+POSTGRES_PASSWORD=replace-with-a-unique-database-password
 POSTGRES_DB=miniflux
 ```
 
@@ -88,6 +88,8 @@ Pokud v této fázi potřebujete nahrát ke službám nějaká data, tak můžet
     Je důležité všechny soubory udržet v adresáři /srv/stack, kde systém vaše data očekává.
 
 ### Možnost 2: Nasazení přes CLI (`rosticli stacks push`)
+
+CLI ve výběru profilu označuje běžné profily jako **Normal** a uspávané jako **Sleepy**, běžné uvádí první. Běžný stack zůstává spuštěný a připravený na požadavky; sleepy stack při nečinnosti spí a první HTTP požadavek čeká na probuzení. `stacks push` i `stacks ssh` sleepy stack probudí a průběžně obnovují režim údržby. Po dokončení, chybě nebo přerušení údržbu vypnou a obnoví automatické uspávání. Více v [dokumentaci CLI](rosticli-push.md#bezne-a-sleepy-profily).
 
 Příkaz `push` sestaví Docker image lokálně na vašem počítači a přenese ho přímo do stacku přes SSH. V interaktivním terminálu při přenosu ukazuje přesná procenta, objem přenesených dat a rychlost. Příkaz je idempotentní — spusťte ho znovu kdykoli se změní kód.
 
@@ -110,16 +112,18 @@ rosticli stacks init    # první spuštění: vygeneruje soubory, vytvoří stac
 rosticli stacks push    # sestaví image a nasadí
 ```
 
+Velikost stacku změníte příkazem `rosticli stacks scale`, který nabídne dostupné profily a označí aktuální. Profil lze zadat přímo jako `rosticli stacks scale <ID_PROFILU>` nebo `rosticli stacks scale --profile-id <ID_PROFILU>`. Výběr aktuálního profilu stack nezmění; pro konkrétní prostředí přidejte `--target production`.
+
 Při každém dalším nasazení stačí spustit `rosticli stacks push`. CLI při sestavení Dockerem nebo Podmanem explicitně volí `linux/amd64` pro každou vlastní image, včetně nasazování z Apple Silicon. Sestavení na ARM může kvůli emulaci trvat déle; v Dockerfile nefixujte finální fázi na ARM.
 
 CLI podporuje i více kontejnerů v jednom Compose a sestavení několika vlastních image z Dockerfiles v podadresářích. Postup pro frontend, backend a další služby najdete na stránce [Nasazení více kontejnerů přes CLI](rosticli-multicontainer.md).
 
-Pokud chcete ze stejného adresáře spravovat více prostředí, použijte targety. Příkaz `rosticli stacks set-target production` nastaví aktivní target pro další příkazy, `rosticli stacks targets` je vypíše a jednorázově lze target přepsat pomocí `--target staging`. Když při `init` nezadáte `--name`, target jiný než `default` se přidá jako suffix k názvu stacku, například `moje-app-staging`. Vlastní `--name` musí mít 1-30 znaků a smí obsahovat jen písmena, číslice, mezery, tečku, podtržítko nebo pomlčku.
+Pokud chcete ze stejného adresáře spravovat více prostředí, použijte targety. Příkaz `rosticli stacks set-target production` nastaví aktivní target pro další příkazy, `rosticli stacks targets` je vypíše a jednorázově lze target přepsat pomocí `--target staging`. Když při `init` nezadáte `--name`, target jiný než `default` se přidá jako suffix k názvu stacku, například `mojeappstaging`. Vlastní `--name` musí mít 1-30 znaků a smí obsahovat jen ASCII písmena a číslice.
 
-Pokud budete chtít nasazovat neinteraktivně s `--company-id` a `--profile-id`, použijte nejdřív `rosticli companies` a potom `rosticli stacks profiles --company-id <ID_SPOLECNOSTI>`. Tyto příznaky patří k příkazu `init`:
+Pokud budete chtít nasazovat neinteraktivně s `--company-id` a `--profile-id`, použijte nejdřív `rosticli companies` a potom `rosticli stacks profiles --company-id <ID_SPOLECNOSTI>`. Tyto příznaky patří k příkazu `init`. Pokud již máte `Dockerfile` a `docker-compose.rosti.yml`, přidejte `--keep`: zachová je bez dotazu a pokračuje přípravou stacku. Chybějící soubory dál nabídne vygenerovat:
 
 ```
-rosticli stacks init --no-input --company-id <ID> --profile-id <ID> --name moje-app
+rosticli stacks init --no-input --keep --company-id <ID> --profile-id <ID> --name mojeapp
 rosticli stacks push --no-input
 ```
 
@@ -129,19 +133,38 @@ Příkaz `login` otevře prohlížeč s přihlašovací stránkou. Po potvrzení
 
 Podrobný popis příkazů a jejich možností najdete na stránce [Jednoduchý a rychlý deployment přes CLI](rosticli-push.md).
 
-### Možnost 3: Automatizované CI/CD přes GitHub Actions
+Proměnné prostředí nahrajte samostatně příkazem `rosticli stacks push-env`: target `default` čte `.env`, pojmenovaný target čte `.env.<target>` (například `.env.ABCD`). Chybějící soubor je chyba bez náhrady za `.env`; celý vzdálený soubor se přepíše a prázdný soubor jej vyprázdní. Vyžaduje inicializovaný target. Po nahrání spusťte `rosticli stacks up` se stejným targetem, například:
+
+```sh
+rosticli stacks push-env --target ABCD
+rosticli stacks up --target ABCD
+```
+
+Běžný `push` soubory prostředí nenahrává. Při aktualizaci kódu i proměnných spusťte `push-env` před `push`, který změny aplikuje svým krokem `up`. Stejný postup lze použít pro konfiguraci stacku nasazovaného přes CI/CD; podrobnosti jsou v [dokumentaci CLI](rosticli-push.md).
+
+### Možnost 3: Automatizované CI/CD
 
 Generované workflow explicitně sestavuje každou vlastní image s `--platform linux/amd64`. U dříve vytvořeného workflow příznak doplňte do build příkazů, nebo workflow znovu vygenerujte pomocí `rosticli stacks setup-cicd`.
 
-Příkaz `setup-cicd` vytvoří GitHub Actions workflow, který při každém pushnutí sestaví Docker image, uloží ho do GitHub Container Registry a přikáže stacku, aby si ho stáhl a restartoval. U projektů s více Dockerfile v podadresářích, například `frontend/Dockerfile` a `backend/Dockerfile`, sestaví samostatný image pro každou část projektu. Zároveň nakonfiguruje potřebné GitHub secrets a udělí stacku přístup k vašemu container registry.
+Příkaz `setup-cicd` vytvoří konfiguraci pro GitHub Actions, Forgejo Actions, GitLab CI/CD nebo Bitbucket Pipelines. Při pushnutí sestaví Docker image, uloží ho do zvolené registry a přikáže stacku, aby si ho stáhl a restartoval. U projektů s více Dockerfile v podadresářích, například `frontend/Dockerfile` a `backend/Dockerfile`, sestaví samostatný image pro každou část projektu. Zároveň nakonfiguruje potřebné secrets repozitáře a udělí stacku přístup k vašemu container registry.
+
+Na konci `setup-cicd` vypíše příkaz `git add` se změněnými soubory potřebnými pro CI/CD, včetně `.github/workflows/release.yml`, `.forgejo/workflows/release.yml`, `.gitlab-ci.yml` nebo `bitbucket-pipelines.yml` a Dockerfile v podadresářích. Tyto soubory commitněte a pushněte do repozitáře.
+
+Po nahrání imagí workflow zahájí Pull+Up+Prune a každých 10 sekund kontroluje jeho stav. Nasazení je úspěšné až po dokončení Pull+Up. Pokud Pull+Up selže, nedokončí se do 15 minut nebo nelze načíst jeho stav, workflow skončí chybou a vypíše dostupný výstup Docker Compose.
+
+#### Stav automatického nasazení
+
+Secret `PULL_ENDPOINT` je tajný odkaz, který opravňuje ke spuštění nasazení daného stacku. Nikdy jej nezveřejňujte ani nevkládejte do zdrojového kódu. Workflow z něj odvodí endpoint pro stav nasazení: `GET ${PULL_ENDPOINT}/status`.
+
+Endpoint vrací `status`, srozumitelnou zprávu v poli `message`, časy a dobu běhu úlohy. Po dokončení obsahuje také `compose_result` a případné `compose_error`. Stav `running` znamená, že se na dokončení stále čeká, `succeeded` úspěšné nasazení a `failed` nebo `timed_out` selhání nasazení.
 
 **Vhodné pro:** týmy nebo projekty, kde má každý commit nebo release automaticky nasadit novou verzi bez ručních kroků.
 
-Vyžaduje, aby měl váš projekt GitHub repozitář nastavený jako git remote `origin`.
+Vyžaduje GitHub, Forgejo nebo Bitbucket Cloud repozitář nastavený jako git remote `origin`.
 
 Stejně jako u `push`, i `setup-cicd` vyžaduje předchozí spuštění `stacks init`. Ten vygeneruje potřebné soubory (nebo nabídne jejich vytvoření přes AI) a připraví stack na Roští.
 
-Pro více prostředí použijte stejný target u `init` i `setup-cicd`, například `rosticli stacks init --target production` a potom `rosticli stacks setup-cicd --target production`. Pokud target nastavíte jako aktivní pomocí `rosticli stacks set-target production`, příznak `--target` už u dalších příkazů není potřeba.
+Pro více prostředí použijte stejný target u `init` i `setup-cicd`, například `rosticli stacks init --target production` a potom `rosticli stacks setup-cicd --target production`. Pokud target nastavíte jako aktivní pomocí `rosticli stacks set-target production`, příznak `--target` už u dalších příkazů není potřeba. GitHub/Forgejo pro tento target vytvoří `release-production.yml` a použije samostatný secret `PULL_ENDPOINT_PRODUCTION`; target `default` zachovává `release.yml` a `PULL_ENDPOINT`. Suffix platí i při výběru aktivního targetu bez příznaku. Pro staging z jiné větve použijte například `rosticli stacks setup-cicd --target staging --branch staging`; jinak všechny targety používají `main`. Image a registry credentials zůstávají společné. Starší workflow bez suffixu zůstávají na místě, proto při migraci zkontrolujte jejich triggery. Bitbucket zachovává jeden `bitbucket-pipelines.yml` s proměnnou endpointu podle targetu; více prostředí vyžaduje ruční sloučení pipelines.
 
 **Instalace rosticli** — [rosti.cz/cli](https://rosti.cz/cli)
 
@@ -158,12 +181,64 @@ rosticli stacks init    # první spuštění: vygeneruje soubory, vytvoří stac
 rosticli stacks setup-cicd
 ```
 
-Pro neinteraktivní režim platí stejný postup jako u Možnosti 2 — příznaky `--company-id`, `--profile-id` a `--name` patří k příkazu `init`:
+Při výběru události nabízí CLI jako třetí možnost **Skip**. Ta pouze nastaví secrets u poskytovatele Gitu a přístup stacku k image registry v Adminu. Nevytváří ani nepřepisuje workflow, nemění projektové soubory a nenahrává Compose. Nevyžaduje Docker ani výběr runneru. `--no-input` nadále vybírá push do zvolené větve.
 
+Forgejo načte dostupné runner labely s názvy a stavem runnerů. Vyberte jeden či více labelů čísly oddělenými čárkami, například `2,1,4`, nebo použijte `--runner debian13,amd64,dev`. Všechny musí mít společný runner; pořadí se zachová a první label určuje prostředí spuštění. Více labelů se zapíše do `runs-on` jako pole. CLI na Forgejo nepředpokládá `ubuntu-latest`. Pro změnu již existujícího workflow spusťte setup interaktivně a potvrďte jeho nahrazení; `--no-input` soubor ponechá.
+
+#### Podporovaní poskytovatelé CI/CD
+
+| Poskytovatel | Registry a soubor konfigurace | Přihlášení a runner |
+|---|---|---|
+| GitHub.com / GitHub Actions | GHCR (`ghcr.io`), `.github/workflows/release.yml` | První přihlášení interaktivně přes device flow, pak uložený token; runner výchozí `ubuntu-latest` |
+| Forgejo / Forgejo Actions | Registry instance, `.forgejo/workflows/release.yml` | `FORGEJO_TOKEN`, uložený token pro instanci nebo skrytý dotaz; s `--no-input` je povinný `--runner <label[,label...]>` |
+| GitLab.com / vlastní GitLab | Registry projektu nebo externí registry, `.gitlab-ci.yml` | `GITLAB_TOKEN` (api/read_registry, Maintainer); privilegovaný Docker-in-Docker, sdílené `/certs/client`, volitelné `--runner <tag[,tag...]>` |
+| Bitbucket Cloud / Pipelines | Nativní Packages (`crg.apkg.io`) nebo externí registry, `bitbucket-pipelines.yml` | `BITBUCKET_TOKEN`; cloud nebo vlastní Linux Docker runner, s `--no-input` výchozí cloud |
+
+Výchozí `--provider auto` vybírá podle git remote `origin` (HTTPS nebo SSH). Poskytovatele lze zadat jako `--provider github`, `--provider forgejo`, `--provider gitlab` nebo `--provider bitbucket`. GitHub Enterprise ani Bitbucket Data Center tento příkaz samostatně nepodporuje.
+
+Příklady po `stacks init`:
+
+```sh
+# GitHub: první spuštění umožní přihlášení; další mohou použít --no-input
+rosticli stacks setup-cicd --provider github --target production
+
+# Forgejo: předem uložený token nebo FORGEJO_TOKEN a existující runner label
+rosticli stacks setup-cicd --provider forgejo --target production --runner debian13,amd64,dev --no-input
+
+# Bitbucket s externí registry: BITBUCKET_TOKEN a REGISTRY_TOKEN v prostředí
+rosticli stacks setup-cicd --provider bitbucket --target production --image registry.example/tym/aplikace --registry-user robot --runner cloud --no-input
+
+# Bitbucket Packages: BITBUCKET_TOKEN s read:package:bitbucket a BITBUCKET_EMAIL
+# Balíčky image musí být předem vytvořené a propojené s repozitářem
+rosticli stacks setup-cicd --provider bitbucket --target production --no-input --bitbucket-packages-ready
 ```
-rosticli stacks init --no-input --company-id <ID> --profile-id <ID> --name moje-app
-rosticli stacks setup-cicd --no-input
+
+Pro neinteraktivní inicializaci zadejte ID a název u `init`, například `rosticli stacks init --target production --no-input --company-id <ID> --profile-id <ID> --name mojeapp`. `--no-input` u `setup-cicd` vybere push do větve `main`, případně větve z `--branch`. Interaktivně lze vybrat publikování release na GitHub/Forgejo nebo push Git tagu na GitLabu/Bitbucketu. Ruční spuštění zůstává vždy dostupné.
+
+Forgejo potřebuje token s `read:user`, `write:repository`, `write:package` a správou repozitáře; po ověření se uloží pro danou instanci. `--git-url` řeší SSH aliasy, jiný webový port nebo podadresář. Bitbucket API token potřebuje `read:repository:bitbucket`, `read:pipeline:bitbucket`, `admin:pipeline:bitbucket`; pro zjištění vlastních runnerů také `read:runner:bitbucket`. Bitbucket token se lokálně neukládá. Nativní Packages vyžadují dostupnou službu a předem vytvořené balíčky všech image; `--bitbucket-packages-ready` tyto předpoklady potvrzuje, automaticky je neověřuje.
+
+Existující workflow se s `--no-input` nepřepisuje. Změnu runneru, větve nebo triggeru ve stávajícím souboru potvrďte interaktivně, nebo soubor upravte ručně. Setup může upravit image v Compose a aktualizuje secrets i přístup k registry; pro obnovu registry tokenu slouží `--force-registry-setup`.
+
+GitHub/Forgejo vytvoří pro pojmenované targety samostatné workflow. GitLab a Bitbucket sdílejí jeden soubor pipelines a vyžadují ruční sloučení pro více prostředí. Všechny používají endpoint podle targetu a sdílené image i přihlašovací údaje registry. Podrobný postup, oprávnění, výběr runnerů, registry a omezení najdete v [návodu k CI/CD](rosticli-push.md#prechod-na-automatizovane-cicd).
+
+#### GitLab CI/CD
+
+GitLab.com se rozpozná automaticky z HTTPS i SSH origin, včetně vnořených skupin. Pro vlastní instanci použijte `--provider gitlab`; `--git-url` nastaví HTTPS adresu při SSH aliasu, jiném portu nebo instalaci v podadresáři. Nastavte `GITLAB_TOKEN` se scopes `api` a `read_registry` a rolí Maintainer, nebo token zadejte do skrytého dotazu. Token se lokálně neukládá.
+
+```sh
+# GITLAB_TOKEN je nastavený v prostředí
+rosticli stacks setup-cicd --provider gitlab --no-input
+rosticli stacks setup-cicd --provider gitlab --git-url https://git.example/gitlab --runner linux,amd64 --target production --branch main --no-input
 ```
+
+CLI vytvoří `.gitlab-ci.yml`. Adresu registry načte z API projektu; výchozí image je `<registry projektu>/app`, jednotlivé části používají `app-backend`, `app-frontend` apod. pod cestou stejného projektu. Pipeline publikuje pomocí `CI_REGISTRY_USER` a `CI_REGISTRY_PASSWORD`. Stack stahuje pomocí přístupového tokenu, nebo samostatných `REGISTRY_USER` / `--registry-user` a `REGISTRY_TOKEN` (například deploy token se scope `read_registry`). Se samostatným tokenem zadejte i odpovídající uživatelské jméno. Externí registry lze vybrat přes `--image registry.example/tym/aplikace` s těmito přihlašovacími údaji.
+
+Runner musí být Linux amd64 s podporou privilegovaného Docker-in-Docker a sdíleným svazkem `/certs/client` pro TLS mezi jobem a `docker:28-dind`. `--runner linux,amd64` vyžaduje všechny zadané tagy; prázdná hodnota nebo `cloud` vytvoří job bez tagů. CLI runnery nevytváří ani nezjišťuje. Viz [nastavení Docker runneru v GitLabu](https://docs.gitlab.com/ci/docker/using_docker_build/).
+
+Interaktivně lze vybrat push do větve (výchozí `main`) nebo push Git tagu. Ruční **New pipeline** funguje vždy; proměnná `VERSION` přepíše image tag, jinak se použije Git tag nebo krátký SHA commitu. Pipeline sestaví image pro `linux/amd64` a čeká až 15 minut na dokončení nasazení.
+
+`PULL_ENDPOINT` nebo `PULL_ENDPOINT_<TARGET>` je maskovaná proměnná s rozsahem prostředí `*`, bez expanze a bez omezení na chráněné větve. Spouštění pipelines omezte na důvěryhodné členy projektu. Pro externí registry CLI přidá `REGISTRY_USER` a maskovaný `REGISTRY_TOKEN`; proměnné jiných rozsahů zachová. Pojmenované targety sdílejí `.gitlab-ci.yml`, proto více prostředí vyžaduje ruční sloučení pipelines. Existující soubor se přepisuje po potvrzení; `--no-input` jej zachová. Pro obnovu přístupu stacku použijte nový token a `--force-registry-setup`.
+
 
 ## Správa stacku
 
@@ -190,6 +265,23 @@ V kartě *Přístup* se dá nastavit SSH heslo a SSH klíče pro přístup pomoc
 Tady se nastavují pouze přístupy, informace k samotnému připojení se nachází v info kartě.
 
 ### Nastavení domén
+
+Novou vlastní doménu můžete zaregistrovat přes
+`rosticli domains register example.cz --company 12 --contact-id 42`. Kontakt
+musí mít v administraci ověřený e-mail i telefon. CLI před platbou zobrazí
+nabídku a požádá o potvrzení přesné částky v měně firmy. Pro kontrolu dostupnosti
+slouží `rosticli domains check example.cz --company 12`; kontakty vypíše
+`rosticli domains contacts list --company 12`. [Podrobnosti registrace a automatizace](rosticli-push.md#registrace-vlastni-domeny).
+
+Domény lze spravovat také přes CLI: `rosticli stacks domains list`,
+`rosticli stacks domains add www.example.cz` a
+`rosticli stacks domains remove www.example.cz`. U vlastní DNS zóny CLI
+nabídne chybějící A/AAAA záznamy, u externí domény požádá o potvrzení.
+`add --no-input` přidá doménu bez otázek a bez změn DNS. Wildcard domény jsou
+povolené pouze v zóně vaší společnosti, pro kterou je Roští autoritativní.
+Odstranění domény ponechá DNS záznamy. Podrobnosti a výběr targetu najdete
+v [dokumentaci CLI](rosticli-push.md#sprava-domen-stacku).
+
 
 Tahle část jde přeskočit, pokud se rozhodnete používat výchozí doménu, kterou vám systém přidělil. Každý stack jednu takovou má. Je ve formátu `STACK_NAME-ID.rostiapp.cz` a je plně funkční.
 
@@ -249,6 +341,8 @@ Poslední důležitá karta jsou Docker registries, v administrace jako *Registr
 
 ### Metriky
 
+Graf **Využití disku** ukazuje obsazené místo na disku stacku ve vybraném časovém rozsahu. Podle velikosti dat používá B, kB, MB nebo GB; rychlost čtení a zápisu zůstává v samostatných grafech diskových operací. Naměřené hodnoty se aktualizují přibližně každých pět minut a lze je stáhnout jako CSV společně s ostatními metrikami. Chybějící měření neznamená nulové využití; graf se zobrazí až po získání dat.
+
 Časová osa a popisky v grafech metrik stacku používají časové pásmo vašeho prohlížeče včetně přechodů mezi letním a zimním časem. Pokud časové pásmo nelze zjistit, použije se `Europe/Prague`.
 
 ### Běžící stack
@@ -262,3 +356,5 @@ Prošli jsme si základní kroky k vytvoření stacku, tak nezbývá než klikno
 Zálohování máme implementované jako vytvoření snapshotu souborového systému a zkopírování celého image se stackem na zálohovací server. U některých služeb, jako jsou třeba databáze, je tak lepší dělat někam pravidelné dumpy, aby bylo možné databázi obnovit v případě nekonzistence databázových dat. K zálohování dochází jednou denně a jsou uchovávány po dobu 14 dnů.
 
 Do obsazeného diskového prostoru se počítá všechno včetně systémových souborů. Základní systém má kolem 3 GB, zbytek už je pro vás. Pokud překročíte kvótu, stack se nevypne, ale budeme vám účtovat každý extra obsazený GB.
+
+Pro weby Pages jsou dostupné stejné operace pod `rosticli pages domains list|add|remove`. Viz [správa domén Pages přes CLI](../pages.md#sprava-domen-pres-cli).

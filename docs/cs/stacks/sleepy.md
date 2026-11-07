@@ -6,7 +6,10 @@ Sleepy stacky jsou dostupné k běžnému použití. Pro automatické uspáván�
 
 Běžný profil udržuje stack spuštěný. Sleepy profil umožní stack při nečinnosti uspat a při dalším HTTP požadavku znovu spustit. Ve výběru profilů jsou nejprve běžné profily, potom sleepy profily. Stávající profily se automaticky na sleepy nepřepínají; příznak `sleepy` má při vynechání hodnotu `false`. Úprava profilu v katalogu sama nezmění režim existujícího stacku. Změna katalogu platí pro nové alokace nebo přechod na jiný profil. Existující použitý cenový snímek zůstává beze změny. Pro přechod vyberte jiný cílový profil; doporučujeme vytvořit samostatný sleepy profil. `UpdateProfile` odmítá stejné ID profilu, takže opětovné použití stejného profilu změnu neprovede. Rozhoduje již použitý režim stacku (`stack.sleepy`), nikoli pozdější změny katalogu.
 
-Probuzení prodlouží první požadavek o dobu spuštění stacku a připravenosti jeho HTTP služby. Průběžné úlohy, databáze nebo služby, které musí běžet bez příchozích HTTP požadavků, potřebují běžný profil. Uspávání se týká celého stacku, tedy i jeho vnitřních Docker kontejnerů. Samotné SSH připojení nepovažujte za záruku, že automatické uspání nenastane.
+Probuzení prodlouží první požadavek o dobu spuštění stacku a připravenosti jeho HTTP služby. Průběžné úlohy, databáze nebo služby, které musí běžet bez příchozích HTTP požadavků, potřebují běžný profil. Uspávání se týká celého stacku, tedy i jeho vnitřních Docker kontejnerů. Příkazy `rosticli stacks push` a `rosticli stacks ssh` zapnou údržbu, během práce ji obnovují každých 5 minut a po dokončení, chybě nebo přerušení vypnou. Přímé SSH připojení mimo CLI tuto ochranu neposkytuje.
+
+!!! warning "Připravenost na první požadavek"
+    Aby sleepy stack spolehlivě obsloužil už první požadavek po probuzení, musí být aplikace připravená přijímat požadavky ve chvíli, kdy je port `80` otevřený a všechny kontejnery jsou ve stavu `healthy`. Nastavte kontroly zdraví (healthchecky) tak, aby tento stav odpovídal skutečné připravenosti aplikace včetně jejích závislostí.
 
 !!! warning "Připravenost na první požadavek"
     Aby sleepy stack spolehlivě obsloužil už první požadavek po probuzení, musí být aplikace připravená přijímat požadavky ve chvíli, kdy je port `80` otevřený a všechny kontejnery jsou ve stavu `healthy`. Nastavte kontroly zdraví (healthchecky) tak, aby tento stav odpovídal skutečné připravenosti aplikace včetně jejích závislostí.
@@ -29,13 +32,15 @@ Ovládání je dostupné v nové administraci a přes API Ninja a MCP. API Ninja
 
 ## Detail uspaného stacku a Pull+Up
 
-Detail uspaného stacku vrací stav hned po ověření stavu kontejneru a zobrazí hlášení **Stack is sleeping**. Samotné otevření administrace stack neprobudí. Dokud spí, administrace nenačítá Docker služby, Compose, terminál ani další údaje vyžadující běžící kontejner; jejich formuláře nelze uložit jako prázdné nastavení. Pro práci s nimi stack nejprve spusťte pomocí údržby.
+Detail uspaného stacku vrací stav hned po ověření stavu kontejneru a zobrazí hlášení **Stack is sleeping**. Samotné otevření přehledu stack neprobudí. Otevření záložek **Compose**, **Domains**, **Registry** nebo webového terminálu automaticky zapne údržbu a probudí stack. Editory před načtením formulářů čekají na službu správy; dočasné chyby při startu opakují nejvýše dvě minuty. Údržba se během otevření těchto stránek obnovuje každých deset minut a při jejich opuštění končí, i když byla aktivní už před jejich otevřením. Zavření karty odešle požadavek na ukončení údržby; pokud se jej nepodaří doručit, ochrana vyprší po 15 minutách od posledního obnovení. Ostatní sekce vyžadující běžící kontejner zůstávají během spánku nedostupné.
 
 Pull+Up nejprve zapne ochranu před uspáním a probudí stack. Po připravenosti Dockeru provede pull, up a úklid. Ochranu průběžně obnovuje a po dokončení nebo chybě ukončí ochranu, kterou sám vlastní. Aktivní ruční údržbu jiného požadavku nemaže. Po pádu procesu poslední dočasná ochrana sama vyprší. Doba běhu během Pull+Up se účtuje běžným způsobem.
 
 Souběžný Pull+Up na stejném stacku se nespouští podruhé: synchronní volání dostane HTTP 409, asynchronní spouštěč vrátí již běžící úlohu.
 
 Pokud ještě žádný Pull+Up neproběhl, endpoint stavu úlohy vrací očekávané HTTP 404. Administrace jej považuje za stav „zatím žádná úloha“, nikoli za chybu serveru.
+
+V záložce **Výkon** zobrazuje výběr sleepy profilů cenové rozpětí za 30 dní bez DPH: od ceny při hodinovém minimu daného profilu po cenu nepřetržitého běhu. Disk navíc a snapshoty nejsou součástí tohoto rozpětí. Při změně z nebo na sleepy profil upozornění uvádí cenu cílového profilu namísto pevného cenového rozdílu, který závisí na skutečné době běhu.
 
 ## Doba běhu a grafy
 
@@ -65,9 +70,9 @@ Grafy a endpointy doby běhu dál ukazují skutečný pozorovaný běh, nikoli d
 
 ## Uzavření firemního účtu
 
-Pokud firma má historii finančního vypořádání sleepy stacků, uzavření jejího účtu je zatím zablokované výslovnou chybou ještě před zahájením rušení externích služeb. Finanční auditní historie se automaticky nemaže. Pro uzavření takového účtu je potřeba budoucí postup archivace a konečného vypořádání.
+Zavření firmy není podmíněné zůstatkem peněženky: kladný, nulový ani záporný zůstatek a historie sleepy účtování mu nebrání. Administrace před smazáním uloží finanční záznamy včetně plateb, transakcí, účetních checkpointů a výjimek z účtování do archivu. Zavření samo neprovádí vrácení kreditu ani konečné vypořádání.
 
-Toto omezení se netýká smazání jednotlivého stacku, změny profilu ani převodu stacku na jiného vlastníka; historický běh se při těchto operacích nadále vypořádá.
+Požadavek může potvrdit vlastník firmy nebo superuživatel. Uloží se trvale a firma zůstane viditelná se stavem probíhajícího mazání až do dokončení úklidu. Stav je dostupný i po obnovení stránky. Při selhání externí služby nebo fronty se úklid automaticky zopakuje za pět minut; opakované potvrzení nevytváří další požadavek. Přijetí požadavku ještě nepotvrzuje dokončení úklidu.
 
 ## Ochrana při prvním nasazení
 
@@ -88,3 +93,11 @@ Při výpadku měření se neznámá doba nepovažuje za spánek ani za prokáza
 Po obnovení měření může pokračovat účtování dalšího prokázaného provozu, aniž by na něj čekala kontrola staršího výpadku. Samostatně ověřené poplatky za disk navíc a snapshoty se řídí dosavadními pravidly. Neúčtované intervaly najdete v měsíčním přehledu **Platby → Odečty**, i když v daném měsíci nevznikl žádný finanční odečet. Interval zůstává v auditní historii; opakované načtení nebo restart jej nesmí zpětně naúčtovat. Neznámé úseky v časové ose nadále zůstávají označené jako neznámé.
 
 Tato pravidla popisují schválený postup obnovy. Aktuální stav nasazení se ověřuje samostatně.
+
+## Aktualizace systému
+
+Záložka **Systém** ukazuje aktuální verzi Alpine, dostupné aktualizace balíčků a novější vydání Alpine. Zobrazení uložených výsledků ani ikon v seznamu hostingů spící stack neprobudí. Stáří kontroly je viditelné; novou kontrolu lze vyžádat samostatně.
+
+Aktualizace balíčků i vydání probíhá na pozadí a končí restartem stacku. Aktualizaci vydání lze spustit až po instalaci všech dostupných aktualizací balíčků aktuálního vydání. V seznamu hostingů tlačítko hromadných aktualizací zobrazí výběr stacků a akcí: balíčky, vydání Alpine a image mgm. Každý stack má vlastní výsledek a průběh.
+
+Spuštění aktualizace probudí sleepy stack a chrání jej před uspáním po celou dobu aktualizace i následného ověření, včetně běhu delšího než 15 minut. Ochrana je nezávislá na otevřené stránce a běžné ruční údržbě. Nejasně přerušená aktualizace vyžaduje ověření skutečného stavu; nesmí se automaticky zopakovat. Běh během aktualizace se účtuje obvyklým způsobem.

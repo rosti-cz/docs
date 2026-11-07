@@ -63,3 +63,9 @@ Volba **Vytvořit pouze DNS zónu** založí zónu s výchozími záznamy a otev
 ## API
 
 Doménové kontakty lze spravovat také přes REST API. Dokumentace je dostupná na adrese [https://admin.rosti.cz/api-n/docs](https://admin.rosti.cz/api-n/docs) v sekci **domain-addresses**.
+
+Pokud registrace domény skončí odmítnutím poštovní adresy, opravte kontakt zde a
+uložte jej. Neúspěšný pokus se po vrácení kreditu neobnovuje: vyžádejte si novou
+nabídku registrace a potvrďte aktuální cenu. Opravené údaje se při nové nabídce a
+registraci znovu odešlou registrátorovi. Důvod odmítnutí nemusí určit konkrétní
+neplatné pole, proto zkontrolujte celou poštovní adresu.

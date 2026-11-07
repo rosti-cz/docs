@@ -59,6 +59,27 @@ Aby byla doména nasměrovaná do konkretní aplikace, musíme ji u aplikace nas
 
 Tady doménu a případně její www variantu nebo další subdomény dopíšeme do pole *Domény*. Pole zobrazuje jednotlivé domény jako štítky; doménu potvrdíte mezerou nebo Enterem. Administrace při psaní nabízí volné domény, subdomény z vašich DNS zón a subdomény na naší testovací doméně `rostiapp.cz`. U domén ve zónách spravovaných v Roští umí po potvrzení automaticky vytvořit A a AAAA záznamy na náš load balancer a doménu přiřadit k aplikaci. Subdomény na `rostiapp.cz` se přiřadí bez vytváření DNS záznamů, ale konkrétní celá doména může být použitá jen u jedné aplikace, stacku nebo Pages webu. Domény mimo vaše zóny se přidají jako externě spravované a DNS musíte nastavit u svého poskytovatele. Zelené štítky označují domény v našich DNS zónách, modré subdomény na testovací doméně a oranžové externě spravované domény. Než změnu potvrdíme, můžeme ještě aktivovat HTTPS, nastavit HSTS nebo změnit balíček.
 
+Wildcard doménu, například `*.example.com`, můžete přidat v nové administraci přes **Přidat doménu** u aplikace, stacku nebo webu Pages. U vlastní DNS zóny administrace vytvoří wildcard A/AAAA záznamy, u externího DNS je nastavte u svého poskytovatele. Wildcard HTTPS je dostupné, pokud DNS zóna patří stejné firmě jako aplikace, stack nebo web Pages a veřejné DNS odkazuje na jmenné servery Roští. Pro externí DNS zůstává wildcard doména pouze na HTTP. Administrace zobrazí stav přípravy certifikátu i případné chyby. U již přiřazené wildcard domény po zapnutí podpory uložte nastavení proxy, aby se ověřila DNS zóna a povolilo vydání certifikátu. Certifikát pro `*.example.com` nepokrývá samotnou doménu `example.com` ani hlubší názvy jako `a.b.example.com`. Pokud zóna obsahuje nepublikované změny DNS, nejprve je potvrďte nebo zrušte; vydávání a obnova certifikátu je automaticky nezveřejní.
+
 Je možné, že změny v DNS chvíli potrvají, ale během hodiny by mělo vše fungovat. Doménu, kterou jsme vám dali na testování, můžete používat dál nebo ji smazat.
 
-Než se pustíte do zkoumání co všechno dalšího Rošté umí, mrkněte na poslední část tohoto průvodce, která vám ukáže, [jak použít nástroj rostictl](rostictl.md).
+Než se pustíte do zkoumání co všechno dalšího Rošté umí, mrkněte na poslední část tohoto průvodce, která vám ukáže, [jak použít nástroj rosticli](../stacks/rosticli-push.md).
+
+## Když registrace selže
+
+Pokud registrátor prokazatelně odmítne registraci (například kvůli neplatné
+poštovní adrese kontaktu), administrace zobrazí srozumitelný důvod a stav vrácení
+kreditu. Vrátí se přesně původně odečtený kredit, pouze jednou. DNS zóna zůstává
+zachována. Stav „Vrácení kreditu se zpracovává“ znamená, že administrace ještě
+dokončuje potvrzení mezi službami; zatím registraci neopakujte.
+
+Po dokončení vrácení kreditu použijte „Opravit kontakt a opakovat“. Zkontrolujte
+adresu v kontaktech domény a uložte opravu. Potom znovu ověřte dostupnost domény,
+získejte novou nabídku registrace a potvrďte její aktuální cenu. Nový pokus má
+vlastní platbu; původní neúspěšný pokus se znovu nespouští. Registrátor může
+odmítnout adresu bez označení konkrétního pole, proto zkontrolujte celou adresu.
+
+Pokud výsledek registrátora není jistý, administrace jej nejdříve prověří.
+Samotná časová prodleva nebo nenalezení domény ještě neznamenají odmítnutí.
+V takovém případě registraci ani platbu neopakujte a podle zobrazeného stavu
+kontaktujte podporu. Nezaregistrovanou doménu nelze prodloužit ani převést ven.

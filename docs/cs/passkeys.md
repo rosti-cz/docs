@@ -28,8 +28,14 @@ V seznamu přístupových klíčů klikněte na tlačítko **Smazat** u klíče,
 
 ## Kompatibilita
 
-Přístupové klíče vyžadují moderní prohlížeč s podporou WebAuthn/FIDO2. Jsou podporovány ve všech aktuálních verzích Chrome, Firefox, Safari a Edge. Přihlášení přes heslo zůstává dostupné i nadále.
+Přístupové klíče vyžadují moderní prohlížeč s podporou WebAuthn/FIDO2. Jsou podporovány ve všech aktuálních verzích Chrome, Firefox, Safari a Edge. Přihlášení přes heslo zůstává dostupné, pokud máte heslo nastavené.
 
 ## API
 
 Přístupové klíče lze také spravovat přes REST API. Dokumentace je dostupná na [https://admin.rosti.cz/api-n/docs](https://admin.rosti.cz/api-n/docs) v sekci **passkeys**.
+
+## Odstranění hesla k účtu
+
+V administraci na stránce [Změna hesla](https://admin.rosti.cz/password/change) můžete tlačítkem **Odstranit heslo** a následným potvrzením vypnout přihlašování heslem. Nadále se můžete přihlašovat odkazem zaslaným na e-mail nebo registrovanými přístupovými klíči. Nové heslo si můžete kdykoli nastavit na stejné stránce bez zadávání původního hesla.
+
+Heslo lze odstranit také autentizovaným požadavkem `DELETE /api-n/me/password` nebo MCP nástrojem `remove_my_password`. Akce se vztahuje pouze na vlastní účet a zachovává přístupové klíče i existující API tokeny.

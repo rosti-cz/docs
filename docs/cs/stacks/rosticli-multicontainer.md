@@ -156,7 +156,7 @@ Pro nasazení z GitHub Actions použijte po inicializaci:
 rosticli stacks setup-cicd
 ```
 
-Workflow používá stejný plán a sestaví samostatnou GHCR image pro každou část projektu. `setup-cicd` nabídne nahrazení lokálních odkazů `app-...:latest` odkazy na GHCR v místním Compose. Podrobnosti najdete v [průvodci CI/CD](quickstart.md#moznost-3-automatizovane-cicd-pres-github-actions). Před návratem k lokálnímu `push` je potřeba vrátit odkazy na lokální image.
+Workflow používá stejný plán a sestaví samostatnou GHCR image pro každou část projektu. `setup-cicd` nabídne nahrazení lokálních odkazů `app-...:latest` odkazy na GHCR v místním Compose. Podrobnosti najdete v [průvodci CI/CD](quickstart.md#moznost-3-automatizovane-cicd). Před návratem k lokálnímu `push` je potřeba vrátit odkazy na lokální image.
 
 ## Omezení kontroly Compose
 
