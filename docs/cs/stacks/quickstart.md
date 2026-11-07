@@ -1,6 +1,6 @@
 # Jak začít se Stacky
 
-Stack je kontejner, ve kterém běží Docker a můžete si v něm spouštět vlastní sadu kontejnerů nadefinovanou pomocí `docker-compose.yml`. Pro kopírování dat a debugging máte k dispozici *SSH* a *SFTP*. Jedná se o službu pro provoz HTTP serverů, kde není možné zpřístupnit ven jakýkoli port, ale pouze jeden HTTP port (80), na který budou přes reverzní proxy nasměrovány vybrané domény. Na vnitřní síti je možné spustit libovolné služby. Například databáze, message brokery, migrační kontejnery, proxy servery a podobně.
+Stack je kontejner, ve kterém běží Docker a můžete si v něm spouštět vlastní sadu kontejnerů nadefinovanou pomocí `docker-compose.yml`. Pro kopírování dat a debugging máte k dispozici *SSH* a *SFTP*. Jedná se o službu pro provoz HTTP serverů, kde není možné zpřístupnit ven jakýkoli port, ale HTTP port (80) a při zapnutém TLS passthrough také HTTPS port (443), na které budou přes reverzní proxy nasměrovány vybrané domény. Na vnitřní síti je možné spustit libovolné služby. Například databáze, message brokery, migrační kontejnery, proxy servery a podobně.
 
 ## Vytvoření stacku
 
@@ -234,7 +234,12 @@ Když máte DNS vaší domény či domén správně nasměrovány, tak můžete 
 
 ![Nastavení proxy](../../imgs/stacks/proxy.png)
 
-Zde je možné upravit i nastavení HSTS, případně přesměrovat všechny domény na první uvedenou. O HTTPS certifikáty se už postará systém sám a není možné je vypnout. Automaticky bude docházet i k obnově certifikátů. První získání certifikátu může trvat několik minut a je potřeba si na to dát pozor například při přihlašování. Subdomény na doméně *rostiapp.cz* mají HTTPS hned.
+V sekci **Domény** lze vybrat dva režimy HTTPS:
+
+- **TLS na serveru Roští (výchozí)**: certifikáty vydává a obnovuje Roští, HTTPS končí na vstupní proxy a do stacku pokračuje HTTP na port 80. Nastavení HSTS a přesměrování se používá jako dosud. První získání certifikátu může trvat několik minut. Subdomény na doméně *rostiapp.cz* mají HTTPS hned.
+- **TLS passthrough**: proxy podle SNI předá původní šifrované spojení na port 443 stacku. Ve stacku musíte provozovat HTTPS server s platným certifikátem a zajistit jeho obnovu. Certifikát ani HTTPS provoz se na vstupní proxy nedešifruje. Nastavení HSTS, HTTPS přesměrování a HTTP hlaviček řeší váš server; skutečnou IP návštěvníka nelze vložit do šifrovaných požadavků.
+
+Vybraný režim se uloží tlačítkem **Uložit** a platí pro všechny domény stacku. HTTP stále používá port 80; požadavky na ACME HTTP-01 ověření se v režimu passthrough předají vašemu HTTP serveru. V Compose proto vystavte také port `443:443`. Limity počtu připojení platí v obou režimech se stejnými prahy: v passthrough se počítají TCP spojení a nadlimitní spojení se ukončí, zatímco spravované HTTP používá dosavadní pravidla a chybu 503. Více HTTP/2 požadavků uvnitř jednoho šifrovaného spojení nelze na proxy samostatně počítat. TLS passthrough nelze kombinovat s režimem sleepy.
 
 ### Přístup do externích docker registry
 
