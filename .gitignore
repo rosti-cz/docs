@@ -2,3 +2,6 @@ site/
 venv
 .idea
 .history/
+
+# Internal operational notes belong in private service repositories.
+/operations/
