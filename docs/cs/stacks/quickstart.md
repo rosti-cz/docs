@@ -331,6 +331,8 @@ V sekci **Domény** lze vybrat dva režimy HTTPS:
 - **TLS na serveru Roští (výchozí)**: certifikáty vydává a obnovuje Roští, HTTPS končí na vstupní proxy a do stacku pokračuje HTTP na port 80. Nastavení HSTS a přesměrování se používá jako dosud. První získání certifikátu může trvat několik minut. Subdomény na doméně *rostiapp.cz* mají HTTPS hned.
 - **TLS passthrough**: proxy podle SNI předá původní šifrované spojení na port 443 stacku. Ve stacku musíte provozovat HTTPS server s platným certifikátem a zajistit jeho obnovu. Certifikát ani HTTPS provoz se na vstupní proxy nedešifruje. Nastavení HSTS, HTTPS přesměrování a HTTP hlaviček řeší váš server; skutečnou IP návštěvníka nelze vložit do šifrovaných požadavků.
 
+Přepínač **Přesměrování HTTP na HTTPS** v sekci **Domény** je ve výchozím stavu zapnutý. Vypněte ho a klikněte na **Uložit**, pokud chcete obsluhovat HTTP bez přesměrování na HTTPS. Volba platí pro všechny domény stacku v obou režimech TLS. Prohlížeče s uloženým HSTS mohou nadále používat HTTPS; vypnutí přesměrování uložené HSTS neodstraní.
+
 Vybraný režim se uloží tlačítkem **Uložit** a platí pro všechny domény stacku. HTTP stále používá port 80; požadavky na ACME HTTP-01 ověření se v režimu passthrough předají vašemu HTTP serveru. V Compose proto vystavte také port `443:443`. Limity počtu připojení platí v obou režimech se stejnými prahy: v passthrough se počítají TCP spojení a nadlimitní spojení se ukončí, zatímco spravované HTTP používá dosavadní pravidla a chybu 503. Více HTTP/2 požadavků uvnitř jednoho šifrovaného spojení nelze na proxy samostatně počítat. TLS passthrough nelze kombinovat s režimem sleepy.
 
 ### Přístup do externích docker registry
