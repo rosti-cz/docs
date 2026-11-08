@@ -88,6 +88,8 @@ Po najetí ukazatelem nebo zaměření úseku klávesnicí se zobrazí stav, za�
 
 ## Výpadky měření a pokračování účtování
 
+Při opožděném doručení měření se provoz sleepy stacku účtuje jen do posledního ověřeného okamžiku. Zbývající provoz se zohlední v některém z dalších odečtů po doručení měření; stejná spotřeba se neúčtuje dvakrát. Samotné zpoždění měření nezastaví pravidelné odečty ostatních služeb ani samostatně ověřené poplatky za disk navíc a snapshoty. Zpožděné měření samo o sobě neznamená neúčtovaný výpadek měření.
+
 Při výpadku měření se neznámá doba nepovažuje za spánek ani za prokázaný běh. Podle schválených pravidel automatické obnovy se uzavřený nejistý interval do jedné hodiny včetně neúčtuje za běh ani za hodinové minimum. Delší interval zůstává neúčtovaný za tyto složky a předává se ke kontrole. Hranice jedné hodiny se posuzuje pro celý výpadek, nikoli zvlášť pro jednotlivé hodiny nebo změny profilu.
 
 Po obnovení měření může pokračovat účtování dalšího prokázaného provozu, aniž by na něj čekala kontrola staršího výpadku. Samostatně ověřené poplatky za disk navíc a snapshoty se řídí dosavadními pravidly. Neúčtované intervaly najdete v měsíčním přehledu **Platby → Odečty**, i když v daném měsíci nevznikl žádný finanční odečet. Interval zůstává v auditní historii; opakované načtení nebo restart jej nesmí zpětně naúčtovat. Neznámé úseky v časové ose nadále zůstávají označené jako neznámé.
