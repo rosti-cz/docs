@@ -3,6 +3,12 @@
 !!! warning "Proč jsou Aplikace zastaralé"
     Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
 
+## Fakturační údaje a DIČ
+
+Fakturační údaje upravíte v nastavení firmy. České DIČ se ověřuje primárně v registru DPH Finanční správy; při jeho nedostupnosti se použije VIES. U ostatních zemí se používá VIES. Pokud ověření potvrdí, že DIČ není registrováno k DPH, změnu nelze uložit. Pokud ověřovací služby nedokážou odpovědět, jejich výpadek uložení údajů neblokuje.
+
+Ověření DIČ samo nemění nastavení **Plátce DPH**. Identifikovaná osoba není totéž co plátce DPH.
+
 ## Zkušební období a čerpání kreditu
 
 Po registraci máte 30 dní na vyzkoušení. Během této doby můžete aplikace a dostupné balíčky nastavit a používat stejně jako později. Větší balíčky jsou k dispozici až po připsání první platby. Po skončení zkušebního období není nutné přecházet na jiný tarif: u aktivních aplikací se začne podle jejich nastaveného balíčku čerpat kredit.
