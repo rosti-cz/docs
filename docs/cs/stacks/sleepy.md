@@ -46,6 +46,8 @@ V záložce **Výkon** zobrazuje výběr sleepy profilů cenové rozpětí za 30
 
 Záložka **Metrics** v detailu stacku zobrazuje dobu běhu dnes, v aktuálním měsíci a graf rozdělený do časových úseků podle vybraného časového rozsahu. Denní a měsíční hranice se počítají v UTC. Stejná data poskytuje `GET /api-n/{company_id}/stacks/{stack_id}/uptime` a MCP `get_stack_uptime`. Doba běhu označuje pozorovaný běh stacku, nikoli počet požadavků nebo záruku dostupnosti aplikace.
 
+Podrobné intervaly běhu jsou dostupné alespoň za posledních 24 hodin. Starší historie se uchovává v hodinových součtech podle UTC; její zpracování nemění již zaznamenanou spotřebu ani účtovací minimum. Pro starší období používejte celé hodinové úseky. Pokud požadavek vyžaduje jemnější rozlišení, odpověď označí data jako neúplná pomocí `usage_history_hourly_resolution`. Neznámý průběh uvnitř hodiny nelze považovat za naměřený spánek.
+
 Při výpadku měření mohou být data neúplná. Chybějící měření neznamená nulový běh a nesmí se zobrazit jako spolehlivě naměřená nula. Běh během údržby se také měří. Graf ani provozní čítač sám o sobě neurčuje vyúčtování.
 
 ## Hodinové minimum
