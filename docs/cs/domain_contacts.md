@@ -69,3 +69,31 @@ uložte jej. Neúspěšný pokus se po vrácení kreditu neobnovuje: vyžádejte
 nabídku registrace a potvrďte aktuální cenu. Opravené údaje se při nové nabídce a
 registraci znovu odešlou registrátorovi. Důvod odmítnutí nemusí určit konkrétní
 neplatné pole, proto zkontrolujte celou poštovní adresu.
+
+
+## Změna držitele registrované domény
+
+V detailu domény otevřete část **Registrace domény → Držitel domény**.
+Vyberte jiný doménový kontakt ze stejného účtu a potvrďte změnu. Nový kontakt
+musí mít ověřený e-mail i telefon. Doména zůstává ve stejném účtu Roští.
+
+Registrátor může původnímu i novému držiteli poslat e-mail se žádostí o souhlas.
+Do potvrzení změny zobrazujeme dosavadního držitele a vybraný nový kontakt.
+Tlačítko **Zkontrolovat změnu držitele** ověří aktuální stav; neposílá další
+žádost. Změny se ověřují také automaticky. Pokud je výsledek u registrátora
+nejistý, neposílejte novou žádost a obraťte se na podporu, pokud se stav nevyjasní.
+
+Některé koncovky vyžadují placenou změnu držitele nebo zvláštní postup registru.
+Tyto změny zatím vyřizuje podpora. Samoobslužná změna nepřijímá placené operace.
+Registrátor může po změně držitele omezit převod domény k jinému registrátorovi.
+
+Přes REST API použijte
+`POST /api-n/{company_id}/domains/{domain_id}/owner` s tělem
+`{"domain_address_id": 42}`. ID domény i kontaktu musí patřit stejné firmě,
+do které máte přístup. `domain_address_id` v odpovědi označuje potvrzeného
+držitele; `pending_domain_address_id` označuje požadovaný kontakt a
+`contact_change_status` stav změny (`preparing`, `submitting`, `pending`,
+`unknown`, `completed` nebo `failed`; prázdná hodnota znamená, že žádná změna
+neproběhla). Stav ověříte pomocí
+`POST /api-n/{company_id}/domains/{domain_id}/owner/refresh`.
+Stejné akce poskytují MCP nástroje `change_domain_owner` a `refresh_domain_owner`.
