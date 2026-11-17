@@ -16,6 +16,16 @@ Probuzení prodlouží první požadavek o dobu spuštění stacku a připraveno
 
 Při přechodu zpět na běžný profil se odstraní nastavení uspávání i údržby a zastavený stack se spustí. Domény a aplikace mají být po dokončení změny dostupné obvyklým způsobem.
 
+## Ochrana před skenováním
+
+V detailu stacku v části **Nastavení → Ochrana před skenováním** můžete zvolit, které příchozí požadavky se zablokují. Zablokované požadavky spící stack neprobudí.
+
+- **Vypnuto** je výchozí nastavení.
+- **Aplikace s PHP** blokuje běžné pokusy o přístup k citlivým souborům, ale umožňuje používat PHP a WordPress.
+- **Aplikace bez PHP** navíc blokuje požadavky na PHP skripty a obvyklé cesty WordPressu.
+
+Při přepnutí běžného stacku na sleepy profil se vypnutá ochrana nastaví na **Aplikace bez PHP**. Pokud stack používá PHP, můžete potom přepnout na **Aplikace s PHP**. Uložení volby stack neprobudí.
+
 ## Vlastní doba nečinnosti
 
 V detailu stacku v **Settings** lze nastavit dobu nečinnosti v sekundách. Kladné celé číslo od `1` do `2147483647` přepíše výchozí hodnotu uzlu; prázdné pole ji obnoví. Výchozí hodnota proxy je 60 sekund, ale provozovatel ji může na uzlu změnit.
