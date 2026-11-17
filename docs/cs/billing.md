@@ -61,6 +61,8 @@ V administraci je možné nastavit i automatické generování plateb pod zálo�
 
 V sekci **Platby → Odečty** vyberte období. Nejdříve uvidíte náklady vybraného měsíce a rozpis podle služeb; historické grafy najdete níže. Souhrn rozlišuje náklady služeb, vrácený kredit a čistý odečet. Částky jsou v měně firmy a bez DPH. Případný rozdíl způsobený zaokrouhlením se zobrazuje zvlášť. Právě probíhající měsíc obsahuje pouze zatím zaúčtované položky, nikoli zaručeně veškerou spotřebu do aktuálního okamžiku.
 
+Pokud nelze ověřit podklady pro odečet stacků vaší firmy, jejich zaúčtování může být odloženo. Odečty dalších ověřených služeb mohou pokračovat. Odložená část se může v přehledu objevit později; již zaúčtované položky se při opakování stejného odečtu neúčtují znovu.
+
 Roky, souhrnné částky, měsíce, denní náklady a skupiny služeb jsou vizuálně oddělené. Sloupcové grafy umožňují porovnat roky, měsíce i jednotlivé dny; kliknutím na roční nebo měsíční sloupec vyberete období. Po najetí myší nebo zaměření klávesnicí se zobrazí částka. Budoucí dny se v denním grafu nezobrazují. Den bez zaúčtovaných položek není potvrzením nulové skutečné spotřeby. Vrácený kredit se zobrazuje pod nulovou osou; přesné denní částky lze prohlížet také v tabulce. Denní součty se počítají z kreditů před převodem do měny firmy a zaokrouhlením, aby se neztrácely malé hodinové odečty.
 
 Po výběru měsíce uvidíte náklady podle služeb: stacky, aplikace, domény, schránky a ostatní služby. Kliknutím na skupinu zobrazíte měsíční náklady jednotlivých prostředků. U stacku jsou sloučené náklady za běh, disk navíc a snapshoty. Tlačítko **Zobrazit transakce** rozbalí původní denní položky. Historické identifikátory zůstávají dostupné i po smazání prostředku.
