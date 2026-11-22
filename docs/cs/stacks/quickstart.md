@@ -250,6 +250,8 @@ V info kartě stacku je možné dělat základní operace nad běžícími služ
 
 Tlačítko *Up* spustí všechny služby, které neběží. *Down* dělá pravý opak a všechny služby vypne a odstraní je z Dockeru. *Restart* restartuje kontejnery s běžícími službami. *Pull+Up+Prune* stáhne nové verze obrazů, nasadí je a odstraní všechny nepoužívané obrazy. Samostatné tlačítko *Prune* pouze odstraní nepoužívané obrazy. Používané obrazy zůstávají zachovány.
 
+V detailu stacku otevřete **Nastavení → Tvrdý restart** a potvrďte akci. Restartuje se celý kontejner stacku včetně systémových služeb. Po dobu restartu jsou služby nedostupné. Stejnou akci nabízí API přes `PUT /api-n/{company_id}/stacks-actions/{stack_id}/restart-container` a nástroj MCP `stack_action` s parametrem `action="restart-container"`.
+
 ### Logy
 
 V kartě *Logs* jsou živé logy služeb ve stacku. V nabídce *Show logs from* lze zvolit poslední hodinu, 6 hodin, 24 hodin nebo 7 dní; poté se dále zobrazují nové řádky. Lze také vybrat jednotlivé služby, pozastavit výpis nebo filtrovat již načtené řádky.
