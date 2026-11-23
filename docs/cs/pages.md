@@ -14,6 +14,10 @@ Wildcard domény (například `*.example.com`) podporují HTTPS, pokud jejich DN
 
 Pokud je v seznamu alespoň dvojice domén, můžete v nastavení **Proxy** zapnout **Přesměrování na první doménu**. Všechny ostatní domény pak přesměrují návštěvníky na první doménu uvedenou v seznamu.
 
+V záložce **Proxy** můžete nastavit také **HSTS** pro všechny domény webu. Prohlížeč si po úspěšném připojení přes HTTPS zapamatuje, že má po zadanou dobu používat pouze HTTPS. Jakmile ověříte funkční HTTPS na všech doménách, začněte krátkou dobou a postupně ji prodlužujte. Hodnota 0 vypne odesílání hlavičky HSTS. Prohlížeče mohou dříve uloženou hodnotu používat až do jejího vypršení.
+
+Přes REST API změňte nastavení požadavkem `PUT /api-n/{company_id}/pages/{page_id}/proxy` s tělem například `{"hsts": 3600}`. Hodnota je v sekundách. Pokud pole `hsts` vynecháte, použije se dosavadní nastavení. Stejné pole nabízí nástroj MCP `update_page_proxy`.
+
 ### Správa domén přes CLI
 
 Domény Pages lze spravovat stejně jako domény stacků:
