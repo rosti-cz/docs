@@ -377,6 +377,8 @@ Pro weby Pages jsou dostupné `rosticli pages domains list|add|remove` a nastave
 V detailu stacku otevřete v levém menu pod **Metriky** položku **AI analýza**.
 Spustí se sběr diagnostiky a po dokončení se zobrazí zjištěné problémy,
 doporučení pro uživatele stacku, podněty pro Roští a návrhy na optimalizaci.
+Pokud dostupná data neukazují žádné problémy, report to uvede v souhrnu
+a část se zjištěnými problémy vynechá.
 Roští analýzu provádí na vlastních GPU a diagnostická data zůstávají uvnitř
 infrastruktury Roští.
 
@@ -385,6 +387,9 @@ Hotový výsledek se znovu používá jednu hodinu od vytvoření. U výsledku v
 Report také posoudí, zda aktuální tarif odpovídá naměřené zátěži. Pokud
 dostupná data podporují bezpečnou úsporu nebo ukazují, že stack potřebuje více
 prostředků, může doporučit konkrétní tarif a uvést předpoklady odhadu ceny.
+Procenta využití disku v reportu vyjadřují podíl prostoru zahrnutého v tarifu.
+Při využití nad 100 % stack běží dál a za obsazený prostor navíc se účtuje
+příplatek.
 
 Podklady zahrnují stav a logy kontejnerů, dostupnou historii událostí a až 72
 hodin metrik. U každého kontejneru se sbírá nejvýše 1 000 posledních řádků logu
