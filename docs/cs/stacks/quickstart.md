@@ -371,6 +371,10 @@ doporučení pro uživatele stacku, podněty pro Roští a návrhy na optimaliza
 Roští analýzu provádí na vlastních GPU a diagnostická data zůstávají uvnitř
 infrastruktury Roští.
 
+Report také posoudí, zda aktuální tarif odpovídá naměřené zátěži. Pokud
+dostupná data podporují bezpečnou úsporu nebo ukazují, že stack potřebuje více
+prostředků, může doporučit konkrétní tarif a uvést předpoklady odhadu ceny.
+
 Podklady zahrnují stav a logy kontejnerů, dostupnou historii událostí a až 72
 hodin metrik. U každého kontejneru se sbírá nejvýše 1 000 posledních řádků logu
 z posledních 24 hodin. Diagnostiku lze také stáhnout ve formátu JSON. U spícího
