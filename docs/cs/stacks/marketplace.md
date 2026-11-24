@@ -8,7 +8,7 @@ Recepty najdete v sekci **Marketplace** v levém menu administrace. Po kliknutí
 
 Při nasazení zadáváte:
 
-- **Název stacku** — krátký název (písmena, číslice, mezery, pomlčky, podtržítka a tečky, max. 30 znaků),
+- **Název stacku** — krátký název (písmena, číslice, mezery, pomlčky, podtržítka a tečky, max. 30 znaků). Každé podtržítko musí být mezi dvěma písmeny nebo číslicemi, například `web_2`.
 - **Profil** — velikost stacku (paměť a výkon).
 
 Po potvrzení formuláře se stack vytvoří a příprava probíhá na pozadí. Příprava stacku a spuštění kontejnerů trvá obvykle 2–5 minut. Průběh můžete sledovat v detailu stacku.

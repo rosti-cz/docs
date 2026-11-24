@@ -5,6 +5,15 @@
 
 Na některé otázky na podpoře odpovídáme často a tak jsme vytvořili seznam těch nejčastějších včetně odpovědí.
 
+## Jak se přihlásit na onboarding?
+
+V přehledu administrace najdete panel **Onboarding na Campfire** s nejbližšími
+termíny. Tlačítko **Mám zájem** otevře podrobnosti setkání na Campfire. Přihlašovací
+formulář předvyplní váš e-mail a jméno, pokud je máte v profilu. Údaje můžete upravit;
+přihlášení dokončíte odesláním formuláře na Campfire.
+Panel můžete skrýt křížkem. Administrace si tuto volbu pamatuje v cookie v daném
+prohlížeči i pro další návštěvy.
+
 ## Co je zahrnuto v ceně hostingu?
 
 V rámci ceny hostingu si platíte:

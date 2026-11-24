@@ -38,7 +38,7 @@ Hodnotu čte proxy z konfiguračního pole Incus `user.idle-timeout`, v celých 
 
 Tlačítko **Do maintenance** spustí zastavený stack a potom na 15 minut zabrání jeho automatickému uspání, například při práci se stackem. Po úspěšném dokončení akce je kontejner spuštěný; aplikace uvnitř ještě může potřebovat čas na start. Údržbu můžete ručně ukončit dříve. Po vypršení se znovu uplatní pravidla nečinnosti; stack se nemusí vypnout přesně v okamžiku konce údržby.
 
-Ovládání je dostupné v nové administraci a přes API Ninja a MCP. API Ninja používá `GET` a `POST /api-n/{company_id}/stacks/{stack_id}/maintenance`, POST s `{"enabled": true}` nebo `{"enabled": false}`. MCP nabízí `get_stack_maintenance` a `set_stack_maintenance`. Nové ovládání se do staré administrace nepřidává.
+Ovládání je dostupné v administraci v sekci **Tarif** a přes API Ninja a MCP. API Ninja používá `GET` a `POST /api-n/{company_id}/stacks/{stack_id}/maintenance`, POST s `{"enabled": true}` nebo `{"enabled": false}`. MCP nabízí `get_stack_maintenance` a `set_stack_maintenance`.
 
 ## Detail uspaného stacku a Pull+Up
 
@@ -50,7 +50,7 @@ Souběžný Pull+Up na stejném stacku se nespouští podruhé: synchronní vol�
 
 Pokud ještě žádný Pull+Up neproběhl, endpoint stavu úlohy vrací očekávané HTTP 404. Administrace jej považuje za stav „zatím žádná úloha“, nikoli za chybu serveru.
 
-V záložce **Výkon** zobrazuje výběr sleepy profilů cenové rozpětí za 30 dní bez DPH: od ceny při hodinovém minimu daného profilu po cenu nepřetržitého běhu. Disk navíc a snapshoty nejsou součástí tohoto rozpětí. Při změně z nebo na sleepy profil upozornění uvádí cenu cílového profilu namísto pevného cenového rozdílu, který závisí na skutečné době běhu.
+V záložce **Tarif** zobrazuje výběr sleepy profilů cenové rozpětí za 30 dní bez DPH: od ceny při hodinovém minimu daného profilu po cenu nepřetržitého běhu. Disk navíc a snapshoty nejsou součástí tohoto rozpětí. Při změně z nebo na sleepy profil upozornění uvádí cenu cílového profilu namísto pevného cenového rozdílu, který závisí na skutečné době běhu.
 
 ## Doba běhu a grafy
 

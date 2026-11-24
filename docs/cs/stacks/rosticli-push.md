@@ -568,4 +568,31 @@ a nastavení přesměrování zůstávají zachovány. Příkazy nemění Compos
 nespouštějí nový deploy. Nové příkazy vyžadují Admin API s podporou domain-check
 a volitelného vytváření DNS záznamů.
 
-Stejné příkazy pro domény nabízí také `rosticli pages domains list|add|remove`; místo `--stack-id` použijte `--page-id`. Podrobnosti najdete v [dokumentaci Pages](../pages.md#sprava-domen-pres-cli).
+Nastavení proxy stacku zobrazíte a změníte přímo přes CLI:
+
+```sh
+rosticli stacks domains settings
+rosticli stacks domains settings --json
+rosticli stacks domains get redirect-to-first
+rosticli stacks domains get redirect-to-https
+rosticli stacks domains get hsts
+rosticli stacks domains set redirect-to-first true
+rosticli stacks domains set redirect-to-https 1
+rosticli stacks domains set hsts 86400
+rosticli stacks domains set hsts 0
+```
+
+`get` vypíše pouze hodnotu a konec řádku: `true`/`false` pro přesměrování,
+celé číslo pro HSTS. `settings --json` vrací objekt s klíči
+`redirect_to_first`, `redirect_to_https` a `hsts`. Přesměrování přijímá
+`true`, `false`, `1` nebo `0`. HSTS se zadává v nezáporném celém počtu
+sekund; `0` ho vypne. Přesměrování na první doménu používá pořadí z
+`domains list`; pro zapnutí jsou potřeba alespoň dvě domény bez wildcardu
+a první doména nesmí být wildcard.
+
+Všechny tyto příkazy podporují `--target`, `--stack-id` a `--company-id`.
+`set` nevyžaduje potvrzení a mění pouze zvolenou hodnotu. Ostatní nastavení
+proxy, seznam domén a jejich pořadí zachová; DNS ani Compose soubor nemění.
+Přesměrování HTTP na HTTPS vyžaduje Admin API s podporou tohoto nastavení.
+
+Pro Pages jsou dostupné `rosticli pages domains list|add|remove`, `settings [--json]`, `get redirect-to-first` a `set redirect-to-first <true|false|1|0>`; místo `--stack-id` použijte `--page-id`. HSTS pro Pages nastavíte v administraci. Podrobnosti najdete v [dokumentaci Pages](../pages.md#sprava-domen-pres-cli).

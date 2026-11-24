@@ -45,6 +45,8 @@ repositáře.
 Druhá možnost je dát administraci přístup do vašeho GitHub účtu, ona si přečte seznam vašich
 repositářů a dá vám na výběr do kterého má workflow automaticky nainstalovat. Vytvoří tím
 nový commit s workflow i zmíněný secret.
+V detailu aplikace otevřete **CI/CD**, klikněte na **Připojit GitHub** a potvrďte přístup na GitHubu. Po návratu do administrace načtěte seznam repozitářů, vyberte repozitář a nainstalujte workflow.
+
 
 ## ENV
 

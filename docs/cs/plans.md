@@ -28,6 +28,8 @@ Balíčky je možné měnit kdykoli a od okamžiku změny se z kreditu účtuje 
 vyzkoušet, kolik přesně vaše aplikace potřebuje procesorového času a paměti a poté vybrat třeba cenově výhodnější balíček.
 Více informací k rozhodnutí najdete v administraci v sekci grafy.
 
+Pokud je aplikace vypnutá, po změně balíčku zůstane vypnutá.
+
 ## Limity procesů a připojení
 
 Každý balíček má kromě RAM, CPU a disku nastaveny dva další limity:

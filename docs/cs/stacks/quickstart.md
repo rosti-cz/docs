@@ -284,6 +284,15 @@ povolené pouze v zóně vaší společnosti, pro kterou je Roští autoritativn
 Odstranění domény ponechá DNS záznamy. Podrobnosti a výběr targetu najdete
 v [dokumentaci CLI](rosticli-push.md#sprava-domen-stacku).
 
+Nastavení přesměrování a HSTS zobrazí `rosticli stacks domains settings`
+(nebo `settings --json`). Jednotlivé hodnoty pro skripty vrací
+`rosticli stacks domains get redirect-to-first`, `get redirect-to-https`
+a `get hsts`. Změnu provedete pomocí `rosticli stacks domains set redirect-to-first true`,
+`set redirect-to-https true` nebo `set hsts 86400`. Přesměrování přijímá
+`true`/`false` i `1`/`0`; HSTS je v sekundách a `0` ho vypne.
+Pro přesměrování na první doménu jsou potřeba alespoň dvě domény bez wildcardu
+a první doména nesmí být wildcard. Příkazy podporují `--target`, `--stack-id`
+a `--company-id`; změny nevyžadují potvrzení a zachovají ostatní nastavení.
 
 Tahle část jde přeskočit, pokud se rozhodnete používat výchozí doménu, kterou vám systém přidělil. Každý stack jednu takovou má. Je ve formátu `STACK_NAME-ID.rostiapp.cz` a je plně funkční.
 
@@ -361,7 +370,7 @@ Zálohování máme implementované jako vytvoření snapshotu souborového syst
 
 Do obsazeného diskového prostoru se počítá všechno včetně systémových souborů. Základní systém má kolem 3 GB, zbytek už je pro vás. Pokud překročíte kvótu, stack se nevypne, ale budeme vám účtovat každý extra obsazený GB.
 
-Pro weby Pages jsou dostupné stejné operace pod `rosticli pages domains list|add|remove`. Viz [správa domén Pages přes CLI](../pages.md#sprava-domen-pres-cli).
+Pro weby Pages jsou dostupné `rosticli pages domains list|add|remove` a nastavení přesměrování přes `settings [--json]`, `get redirect-to-first` a `set redirect-to-first <true|false|1|0>`. HSTS pro Pages nastavíte v administraci. Viz [správa domén Pages přes CLI](../pages.md#sprava-domen-pres-cli).
 
 ## AI analýza stacku
 
@@ -370,6 +379,8 @@ Spustí se sběr diagnostiky a po dokončení se zobrazí zjištěné problémy,
 doporučení pro uživatele stacku, podněty pro Roští a návrhy na optimalizaci.
 Roští analýzu provádí na vlastních GPU a diagnostická data zůstávají uvnitř
 infrastruktury Roští.
+
+Hotový výsledek se znovu používá jednu hodinu od vytvoření. U výsledku vidíte, před jakou dobou vznikl. Tlačítkem **Spustit znovu** můžete kdykoli požádat o novou analýzu.
 
 Report také posoudí, zda aktuální tarif odpovídá naměřené zátěži. Pokud
 dostupná data podporují bezpečnou úsporu nebo ukazují, že stack potřebuje více

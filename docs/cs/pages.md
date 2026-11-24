@@ -6,6 +6,10 @@ Pages je služba pro hostování statických webů. Hodí se pro HTML, CSS, Java
 
 Nový web vytvoříte v administraci v sekci **Pages**. Po vytvoření dostane automatickou doménu ve tvaru `nazev-1.rostiapp.cz`. Tato doména je ve stejném seznamu jako ostatní domény a můžete ji později odstranit, pokud v seznamu zůstane alespoň jedna jiná doména.
 
+## Správa souborů
+
+V detailu Pages webu otevřete záložku **Soubory Pages**. Můžete procházet adresáře a načíst, upravit nebo smazat jednotlivé soubory. Editor pracuje s textem v UTF-8 a s binárními soubory v kódování base64 do velikosti 1 MiB. Pro větší soubory použijte rosticli nebo REST API.
+
 ## Domény
 
 Domény se spravují v detailu webu v záložce **Proxy**. Pole domén zobrazuje jednotlivé domény jako štítky; doménu potvrdíte mezerou nebo Enterem. Při psaní administrace nabízí volné domény, subdomény z vašich DNS zón a subdomény na naší testovací doméně `rostiapp.cz`. U domén ve zónách spravovaných v Roští umí po potvrzení automaticky vytvořit A a AAAA záznamy na náš load balancer a doménu přiřadit k Pages webu. Subdomény na `rostiapp.cz` se přiřadí bez vytváření DNS záznamů, ale konkrétní celá doména může být použitá jen u jedné aplikace, stacku nebo Pages webu. Domény mimo vaše zóny se přidají jako externě spravované a DNS musíte nastavit u svého poskytovatele. Zelené štítky označují domény v našich DNS zónách, modré subdomény na testovací doméně a oranžové externě spravované domény. Seznam domén nesmí zůstat prázdný.
@@ -35,6 +39,24 @@ Příkazy používají aktivní target z `.rostistate`, případně `default`. J
 Přidání domény v zóně spravované v Roští nabídne vytvoření chybějících A/AAAA záznamů. U externího DNS vyžaduje potvrzení a DNS nastavíte u svého poskytovatele. `add --no-input` přeskočí dotazy i změny DNS, ale ověření dostupnosti a oprávnění pro wildcard proběhne vždy. Wildcard vyžaduje zónu vlastněnou stejnou firmou a autoritativní DNS Roští.
 
 Odebrání vyžaduje potvrzení; `remove --no-input` ho přeskočí, `rm` je alias pro `remove`. DNS záznamy zůstanou zachované, stejně jako pořadí ostatních domén a nastavení přesměrování. Poslední doménu nelze odebrat — nejprve přidejte jinou. Příkazy vyžadují podporu API pro kontrolu domén a volitelné vytváření DNS záznamů.
+
+Nastavení přesměrování zobrazíte a změníte přímo přes CLI:
+
+```sh
+rosticli pages domains settings
+rosticli pages domains settings --json
+rosticli pages domains get redirect-to-first
+rosticli pages domains set redirect-to-first true
+rosticli pages domains set redirect-to-first 0
+```
+
+`get` vypíše pouze `true` nebo `false` a konec řádku, takže jej lze použít
+ve skriptech. `settings --json` vrací objekt s klíčem `redirect_to_first`.
+`set` přijímá `true`, `false`, `1` nebo `0` a nevyžaduje potvrzení.
+Pro zapnutí jsou potřeba alespoň dvě domény; cílem je první doména z
+`domains list`. Seznam domén a jeho pořadí zůstanou zachované.
+Všechny tyto příkazy podporují `--target`, `--page-id` a `--company-id`.
+HSTS pro Pages nastavíte v administraci. Příkazy výše spravují přesměrování na první doménu.
 
 ## Nahrávání souborů přes `rosticli`
 

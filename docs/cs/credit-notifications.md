@@ -10,6 +10,7 @@ Pokud předchozí den nebyla žádná spotřeba, kredit se pro tento odhad nepov
 * Když zbývá kredit přibližně na sedm dní provozu, přijde jednorázové upozornění na dobití. Spouští se při odhadu nejvýše 7,5 dne.
 * Při nulovém nebo záporném zůstatku přijde upozornění každý den, dokud kredit nedobijete.
 * Po přibližně 14 dnech bez kreditu systém účet zamkne a vypne hostované služby. Poté nadále posílá denní upozornění.
+* V posledních pěti dnech před plánovaným smazáním denní e-mail upozorňuje, že systém brzy smaže účet i hostovaná data, pokud kredit nedobijete.
 * Po přibližně 60 dnech bez kreditu systém účet a jeho služby smaže. Odeslání tohoto e-mailu předchází dokončení smazání.
 
 Po připsání platby systém obnoví účet, pokud má peněženka dostatek kreditu, a začne sledování upozornění znovu od začátku. Data po smazání nemusí být možné obnovit, proto kredit doplňte co nejdříve.
@@ -17,6 +18,7 @@ Po připsání platby systém obnoví účet, pokud má peněženka dostatek kre
 ## Automatická platba kartou
 
 Pokud máte v administraci aktivní automatickou platbu kartou, systém nejdříve upozorní při odhadu přibližně 21 dní do vyčerpání kreditu. Poté se pokusí kartu strhnout při odhadu zhruba 13, 12 a 11 dní. Výše automatické platby vychází z předchozí denní spotřeby a zvoleného předplaceného období.
+Aktivní automatickou platbu můžete zrušit v administraci v sekci **Platby → Automatické platby kartou**.
 
 Úspěšná automatická platba připíše kredit, případně účet odemkne a resetuje upozornění. Pokud automatická platba neproběhne, kredit je možné kdykoli dobít jednorázově v sekci *Platby* v administraci.
 
