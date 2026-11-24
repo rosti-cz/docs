@@ -362,3 +362,22 @@ Zálohování máme implementované jako vytvoření snapshotu souborového syst
 Do obsazeného diskového prostoru se počítá všechno včetně systémových souborů. Základní systém má kolem 3 GB, zbytek už je pro vás. Pokud překročíte kvótu, stack se nevypne, ale budeme vám účtovat každý extra obsazený GB.
 
 Pro weby Pages jsou dostupné stejné operace pod `rosticli pages domains list|add|remove`. Viz [správa domén Pages přes CLI](../pages.md#sprava-domen-pres-cli).
+
+## AI analýza stacku
+
+V detailu stacku otevřete v levém menu pod **Metriky** položku **AI analýza**.
+Spustí se sběr diagnostiky a po dokončení se zobrazí zjištěné problémy,
+doporučení pro uživatele stacku, podněty pro Roští a návrhy na optimalizaci.
+Roští analýzu provádí na vlastních GPU a diagnostická data zůstávají uvnitř
+infrastruktury Roští.
+
+Podklady zahrnují stav a logy kontejnerů, dostupnou historii událostí a až 72
+hodin metrik. U každého kontejneru se sbírá nejvýše 1 000 posledních řádků logu
+z posledních 24 hodin. Diagnostiku lze také stáhnout ve formátu JSON. U spícího
+stacku může analýza vycházet z dostupné historie a stack kvůli ní zůstane spát.
+
+V API spustíte analýzu metodou `POST` na
+`/api-n/{company_id}/stacks/{stack_id}/ai-analysis`. Stav a dokončenou analýzu
+získáte metodou `GET` na stejné cestě doplněné o `/{job_id}`. Výchozí formát
+reportu je Markdown. Parametr `format=html` vrátí HTML. Sběr samostatné
+diagnostiky nabízí `GET /api-n/{company_id}/stacks/{stack_id}/diagnostics`.
