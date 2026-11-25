@@ -382,6 +382,10 @@ a část se zjištěnými problémy vynechá.
 Roští analýzu provádí na vlastních GPU a diagnostická data zůstávají uvnitř
 infrastruktury Roští.
 
+Analýza také kontroluje dostupné části souboru Docker Compose. Může upozornit
+na chyby v YAML či nastavení služeb, například na odkaz na chybějící službu,
+a navrhnout opravu.
+
 Hotový výsledek se znovu používá jednu hodinu od vytvoření. U výsledku vidíte, před jakou dobou vznikl. Tlačítkem **Spustit znovu** můžete kdykoli požádat o novou analýzu.
 
 Report také posoudí, zda aktuální tarif odpovídá naměřené zátěži. Pokud
