@@ -252,6 +252,12 @@ Tlačítko *Up* spustí všechny služby, které neběží. *Down* dělá pravý
 
 V detailu stacku otevřete **Nastavení → Tvrdý restart** a potvrďte akci. Restartuje se celý kontejner stacku včetně systémových služeb. Po dobu restartu jsou služby nedostupné. Stejnou akci nabízí API přes `PUT /api-n/{company_id}/stacks-actions/{stack_id}/restart-container` a nástroj MCP `stack_action` s parametrem `action="restart-container"`.
 
+### Metriky disku
+
+V záložce **Metriky** najdete **Diskovou propustnost** (objem přečtených a zapsaných dat za sekundu) a **Diskové operace (IOPS)** (počet dokončených čtení a zápisů za sekundu). Grafy rozlišují čtení a zápis a jejich data lze stáhnout jako CSV. Mezery v grafech označují období bez měření.
+
+Stejné řady poskytuje `GET /api-n/{company_id}/stacks/{stack_id}/metrics` a nástroj MCP `get_stack_metrics`. Skupina `disk` obsahuje propustnost v `bytes/s` a `disk_iops` obsahuje počet operací za sekundu v `ops/s`. Skupina `disk_usage` obsahuje obsazené místo v bajtech.
+
 ### Logy
 
 V kartě *Logs* jsou živé logy služeb ve stacku. V nabídce *Show logs from* lze zvolit poslední hodinu, 6 hodin, 24 hodin nebo 7 dní; poté se dále zobrazují nové řádky. Lze také vybrat jednotlivé služby, pozastavit výpis nebo filtrovat již načtené řádky.
