@@ -402,7 +402,9 @@ Při využití nad 100 % stack běží dál a za obsazený prostor navíc se ú�
 příplatek.
 
 Podklady zahrnují stav a logy kontejnerů, dostupnou historii událostí a až 72
-hodin metrik. U každého kontejneru se sbírá nejvýše 1 000 posledních řádků logu
+hodin metrik. Pokud jsou k dispozici, diagnostika a analýza zahrnují také
+rychlost čtení a zápisu v bajtech za sekundu a počet dokončených operací za
+sekundu (IOPS). U každého kontejneru se sbírá nejvýše 1 000 posledních řádků logu
 z posledních 24 hodin. Diagnostiku lze také stáhnout ve formátu JSON. U spícího
 stacku může analýza vycházet z dostupné historie a stack kvůli ní zůstane spát.
 
