@@ -3,30 +3,31 @@
 !!! warning "Proč jsou Aplikace zastaralé"
     Aplikace jsou zastaralé. Pro nové projekty doporučujeme [Hosting - Stacky](stacks/quickstart.md). Stacky jsou modernější služba s AI-kompatibilním toolingem. Existující Aplikace zůstávají podporované.
 
-Na Roští nabízíme celou škálu balíčků s různě alokovanými prostředky. Aby vaše aplikace běžela
-stabilně, musíte věnovat výběru balíčku pozornost.
-
-Jedním z nejčastějších problémů, na které na podpoře narážíme, je například *Mini* balíček použitý v
-kombinaci s frameworky React, Django nebo Next.js. Na Mini balíčku je ale k dispozici jen ~120 MB RAM, což je
-hodnota, na kterou nemohou některé oblíbené nástroje, jako *npm* nebo *pip*, fungovat.
-
-Připravili jsme pro vás tabulku, podle které si můžete vybrat balíček podle požadavku vaší aplikace.
-
+Při výběru balíčku zohledněte, kolik prostředků aplikace potřebuje za běhu i při sestavení a instalaci závislostí.
 Větší balíčky jsou dostupné až po připsání první platby.
 
-| Balíček   | RAM  | CPU  | Disk | Použití                                                                                                                            |
-| --------- | ---- | ---- | ---- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| Mini      | 128  | 0.25 | 1    | Statické stránky nebo velmi jednoduché dynamické aplikace. Next.js, React, Django ani další velké frameworky zde nebudou fungovat. |
-| Start+    | 512  | 0.5  | 10   | Balíček vhodný pro menší aplikace napsaný za pomocí různých technologií.                                                           |
-| Normal+   | 2048 | 2    | 25   | Tento balíček je dostatečný pro většinu aplikací, které u nás hostují                                                              |
-| Pro+      | 4096 | 2    | 50   | Pro aplikace s většími požadavky na paměť a diskový prostor.                                                                       |
-| Business+ | 8192 | 4    | 100  | Nejvyšší balíček, vhodný pro aplikace s velkou návštěvností jako jsou třeba eshopy.                                                |
+Ceny v tabulce jsou za 30 dní (720 hodin). Kredit se čerpá po hodinách. Aktuální ceny najdete v [ceníku v sekci Aplikace](https://rosti.cz/cenik#applications).
+
+| Balíček      | RAM (GB) | CPU (jádra) | Úložiště (GB) | Cena s DPH | Cena bez DPH |
+| ------------ | -------: | ----------: | ------------: | ---------: | -----------: |
+| Small        |        1 |        0,25 |             1 |   85,69 Kč |     70,82 Kč |
+| Standard     |        2 |         0,5 |            25 |  139,25 Kč |    115,08 Kč |
+| Production   |        4 |           2 |            50 |  234,46 Kč |    193,77 Kč |
+| Big          |        8 |           4 |            75 |  591,51 Kč |    488,85 Kč |
+| Business     |       16 |           8 |           100 | 1 186,60 Kč |    980,66 Kč |
+| Big Business |       32 |          12 |           250 | 2 376,75 Kč |  1 964,26 Kč |
 
 Výběrem poddimenzovaného balíčku se vystavujete riziku, že bude aplikace nestabilní a nebo nepůjde vůbec nainstalovat. Balíček platí pro jednu konkrétní aplikaci; nepředstavuje společnou kvótu pro více aplikací ve firmě. Pokud potřebujete provozovat více projektů v rámci jednoho balíčku, můžete je spojit do jedné aplikace a nakonfigurovat v ní [více služeb nebo domén](multidomains.md).
 
 Balíčky je možné měnit kdykoli a od okamžiku změny se z kreditu účtuje nová hodinová sazba. Můžete si tedy
 vyzkoušet, kolik přesně vaše aplikace potřebuje procesorového času a paměti a poté vybrat třeba cenově výhodnější balíček.
 Více informací k rozhodnutí najdete v administraci v sekci grafy.
+
+## Úložiště navíc
+
+Úložiště nad limit balíčku stojí 14,28 Kč s DPH (11,80 Kč bez DPH) za GiB za 30 dní.
+Při překročení limitu se účtuje každý započatý GiB navíc. Pokud limit překročíte přesně o celý počet GiB, připočte se ještě jeden GiB.
+Například při překročení limitu přesně o 1 GiB se účtují 2 GiB navíc.
 
 ## Limity procesů a připojení
 
